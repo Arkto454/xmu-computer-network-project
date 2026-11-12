@@ -1,0 +1,23 @@
+@baseUrl = http://localhost:8080
+@adminUsername = admin
+@adminPassword = REPLACE_WITH_LOCAL_ADMIN_PASSWORD
+@accessToken = REPLACE_WITH_LOGIN_ACCESS_TOKEN
+
+### 应用与数据库健康检查
+GET {{baseUrl}}/api/health
+
+### 管理员登录，在本机替换密码占位符
+POST {{baseUrl}}/api/admin/auth/login
+Content-Type: application/json
+
+{
+  "username": "{{adminUsername}}",
+  "password": "{{adminPassword}}"
+}
+
+### 将登录返回的 accessToken 填入顶部占位符
+GET {{baseUrl}}/api/admin/me
+Authorization: Bearer {{accessToken}}
+
+### 不带凭据，预期 HTTP 401
+GET {{baseUrl}}/api/admin/me

@@ -1,0 +1,12 @@
+spring:
+  config:
+    import: ""
+  datasource:
+    url: jdbc:h2:mem:admin_auth_test;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+app:
+  admin:
+    bootstrap:
+      enabled: false
