@@ -2,6 +2,8 @@
 @adminUsername = admin
 @adminPassword = REPLACE_WITH_LOCAL_ADMIN_PASSWORD
 @accessToken = REPLACE_WITH_LOGIN_ACCESS_TOKEN
+@wechatCode = REPLACE_WITH_REAL_WX_LOGIN_CODE
+@studentAccessToken = REPLACE_WITH_STUDENT_ACCESS_TOKEN
 
 ### 应用与数据库健康检查
 GET {{baseUrl}}/api/health
@@ -18,6 +20,18 @@ Content-Type: application/json
 ### 将登录返回的 accessToken 填入顶部占位符
 GET {{baseUrl}}/api/admin/me
 Authorization: Bearer {{accessToken}}
+
+### 学生微信登录：需要配置AppID/AppSecret；未配置时预期503
+POST {{baseUrl}}/api/student/auth/wechat
+Content-Type: application/json
+
+{
+  "code": "{{wechatCode}}"
+}
+
+### 学生身份查询：使用学生登录返回的凭据
+GET {{baseUrl}}/api/student/me
+Authorization: Bearer {{studentAccessToken}}
 
 ### 不带凭据，预期 HTTP 401
 GET {{baseUrl}}/api/admin/me

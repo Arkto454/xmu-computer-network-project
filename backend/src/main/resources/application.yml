@@ -12,11 +12,17 @@ spring:
   sql:
     init:
       mode: always
+      platform: mysql
       encoding: UTF-8
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
 app:
+  student:
+    token-ttl: 1h
+  wechat:
+    app-id: ${WECHAT_APP_ID:}
+    app-secret: ${WECHAT_APP_SECRET:}
   admin:
     token-ttl: 1h
     bootstrap:

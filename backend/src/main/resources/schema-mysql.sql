@@ -1,0 +1,11 @@
+CREATE TABLE IF NOT EXISTS student_user (
+    id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    app_id VARCHAR(64) NOT NULL,
+    wechat_openid VARCHAR(128) NOT NULL,
+    nickname VARCHAR(64) NOT NULL,
+    contact VARCHAR(128),
+    enabled BOOLEAN NOT NULL DEFAULT TRUE,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_student_wechat_identity UNIQUE (app_id, wechat_openid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

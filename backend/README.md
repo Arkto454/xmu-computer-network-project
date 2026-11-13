@@ -1,6 +1,6 @@
-# 校园互助跑腿后端 第一阶段
+# 校园互助跑腿后端
 
-本轮实现可启动的 Spring Boot 工程、管理员账号初始化、管理员登录和当前管理员信息查询。学生登录与任务功能后续逐步实现。
+已实现管理员登录，以及学生微信登录的后端与隔离测试。学生真实微信联调等待小程序 AppID、AppSecret 和有效临时 code；任务功能后续实现。学生模块说明见 [学生登录说明](./STUDENT_LOGIN.md)。
 
 ## 1 当前实现
 
@@ -10,6 +10,8 @@
 | 管理员初始化 | 显式开启时创建账号，数据库保存 BCrypt 哈希；已有账号不覆盖密码 |
 | 登录 | 检查账号、密码与启用状态，签发随机 Bearer 凭据 |
 | 身份查询 | 校验凭据及当前账号状态，返回管理员编号、账号与名称 |
+| 学生微信登录后端 | 接收 code，由微信身份查找或创建学生并签发独立凭据；真实微信联调待配置 |
+| 当前学生查询 | 学生凭据校验和公开资料查询；隔离测试已验证 |
 | 失败反馈 | 区分请求格式错误、登录失败、未认证与服务异常，不返回密码哈希 |
 
 技术版本：Spring Boot 3.5.16、MyBatis Starter 3.0.5、MySQL Connector/J、Spring Security Crypto。源码以 Java 17 为编译目标，本机使用 Java 25.0.3 验证。
@@ -59,7 +61,7 @@ application-local.properties   本机私有配置，已被 .gitignore 排除
 ```powershell
 Set-Location 'D:\计网项目和实验\backend'
 .\mvnw.cmd clean package
-java -jar .\target\campus-errand-backend-0.1.0-SNAPSHOT.jar
+java -jar .\target\campus-errand-backend-0.2.0-SNAPSHOT.jar
 ```
 
 首次使用 Wrapper 可能下载 Maven 和依赖。也可以在 IDEA 中将 pom.xml 作为 Maven 工程打开，运行 CampusErrandApplication；运行配置的工作目录设为 backend，以便读取本机配置文件。
@@ -67,7 +69,7 @@ java -jar .\target\campus-errand-backend-0.1.0-SNAPSHOT.jar
 默认地址为 http://localhost:8080。若端口被占用：
 
 ```powershell
-java -jar .\target\campus-errand-backend-0.1.0-SNAPSHOT.jar --server.port=8081
+java -jar .\target\campus-errand-backend-0.2.0-SNAPSHOT.jar --server.port=8081
 ```
 
 测试命令：
@@ -137,4 +139,4 @@ HTTP 200 返回当前管理员公开资料。
 - 真实 MySQL 8.0.46 与可执行 JAR 完成 5 项 HTTP 验证：健康、正确登录、带凭据查询、不带凭据拒绝、错误密码拒绝。
 - 当前测试报告位于 target/surefire-reports，MySQL 联调结果位于 target/mysql-smoke-results.txt；target 可由 clean 清除。
 
-下一小步建议先由使用者在 Apifox 跑通登录和资料查询，再继续学生身份与任务发布。
+管理员接口已由使用者通过 PowerShell 验收。当前学生模块的隔离验证与真实微信联调边界，见 STUDENT_LOGIN.md；终端环境保持用户原状，使用明确指定的 JDK 启动。

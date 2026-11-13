@@ -1,6 +1,9 @@
 spring:
   config:
     import: ""
+  sql:
+    init:
+      platform: test
   datasource:
     url: jdbc:h2:mem:admin_auth_test;MODE=MySQL;DB_CLOSE_DELAY=-1
     username: sa
