@@ -1,0 +1,6 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">核对交付</text><text wx:if="{{taskId}}" class="muted">当前预览任务：{{taskId}}</text><text wx:else>缺少有效任务编号，请返回。</text>
+<view class="section"><text class="section-title">扫码功能尚未接入</text><text>这里没有扫码结果，不会调用相机或确认完成任务。</text><text class="hint">后续仅发布者可确认；有只读核验接口时先核对再提交，否则先明确确认再扫码提交。</text></view>
+<view class="actions"><button disabled>确认完成待接入</button><button bindtap="back">返回上一页</button></view>
+</view>

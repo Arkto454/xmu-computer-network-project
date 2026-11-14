@@ -1,0 +1,1 @@
+<template name="mode"><view class="mode-banner" role="status">{{modeLabel}}</view></template>

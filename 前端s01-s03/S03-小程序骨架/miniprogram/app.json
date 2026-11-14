@@ -1,0 +1,32 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/my-tasks/index",
+    "pages/profile/index",
+    "pages/login/index",
+    "pages/publish/index",
+    "pages/task-detail/index",
+    "pages/profile-edit/index",
+    "pages/delivery-code/index",
+    "pages/scan-confirm/index",
+    "pages/earnings/index"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "校园互助",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#f4f5ef"
+  },
+  "tabBar": {
+    "color": "#576c63", "selectedColor": "#17634f", "backgroundColor": "#ffffff", "borderStyle": "white",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "任务大厅" },
+      { "pagePath": "pages/my-tasks/index", "text": "我的任务" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

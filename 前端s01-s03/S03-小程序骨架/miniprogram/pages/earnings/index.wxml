@@ -1,0 +1,5 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">模拟收益</text><view class="note">仅模拟结算，不涉及真实支付。</view>
+<view class="section"><text class="section-title">暂无结算数据</text><text>登录与结算查询尚未接入，不将“没有加载数据”显示为真实零收益。</text><text class="hint">后续展示服务端有效结算汇总与明细，无充值、提现或钱包。</text></view><view class="actions"><button bindtap="back">返回上一页</button></view>
+</view>

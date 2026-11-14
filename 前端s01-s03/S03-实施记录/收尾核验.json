@@ -1,0 +1,19 @@
+{
+  "sourceSnapshotFilesCompared": 56,
+  "sourceConfiguration": "unchanged",
+  "backupHashCheck": "passed",
+  "workbookSheets": 7,
+  "nativeFiltersRestored": [
+    "xl/worksheets/sheet2.xml",
+    "xl/worksheets/sheet3.xml",
+    "xl/worksheets/sheet4.xml",
+    "xl/worksheets/sheet5.xml",
+    "xl/worksheets/sheet6.xml",
+    "xl/worksheets/sheet7.xml"
+  ],
+  "freezeValidationMerge": "preserved",
+  "unrelatedPopulatedCellsAndFormulas": "unchanged",
+  "acceptedTasks": 3,
+  "S03": "Mock scaffold/navigation accepted",
+  "next": "S04 not started"
+}

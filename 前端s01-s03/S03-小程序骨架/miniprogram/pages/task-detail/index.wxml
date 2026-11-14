@@ -1,0 +1,14 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<block wx:if="{{task}}">
+<view class="row"><text class="badge">{{task.statusText}}（样例）</text><text class="small muted">{{task.typeName}}</text></view>
+<view class="row space"><view class="row-main"><text class="title">{{task.title}}</text></view><view><text class="amount">¥{{task.rewardText}}</text><text class="amount-label">模拟奖励</text></view></view>
+<view class="section"><view class="route-stop"><text class="stop-label">取</text><text>{{task.pickupLocation}}</text></view><view class="route-stop"><text class="stop-label stop-end">送</text><text>{{task.deliveryLocation}}</text></view><text class="hint">{{task.deadlineText}}</text></view>
+<view class="section"><text class="section-title">公开任务说明</text><text>{{task.description}}</text></view>
+<view class="section"><text class="section-title">交接信息</text><text>此骨架只展示公开样例。正式版本仅由服务端向发布者和成功接单者返回本次交接信息，接单失败不获得查看权限。</text></view>
+<text class="hint">接单时将填写本次手机号和选填微信号；当前未登录，不能接单或推进状态。</text>
+<view class="actions"><button class="primary" bindtap="go" data-page="login">查看登录页</button></view>
+<view wx:if="{{isMock}}" class="section"><text class="section-title">交付页面骨架预览</text><text class="small muted">仅检查导航，不代表此任务已到交付阶段。</text><view class="actions"><button bindtap="go" data-page="deliveryCode" data-task-id="{{taskId}}">交付码页面预览</button><button bindtap="go" data-page="scanConfirm" data-task-id="{{taskId}}">扫码核对页面预览</button></view></view>
+</block><view wx:else class="empty"><text class="subtitle">{{message}}</text></view>
+<view class="actions"><button bindtap="back">返回上一页</button><button bindtap="go" data-page="hall">回任务大厅</button></view>
+</view>

@@ -1,0 +1,25 @@
+{
+  "task": "S03",
+  "registeredPages": [
+    "pages/index/index",
+    "pages/my-tasks/index",
+    "pages/profile/index",
+    "pages/login/index",
+    "pages/publish/index",
+    "pages/task-detail/index",
+    "pages/profile-edit/index",
+    "pages/delivery-code/index",
+    "pages/scan-confirm/index",
+    "pages/earnings/index"
+  ],
+  "checks": [
+    "wcc.exe全部通过",
+    "wcsc.exe全部通过",
+    "mock：十页加载/模式隔离、三标签和详情路由通过，无网络登录扫码存储副作用",
+    "real：十页加载/模式隔离、三标签和详情路由通过，无网络登录扫码存储副作用"
+  ],
+  "jsonFiles": 15,
+  "jsFiles": 17,
+  "runtime": "微信开发者工具逐页运行通过；仅Mock骨架，详见运行验收.md",
+  "sourceMatchesSnapshotFiles": 56
+}

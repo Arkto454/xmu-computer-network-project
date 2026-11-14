@@ -1,0 +1,166 @@
+{
+    "task":  "S01",
+    "createdAt":  "2026-11-12T20:15:44.6074387+08:00",
+    "source":  "C:\\Users\\23997\\Documents\\Code\\campus-errand\\miniprogram",
+    "backup":  "C:\\Users\\23997\\Documents\\Codex\\2026-10-23\\zhe\\outputs\\S01-基线备份-20261112\\miniprogram-before-S01.zip",
+    "backupSha256":  "77da76099a681991a0fd225b02f2d413467134fce8fe28d89011b546b4c89f7f",
+    "files":  [
+                  {
+                      "path":  "app.js",
+                      "bytes":  364,
+                      "sha256":  "71458d1bbfe841529359fa50aeb5405d23a174e903e07d3c3eddf420f8c91fb8"
+                  },
+                  {
+                      "path":  "app.json",
+                      "bytes":  348,
+                      "sha256":  "371fa739b167651ad19511858ee7d34d34adfdb892dcc8f7feadb28c8ec407ff"
+                  },
+                  {
+                      "path":  "app.wxss",
+                      "bytes":  194,
+                      "sha256":  "2a10971b43af27877f8b2179667f2ea51ae98b071dfbc08cdc6945f058f41e56"
+                  },
+                  {
+                      "path":  "pages/index/index.js",
+                      "bytes":  1798,
+                      "sha256":  "372fee0f36e07ccf3f468c7864fd221598b78613618d3ecdfa40512d6bdd84fb"
+                  },
+                  {
+                      "path":  "pages/index/index.json",
+                      "bytes":  30,
+                      "sha256":  "df9d91912cd42ae9ec5ea6058b2dcabc6388da3ffc277f3beda38c61076f8a58"
+                  },
+                  {
+                      "path":  "pages/index/index.wxml",
+                      "bytes":  1194,
+                      "sha256":  "1491571d2f1cb2ac6f1ff908d2b4e98c745f85228273e36aee2b35db97237661"
+                  },
+                  {
+                      "path":  "pages/index/index.wxss",
+                      "bytes":  862,
+                      "sha256":  "916950bc1e0ec9eafa985d92e46586608f5347915dbb78c5da49880b353f8797"
+                  },
+                  {
+                      "path":  "pages/logs/logs.js",
+                      "bytes":  305,
+                      "sha256":  "b0fcd9c392692663317fa6c61d937f9840a88662b449c0e666dee502cb7b58aa"
+                  },
+                  {
+                      "path":  "pages/logs/logs.json",
+                      "bytes":  30,
+                      "sha256":  "df9d91912cd42ae9ec5ea6058b2dcabc6388da3ffc277f3beda38c61076f8a58"
+                  },
+                  {
+                      "path":  "pages/logs/logs.wxml",
+                      "bytes":  224,
+                      "sha256":  "f4ca0cc28c3a54fbba91b4d12d8c77c621c06938ea1c73194c05d48d8a1d54d5"
+                  },
+                  {
+                      "path":  "pages/logs/logs.wxss",
+                      "bytes":  247,
+                      "sha256":  "38e7b6ca879f43dc8fe9af3df6bed9f5440280753a01c9bf5ef303ad09b5dcbb"
+                  },
+                  {
+                      "path":  "project.config.json",
+                      "bytes":  957,
+                      "sha256":  "98577842a3972e525faed7aa7f8e5a00dea76be043da3a5845ad11720bee067e"
+                  },
+                  {
+                      "path":  "project.private.config.json",
+                      "bytes":  834,
+                      "sha256":  "3d4fa82cc3e159299290c5ea1700ee00d2797c40a9fc46c819b63d6f029afb14"
+                  },
+                  {
+                      "path":  "sitemap.json",
+                      "bytes":  191,
+                      "sha256":  "2812d3c18f15b8cca2b70e3001514c315daaa1f888f60295d8d8a55d16a69faf"
+                  },
+                  {
+                      "path":  "utils/util.js",
+                      "bytes":  460,
+                      "sha256":  "87b2004360bd30330618f52a86a68d5d9f2d7d5456d638d9d337338973d0b06c"
+                  }
+              ],
+    "checks":  [
+                   {
+                       "type":  "JavaScriptSyntax",
+                       "path":  "app.js",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "app.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JavaScriptSyntax",
+                       "path":  "pages/index/index.js",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "pages/index/index.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JavaScriptSyntax",
+                       "path":  "pages/logs/logs.js",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "pages/logs/logs.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "project.config.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "project.private.config.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JSON",
+                       "path":  "sitemap.json",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "JavaScriptSyntax",
+                       "path":  "utils/util.js",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "RouteFiles",
+                       "path":  "pages/index/index",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "RouteFiles",
+                       "path":  "pages/logs/logs",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "BackupSHA256",
+                       "path":  "All 15 files",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "WXMLCompile",
+                       "path":  "pages/index/index.wxml; pages/logs/logs.wxml",
+                       "result":  "PASS"
+                   },
+                   {
+                       "type":  "WXSSCompile",
+                       "path":  "app.wxss; pages/index/index.wxss; pages/logs/logs.wxss",
+                       "result":  "PASS"
+                   }
+               ],
+    "registeredPages":  [
+                            "pages/index/index",
+                            "pages/logs/logs"
+                        ],
+    "runtimeValidation":  "Awaiting developer-tool simulator compilation/display confirmation; offline compiler success is not runtime evidence."
+}

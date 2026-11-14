@@ -1,0 +1,16 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">发布一个任务</text><view class="note">表单布局预览，暂不能提交。奖励仅模拟，不涉及真实支付。请使用虚构测试信息。</view>
+<view class="section"><text class="section-title">公开任务信息</text><text class="small muted">地点写清校区或建筑区域，手机号、取件码与详细房间请勿填在这里。</text><view class="field"><text class="field-label">标题（必填）</text><input class="input" placeholder="例如：帮取校园快递站包裹" maxlength="-1" /></view>
+<view class="field"><text class="field-label">类型（必填）</text><view class="picker-value muted">类型选择待接入</view><text class="hint">{{taskTypeHint}}；最终编码待确认。</text></view>
+<view class="field"><text class="field-label">取件地点（必填）</text><input class="input" placeholder="自由填写，如北门快递站" maxlength="-1" /></view>
+<view class="field"><text class="field-label">送达地点（必填）</text><input class="input" placeholder="自由填写，如第二教学楼门口" maxlength="-1" /></view>
+<view class="field"><text class="field-label">最晚送达时间（必填）</text><view class="picker-value muted">日期与时间选择待接入</view><text class="hint">发布时需晚于当前时间，最终由服务端校验。</text></view>
+<view class="field"><text class="field-label">模拟奖励（必填，元）</text><input class="input" type="digit" placeholder="暂定大于0，最多两位小数" maxlength="-1" /></view>
+<view class="field"><text class="field-label">普通任务说明（选填，公开）</text><textarea class="textarea" placeholder="说明物品和工作量，勿填私密信息" maxlength="-1" /></view></view>
+<view class="section"><text class="section-title">本次任务交接信息</text><text class="small muted">正式版本由服务端按任务关系控制返回，无关浏览者不可见。</text><view class="field"><text class="field-label">本次手机号（必填，非公开）</text><input class="input" type="number" placeholder="基本格式校验，不是短信认证" maxlength="-1" /></view>
+<view class="field"><text class="field-label">本次微信号（选填，非公开）</text><input class="input" placeholder="补充交接方式" maxlength="-1" /></view>
+<view class="field"><text class="field-label">私密交接说明（选填）</text><textarea class="textarea" placeholder="取件码、详细房间或特殊交接要求" maxlength="-1" /></view></view>
+<text class="hint">无需先编辑个人资料；发布后不直接修改。此页暂不保存输入，请勿填写真实联系方式。</text>
+<view class="actions"><button disabled>发布功能待接入</button><button wx:if="{{isMock}}" bindtap="go" data-page="detail" data-task-id="demo-001">查看样例详情（不会提交表单）</button><button bindtap="back">返回上一页</button></view>
+</view>

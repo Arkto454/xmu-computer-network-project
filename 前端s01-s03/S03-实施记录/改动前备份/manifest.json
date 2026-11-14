@@ -1,0 +1,77 @@
+[
+  {
+    "path": "app.js",
+    "sha256": "71458d1bbfe841529359fa50aeb5405d23a174e903e07d3c3eddf420f8c91fb8",
+    "bytes": 364
+  },
+  {
+    "path": "app.json",
+    "sha256": "371fa739b167651ad19511858ee7d34d34adfdb892dcc8f7feadb28c8ec407ff",
+    "bytes": 348
+  },
+  {
+    "path": "app.wxss",
+    "sha256": "2a10971b43af27877f8b2179667f2ea51ae98b071dfbc08cdc6945f058f41e56",
+    "bytes": 194
+  },
+  {
+    "path": "pages/index/index.js",
+    "sha256": "372fee0f36e07ccf3f468c7864fd221598b78613618d3ecdfa40512d6bdd84fb",
+    "bytes": 1798
+  },
+  {
+    "path": "pages/index/index.json",
+    "sha256": "df9d91912cd42ae9ec5ea6058b2dcabc6388da3ffc277f3beda38c61076f8a58",
+    "bytes": 30
+  },
+  {
+    "path": "pages/index/index.wxml",
+    "sha256": "1491571d2f1cb2ac6f1ff908d2b4e98c745f85228273e36aee2b35db97237661",
+    "bytes": 1194
+  },
+  {
+    "path": "pages/index/index.wxss",
+    "sha256": "916950bc1e0ec9eafa985d92e46586608f5347915dbb78c5da49880b353f8797",
+    "bytes": 862
+  },
+  {
+    "path": "pages/logs/logs.js",
+    "sha256": "b0fcd9c392692663317fa6c61d937f9840a88662b449c0e666dee502cb7b58aa",
+    "bytes": 305
+  },
+  {
+    "path": "pages/logs/logs.json",
+    "sha256": "df9d91912cd42ae9ec5ea6058b2dcabc6388da3ffc277f3beda38c61076f8a58",
+    "bytes": 30
+  },
+  {
+    "path": "pages/logs/logs.wxml",
+    "sha256": "f4ca0cc28c3a54fbba91b4d12d8c77c621c06938ea1c73194c05d48d8a1d54d5",
+    "bytes": 224
+  },
+  {
+    "path": "pages/logs/logs.wxss",
+    "sha256": "38e7b6ca879f43dc8fe9af3df6bed9f5440280753a01c9bf5ef303ad09b5dcbb",
+    "bytes": 247
+  },
+  {
+    "path": "project.config.json",
+    "sha256": "98577842a3972e525faed7aa7f8e5a00dea76be043da3a5845ad11720bee067e",
+    "bytes": 957
+  },
+  {
+    "path": "project.private.config.json",
+    "sha256": "3d4fa82cc3e159299290c5ea1700ee00d2797c40a9fc46c819b63d6f029afb14",
+    "bytes": 834
+  },
+  {
+    "path": "sitemap.json",
+    "sha256": "2812d3c18f15b8cca2b70e3001514c315daaa1f888f60295d8d8a55d16a69faf",
+    "bytes": 191
+  },
+  {
+    "path": "utils/util.js",
+    "sha256": "87b2004360bd30330618f52a86a68d5d9f2d7d5456d638d9d337338973d0b06c",
+    "bytes": 460
+  }
+]

@@ -1,0 +1,14 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">今天，顺路帮个忙</text><text class="muted">看看取送地点，找到适合你的任务。</text>
+<view class="actions"><button class="primary" bindtap="go" data-page="publish">＋ 发布任务</button></view>
+<view class="section"><text class="section-title">可接任务</text><text class="small muted">类型筛选、发布时间排序和分页将在后续接入。</text></view>
+<view wx:if="{{isMock}}">
+  <view class="task" wx:for="{{tasks}}" wx:key="id" role="button" aria-label="查看任务详情" bindtap="go" data-page="detail" data-task-id="{{item.id}}">
+    <view class="row"><view class="row-main"><text class="task-title">{{item.title}}</text><text class="small muted">{{item.typeName}}</text></view><view><text class="amount">¥{{item.rewardText}}</text><text class="amount-label">模拟奖励</text></view></view>
+    <view class="route"><view class="route-stop"><text class="stop-label">取</text><text>{{item.pickupLocation}}</text></view><view class="route-stop"><text class="stop-label stop-end">送</text><text>{{item.deliveryLocation}}</text></view></view>
+    <view class="meta"><text>{{item.deadlineText}}</text><text>{{item.statusText}}</text></view>
+  </view><text class="hint">以上为虚构公开样例，仅用于检查页面跳转。</text>
+</view>
+<view wx:else class="empty"><text class="subtitle">任务服务尚未接入</text><text class="hint">真实模式不展示Mock样例，也不请求未确定的接口。</text></view>
+</view>

@@ -1,0 +1,7 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">你好，校园同学</text><text class="muted">尚未登录，不显示真实账号资料或统计。</text>
+<view class="actions"><button class="primary" bindtap="go" data-page="login">查看登录页</button></view>
+<view class="menu"><button bindtap="go" data-page="profileEdit">个人资料　›</button><button bindtap="go" data-page="earnings">模拟收益　›</button></view>
+<view class="section"><text class="section-title">本次任务的联系方式</text><text>发布或接单时填写并确认，不要求先完善个人资料。后续资料修改不会改变已有任务信息。</text></view>
+</view>
