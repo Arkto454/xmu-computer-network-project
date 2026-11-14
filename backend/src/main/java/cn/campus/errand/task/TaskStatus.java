@@ -1,0 +1,3 @@
+package cn.campus.errand.task;
+
+public enum TaskStatus { WAITING, ACCEPTED, PICKED_UP, PENDING_CONFIRMATION, COMPLETED, CANCELLED, EXPIRED, CLOSED }

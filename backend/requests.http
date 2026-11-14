@@ -4,6 +4,8 @@
 @accessToken = REPLACE_WITH_LOGIN_ACCESS_TOKEN
 @wechatCode = REPLACE_WITH_REAL_WX_LOGIN_CODE
 @studentAccessToken = REPLACE_WITH_STUDENT_ACCESS_TOKEN
+@taskId = REPLACE_WITH_CREATED_TASK_ID
+@taskDeadline = 2099-12-31T10:00:00Z
 
 ### 应用与数据库健康检查
 GET {{baseUrl}}/api/health
@@ -35,3 +37,29 @@ Authorization: Bearer {{studentAccessToken}}
 
 ### 不带凭据，预期 HTTP 401
 GET {{baseUrl}}/api/admin/me
+
+### 发布任务：需要真实学生凭据；字段内容仅为示例
+POST {{baseUrl}}/api/student/tasks
+Authorization: Bearer {{studentAccessToken}}
+Content-Type: application/json
+
+{
+  "title": "帮取快递",
+  "type": "EXPRESS",
+  "pickupLocation": "校园快递站东门",
+  "deliveryLocation": "宿舍楼一楼门口",
+  "deadlineAt": "{{taskDeadline}}",
+  "rewardAmount": 3.50,
+  "description": "两个小包裹",
+  "publisherPhone": "13800000000",
+  "publisherWechat": "demo_wechat_contact",
+  "privateInstructions": "DEMO-PICKUP-CODE"
+}
+
+### 大厅仅返回公开摘要
+GET {{baseUrl}}/api/student/tasks?page=1&size=20&type=EXPRESS
+Authorization: Bearer {{studentAccessToken}}
+
+### 用发布者凭据查看完整信息；换另一学生凭据后不返回privateInfo
+GET {{baseUrl}}/api/student/tasks/{{taskId}}
+Authorization: Bearer {{studentAccessToken}}

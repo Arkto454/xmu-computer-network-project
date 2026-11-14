@@ -38,6 +38,7 @@ class StudentAuthIntegrationTest {
 
     @BeforeEach
     void prepare() {
+        jdbc.update("DELETE FROM errand_task");
         jdbc.update("DELETE FROM student_user");
         when(wechat.exchange(anyString())).thenReturn(new WeChatGateway.Identity("test-app", "private-openid"));
     }
