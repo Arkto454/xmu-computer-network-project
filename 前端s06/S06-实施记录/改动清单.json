@@ -1,0 +1,17 @@
+{
+  "source": "C:\\Users\\23997\\Documents\\Code\\campus-errand\\miniprogram",
+  "deliverySnapshot": "C:\\Users\\23997\\Documents\\Codex\\2026-10-23\\zhe\\outputs\\S06-会话与隔离\\miniprogram",
+  "filesWritten": [
+    "app.js",
+    "pages/login/index.js",
+    "pages/login/index.wxml",
+    "pages/my-tasks/index.js",
+    "services/session-request.js",
+    "utils/login-navigation.js",
+    "utils/page-session.js",
+    "utils/scaffold.js",
+    "utils/session.js"
+  ],
+  "deleted": [],
+  "configurations": "原值保留"
+}

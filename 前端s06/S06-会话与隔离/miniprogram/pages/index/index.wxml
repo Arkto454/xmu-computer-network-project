@@ -1,0 +1,24 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">今天，顺路帮个忙</text><text class="muted">看看取送地点，找到适合你的任务。</text>
+<view class="actions"><button class="primary" bindtap="go" data-page="publish">＋ 发布任务</button></view>
+<view class="section"><text class="section-title">可接任务</text><text class="small muted">类型筛选、发布时间排序和分页将在后续接入。</text></view>
+<view wx:if="{{isMock}}">
+  <task-card wx:for="{{tasks}}" wx:key="id" task="{{item}}" bind:open="openTask" />
+  <text class="hint">以上为虚构公开样例，仅用于检查页面跳转。</text>
+</view>
+<page-state wx:else state="unavailable" title="任务服务尚未接入" description="暂时无法查询任务，请稍后再来。" />
+<view wx:if="{{uiPreview}}" class="preview-group">
+  <text class="title">组件检查</text><text class="hint">仅开发预览，使用虚构信息，不产生业务操作。</text>
+  <task-card task="{{uiPreview.longTask}}" />
+  <view class="section"><text class="section-title">状态与超时</text>
+    <view wx:for="{{uiPreview.statuses}}" wx:key="*this" class="space"><status-tag status="{{item}}" /></view>
+    <view class="space"><status-tag status="已取件" overdue /></view>
+  </view>
+  <page-state state="loading" />
+  <page-state state="empty" />
+  <page-state state="{{previewState}}" description="{{previewState === 'error' ? uiPreview.longError : '重新加载已触发，现在展示空列表预览。'}}" bind:action="retryPreview" />
+  <text class="hint">预览重试次数：{{previewRetries}}</text>
+  <page-state state="unknown" />
+</view>
+</view>

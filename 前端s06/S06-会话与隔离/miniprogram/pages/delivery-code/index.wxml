@@ -1,0 +1,7 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">交付码</text><text wx:if="{{taskId}}" class="muted">当前预览任务：{{taskId}}</text><text wx:else>缺少有效任务编号，请返回。</text>
+<view class="code-placeholder"><text>交付码显示区域，当前没有可扫描的二维码</text></view>
+<view class="section"><text>正式版本仅接单者在待确认状态下获取服务端签发的短时凭据；状态、有效期与刷新规则以后端为准。</text></view>
+<view class="actions"><button disabled>交付码功能待接入</button><button bindtap="back">返回上一页</button></view>
+</view>

@@ -1,0 +1,48 @@
+@import "styles/tokens.wxss";
+page { background: #f4f5ef; color: #17332d; font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif; font-size: 32rpx; line-height: 1.6; }
+view, text, input, textarea, button { box-sizing: border-box; }
+button { width: 100%; min-height: 88rpx; margin: 0; font-size: 32rpx; line-height: 1.5; padding: 20rpx 28rpx; border-radius: 12rpx; color: var(--color-text); background: var(--color-surface); overflow-wrap: anywhere; }
+button::after { border-color: #d8dfd8; border-radius: 12rpx; }
+button[disabled] { color: #576c63; background: #e5e9e2; }
+.page { padding: 0 32rpx 40rpx; padding-bottom: calc(40rpx + env(safe-area-inset-bottom)); }
+.mode-banner { margin: 0 -32rpx 32rpx; padding: 12rpx 32rpx; font-size: 28rpx; color: #8a4a17; background: #fff8e8; border-bottom: 1rpx solid #dfded0; overflow-wrap: anywhere; }
+.title { display: block; font-size: 40rpx; line-height: 1.4; font-weight: 650; margin-bottom: 12rpx; }
+.subtitle { display: block; font-size: 32rpx; font-weight: 650; }
+.muted { color: #576c63; }
+.small { font-size: 28rpx; }
+.hint { display: block; margin-top: 12rpx; font-size: 28rpx; color: var(--color-muted); overflow-wrap: anywhere; }
+.section { margin-top: 32rpx; padding: 28rpx; background: #fff; border: 1rpx solid #d8dfd8; border-radius: 10rpx; }
+.section-title { display: block; margin-bottom: 20rpx; font-size: 32rpx; font-weight: 650; }
+.row { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 24rpx; }
+.row-main { flex: 1; min-width: 0; }
+.primary { background: #17634f; color: #fff; }
+.primary::after { border-color: #17634f; }
+.space { margin-top: 24rpx; }
+.actions { display: flex; flex-direction: column; gap: 20rpx; margin-top: 32rpx; }
+.task { margin-top: 24rpx; padding: 28rpx; background: #fff; border-top: 4rpx solid #17634f; border-bottom: 1rpx solid #d8dfd8; border-radius: 6rpx; }
+.task-title { display: block; font-size: 32rpx; font-weight: 650; overflow-wrap: break-word; }
+.amount { display: block; color: #17634f; font-size: 40rpx; font-weight: 700; overflow-wrap: anywhere; }
+.amount-label { display: block; font-size: 28rpx; color: #576c63; text-align: right; }
+.route { margin-top: 24rpx; }
+.route-stop { display: flex; align-items: flex-start; margin-top: 12rpx; }
+.stop-label { flex-shrink: 0; width: 40rpx; height: 40rpx; line-height: 38rpx; text-align: center; margin-right: 16rpx; border: 1rpx solid #17634f; border-radius: 50%; color: #17634f; font-size: 24rpx; }
+.stop-end { background: #17634f; color: #fff; }
+.meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12rpx; margin-top: 24rpx; font-size: 24rpx; color: #576c63; }
+.field { margin-top: 24rpx; }
+.field-label { display: block; margin-bottom: 10rpx; font-size: 28rpx; font-weight: 550; }
+.input, .textarea, .picker-value { display: block; width: 100%; padding: 22rpx; background: #fff; border: 1rpx solid #b9c6bc; border-radius: 10rpx; font-size: 30rpx; }
+.input { height: 92rpx; }
+.textarea { min-height: 180rpx; }
+.empty { padding: 40rpx 0; }
+.note { padding: 24rpx; border-left: 5rpx solid #17634f; background: #eaf0e7; font-size: 28rpx; }
+.badge { display: inline-block; padding: 4rpx 14rpx; border: 1rpx solid #d8dfd8; border-radius: 6rpx; font-size: 26rpx; background: #fff; }
+.menu button { margin-top: 20rpx; text-align: left; }
+.code-placeholder { display: flex; align-items: center; justify-content: center; height: 360rpx; margin-top: 32rpx; padding: 32rpx; background: #fff; border: 2rpx dashed #8a9e91; text-align: center; color: #576c63; }
+text { overflow-wrap: anywhere; }
+.route-stop > text:last-child { min-width: 0; flex: 1; overflow-wrap: anywhere; }
+.page--with-footer { padding-bottom: calc(240rpx + env(safe-area-inset-bottom)); }
+.fixed-actions { position: fixed; z-index: 10; left: 0; right: 0; bottom: 0; box-sizing: border-box; padding: 20rpx 32rpx; padding-bottom: calc(20rpx + env(safe-area-inset-bottom)); border-top: 1rpx solid var(--color-border); background: var(--color-surface); }
+.fixed-actions button { max-width: 100%; }
+button.primary, .actions > button, .menu > button, .fixed-actions > button { width: 100%; }
+.preview-group { margin-top: 48rpx; }
+@media (max-width: 340px) { .row-main { flex-basis: 100%; } }
