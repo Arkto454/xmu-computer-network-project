@@ -1,0 +1,27 @@
+[
+  {
+    "path": "mocks/fixtures.js",
+    "action": "added",
+    "sha256": "7054e3216b7adc7fb01b263a497fbd208d1a08186396a5efe7f90d7104f84bb0"
+  },
+  {
+    "path": "mocks/scenarios.js",
+    "action": "added",
+    "sha256": "eb24196ba499a2cd3abd17eec7b8b005d7b4b342d1f7652f49a86653f728173d"
+  },
+  {
+    "path": "mocks/service.js",
+    "action": "added",
+    "sha256": "75691ae124b8f039a0b65b968afa0da348fd8b2449cca218dc975a946dd56a34"
+  },
+  {
+    "path": "services/index.js",
+    "action": "modified",
+    "sha256": "18d4720f590d62a0ccad1bc1de7200e7306432add176876c2c870a9b69314c65"
+  },
+  {
+    "path": "services/mock.js",
+    "action": "modified",
+    "sha256": "2b25bb4828f9a1c0be9a7c1e0bdf060ba51ad4a182c09a21f84f17a034f82972"
+  }
+]

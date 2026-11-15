@@ -1,0 +1,25 @@
+{
+  "date": "2026-11-15",
+  "mainProject": "C:\\Users\\23997\\Documents\\Code\\campus-errand\\miniprogram",
+  "backupFiles": 79,
+  "backupHashCheck": true,
+  "snapshotFiles": 82,
+  "sourceMatchesSnapshot": true,
+  "changedFiles": 5,
+  "sourceFilesSyntaxChecked": 33,
+  "controlledCheckGroupsPassed": 7,
+  "checks": [
+    "public-summary-whitelist",
+    "relationship-scoped-private-info",
+    "single-winner-acceptance",
+    "publish-cancel-and-state-transitions",
+    "mock-settlement-and-contact-hiding",
+    "failure-delay-pending-and-expired-code-scenarios",
+    "reset-and-service-facade-validation"
+  ],
+  "networkRequests": 0,
+  "realLogin": false,
+  "realBackendIntegration": false,
+  "simulatorPageAcceptance": false,
+  "wxssOrWxmlChanged": false
+}

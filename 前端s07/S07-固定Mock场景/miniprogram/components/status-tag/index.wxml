@@ -1,0 +1,4 @@
+<view class="tags">
+  <text class="tag tag--{{tone}}">{{label}}</text>
+  <text wx:if="{{overdue}}" class="tag tag--warning">已超时</text>
+</view>
