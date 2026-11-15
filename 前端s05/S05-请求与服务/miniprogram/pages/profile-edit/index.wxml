@@ -1,0 +1,6 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">个人资料</text><view class="note">无需先完善资料才能发布或接单。</view>
+<view class="section"><text class="section-title">资料编辑尚未接入</text><text>编辑范围与保存接口将在后续确认。资料可用于自动填充，但每次交接需确认本次信息，修改不影响旧任务。</text></view>
+<view class="actions"><button disabled>保存资料待接入</button><button bindtap="back">返回上一页</button></view>
+</view>

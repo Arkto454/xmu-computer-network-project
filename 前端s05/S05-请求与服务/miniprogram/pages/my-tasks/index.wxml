@@ -1,0 +1,6 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">我的任务</text><text class="muted">我发布的和我承接的任务会在这里分别展示。</text>
+<page-state state="login" description="登录与任务列表尚未接入，当前没有真实任务记录。" bind:action="openLogin" />
+<view class="actions"><button bindtap="go" data-page="hall">去任务大厅</button><button wx:if="{{isMock}}" bindtap="go" data-page="detail" data-task-id="demo-001">查看样例详情</button></view>
+</view>

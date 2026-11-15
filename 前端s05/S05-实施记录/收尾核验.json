@@ -1,0 +1,19 @@
+{
+  "sourceMatchesSnapshotFiles": 75,
+  "backupHashCheck": "passed",
+  "projectConfigurations": "unchanged from before-S05",
+  "workbookSheets": 7,
+  "nativeFiltersRestored": [
+    "xl/worksheets/sheet2.xml",
+    "xl/worksheets/sheet3.xml",
+    "xl/worksheets/sheet4.xml",
+    "xl/worksheets/sheet5.xml",
+    "xl/worksheets/sheet6.xml",
+    "xl/worksheets/sheet7.xml"
+  ],
+  "freezeValidationMerge": "preserved",
+  "unrelatedPopulatedCellsAndFormulas": "unchanged",
+  "acceptedTasks": 5,
+  "S05": "controlled request and service boundary accepted",
+  "next": "S06 not started"
+}

@@ -1,0 +1,8 @@
+@import "../../styles/tokens.wxss";
+:host { display: inline-block; max-width: 100%; }
+.tags { display: flex; flex-wrap: wrap; gap: 12rpx; }
+.tag { display: inline-block; box-sizing: border-box; padding: 4rpx 14rpx; border: 1rpx solid var(--color-border); border-radius: 6rpx; color: var(--color-muted); background: var(--color-surface); font-size: var(--text-small); line-height: 1.6; overflow-wrap: anywhere; }
+.tag--available, .tag--complete { color: var(--color-primary); background: #edf4ed; border-color: #aac8b8; }
+.tag--active { color: #24536a; background: #edf3f7; border-color: #b7cbd5; }
+.tag--warning { color: var(--color-warning); background: #fff8e8; border-color: #e0c8a1; }
+.tag--closed { color: var(--color-danger); background: #fcf0ef; border-color: #dfb9b7; }

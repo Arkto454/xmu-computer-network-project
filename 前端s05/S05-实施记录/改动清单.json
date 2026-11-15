@@ -1,0 +1,13 @@
+{
+  "source": "C:\\Users\\23997\\Documents\\Code\\campus-errand\\miniprogram",
+  "deliverySnapshot": "C:\\Users\\23997\\Documents\\Codex\\2026-10-23\\zhe\\outputs\\S05-请求与服务\\miniprogram",
+  "filesWritten": [
+    "services/errors.js",
+    "services/index.js",
+    "services/mock.js",
+    "services/real.js",
+    "services/request.js"
+  ],
+  "deleted": [],
+  "configurations": "原值保留"
+}
