@@ -1,0 +1,6 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">登录，开始校园互助</text><text>登录后可以发布任务、承接他人的任务和查看自己的记录。</text>
+<view class="section"><text class="section-title">登录功能尚未接入</text><text>当前只检查页面入口与返回，不会调用微信登录或选择账号冒充真实身份。</text></view>
+<view class="actions"><button disabled>微信登录待接入</button><button bindtap="back">返回上一页</button></view>
+</view>

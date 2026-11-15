@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "任务大厅",
+  "usingComponents": {
+    "task-card": "/components/task-card/index",
+    "status-tag": "/components/status-tag/index",
+    "page-state": "/components/page-state/index"
+  }
+}
