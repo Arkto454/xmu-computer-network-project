@@ -1,0 +1,6 @@
+<view class="state-panel state-panel--{{tone}}" role="{{tone === 'error' ? 'alert' : 'status'}}" aria-live="polite" aria-busy="{{pending || busy}}">
+  <text class="marker" aria-hidden="true">{{view.marker}}</text>
+  <text class="state-title">{{title || view.title}}</text>
+  <text class="state-description">{{description || view.description}}</text>
+  <button wx:if="{{!pending && (actionText || view.action)}}" class="state-action {{busy ? 'state-action--busy' : ''}}" disabled="{{busy}}" loading="{{busy}}" bindtap="act">{{actionText || view.action}}</button>
+</view>

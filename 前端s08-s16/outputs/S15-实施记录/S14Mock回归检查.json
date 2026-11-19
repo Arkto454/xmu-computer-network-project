@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-17",
+  "stage": "S14_mock_regression_for_S15",
+  "cases": [
+    {
+      "name": "Mock未登录不查询资料；应用启动无模板网络/登录/存储副作用",
+      "status": "passed"
+    },
+    {
+      "name": "昵称读取中防重复；失败可原地重试且不退出账号，成功清理错误",
+      "status": "passed"
+    },
+    {
+      "name": "隐藏后旧昵称不更新，返回重读；卸载后无更新或新请求",
+      "status": "passed"
+    },
+    {
+      "name": "跨账号同步清空昵称和加载状态，A迟到结果不能覆盖B",
+      "status": "passed"
+    },
+    {
+      "name": "我的页普通入口与标签路由正确；收益页面仅未接入，无查询或虚假汇总",
+      "status": "passed"
+    },
+    {
+      "name": "退出确认防连点与取消保留；隐藏/换账号的迟到确认不登出新账号",
+      "status": "passed"
+    },
+    {
+      "name": "G1从干净Mock：A登录无资料发布一次，到详情/大厅/我的发布；B登录浏览同编号且无私密，关系不串",
+      "status": "passed"
+    }
+  ],
+  "jsFiles": 40,
+  "jsonFiles": 18,
+  "wxmlFiles": 15,
+  "wxssFiles": 16,
+  "realBackendConnected": false,
+  "templateLogsRegistered": false
+}

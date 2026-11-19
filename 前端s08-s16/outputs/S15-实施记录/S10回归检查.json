@@ -1,0 +1,45 @@
+{
+  "date": "2026-11-17",
+  "stage": "S10",
+  "cases": [
+    {
+      "name": "8状态×3关系及未登录：独立按钮矩阵、服务权限缺失与未知状态收敛",
+      "status": "passed"
+    },
+    {
+      "name": "15任务×A/B/C/未登录：响应本身过滤隐私，含发布者待接单私密快照",
+      "status": "passed"
+    },
+    {
+      "name": "缺失/非法taskId不发请求；真实模式不调用Mock或网络",
+      "status": "passed"
+    },
+    {
+      "name": "所有大厅任务能读取详情，页面不保留原始私密字段",
+      "status": "passed"
+    },
+    {
+      "name": "A私密响应迟到不能覆盖B；切换身份同步清空旧内容",
+      "status": "passed"
+    },
+    {
+      "name": "切任务与卸载后迟到响应不回写，失败移除旧操作和隐私",
+      "status": "passed"
+    },
+    {
+      "name": "错误可重试，不存在明确不可访问；重新进入页面刷新详情",
+      "status": "passed"
+    },
+    {
+      "name": "已取件超时保留进度与交付动作；完成、关闭和未知状态只读",
+      "status": "passed"
+    },
+    {
+      "name": "操作只预览且拒绝伪造动作，状态未变；新状态记录来自Mock操作",
+      "status": "passed"
+    }
+  ],
+  "jsFiles": 40,
+  "jsonFiles": 18,
+  "realBackendConnected": false
+}

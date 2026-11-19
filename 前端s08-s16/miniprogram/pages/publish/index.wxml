@@ -1,0 +1,43 @@
+<import src="../../templates/mode.wxml" />
+<view class="page page--publish"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">发布一个任务</text>
+<view class="note">{{isMock ? '奖励与任务均为模拟，请使用虚构交接信息。输入仅在当前页保留。' : '填写本次任务信息。发布后将写入项目后端，请确认内容再提交。'}}</view>
+<view wx:if="{{isMock && !createdTaskId}}" class="preview-panel">
+  <button class="preview-toggle" bindtap="togglePreview">{{showPreview ? '收起演示检查' : '演示检查：账号与虚构样例'}}</button>
+  <view wx:if="{{showPreview}}" class="preview-content">
+    <text class="hint">仅切换虚构身份。请在填写前选账号；有输入后不切换身份。</text>
+    <view class="account-options"><button wx:for="{{mockAccounts}}" wx:key="id" class="{{session.userId === item.id || (!session.authenticated && !item.id) ? 'primary' : ''}}" data-user-id="{{item.id}}" bindtap="switchMockAccount" disabled="{{dirty || isSubmitting || resultUnknown}}">{{item.label}}</button></view>
+    <button bindtap="fillSample" disabled="{{dirty || isSubmitting || resultUnknown}}">填入虚构样例</button>
+    <picker range="{{mockScenarios}}" range-key="label" value="{{mockScenarioIndex}}" bindchange="chooseMockScenario" disabled="{{isSubmitting || resultUnknown}}"><view class="picker-value">响应场景：{{mockScenarios[mockScenarioIndex].label}}</view></picker>
+    <text class="hint">演示约束：标题60字，地点各100字，说明各500字，微信号64字；奖励不超过9999.99元。以上仅为Mock约束。</text>
+  </view>
+</view>
+<text wx:if="{{isMock && !createdTaskId}}" class="hint">{{session.authenticated ? '当前演示身份：' + session.userId : '当前未登录，请先登录。登录后需重新填写任务信息。'}}无需先编辑个人资料。</text>
+<view wx:if="{{!session.authenticated && !createdTaskId}}" class="actions"><button class="primary" bindtap="go" data-page="login">登录后继续填写</button></view>
+<view wx:if="{{guardNotice}}" class="feedback">{{guardNotice}}</view>
+<view wx:if="{{createdTaskId}}" class="section receipt">
+  <text class="section-title">{{isMock ? '模拟任务已发布' : '任务已发布'}}</text><text>任务编号：{{createdTaskId}}</text><text class="hint">{{submitMessage}}</text>
+  <view class="actions"><button class="primary" bindtap="openCreatedTask">打开新任务详情</button><button wx:if="{{!isMock}}" bindtap="startAnotherTask">填写另一个新任务</button><button bindtap="back">返回上一页</button></view>
+</view>
+<block wx:else>
+<view class="section"><text class="section-title">公开任务信息</text><text class="small muted">地点写校区或公共区域。手机号、取件码和详细房间请放在下方交接信息里。</text>
+<view class="field" id="field-title"><text class="field-label">标题（必填）</text><input class="input {{errors.title ? 'invalid' : ''}}" value="{{form.title}}" data-field="title" bindinput="onInput" bindblur="validateField" placeholder="例如：帮取校园快递站包裹" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" /><text wx:if="{{errors.title}}" class="field-error">{{errors.title}}</text></view>
+<view class="field" id="field-typeCode"><text class="field-label">类型（必填）</text><picker range="{{typeOptions}}" range-key="label" value="{{typeIndex}}" bindchange="chooseType" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}"><view class="picker-value {{errors.typeCode ? 'invalid' : ''}}">{{typeLabel || '请选择任务类型'}}</view></picker><text wx:if="{{errors.typeCode}}" class="field-error">{{errors.typeCode}}</text></view>
+<view class="field" id="field-pickupLocation"><text class="field-label">取件地点（必填）</text><input class="input {{errors.pickupLocation ? 'invalid' : ''}}" value="{{form.pickupLocation}}" data-field="pickupLocation" bindinput="onInput" bindblur="validateField" placeholder="如北门快递站" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" /><text wx:if="{{errors.pickupLocation}}" class="field-error">{{errors.pickupLocation}}</text></view>
+<view class="field" id="field-deliveryLocation"><text class="field-label">送达地点（必填）</text><input class="input {{errors.deliveryLocation ? 'invalid' : ''}}" value="{{form.deliveryLocation}}" data-field="deliveryLocation" bindinput="onInput" bindblur="validateField" placeholder="如第二教学楼门口" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" /><text wx:if="{{errors.deliveryLocation}}" class="field-error">{{errors.deliveryLocation}}</text></view>
+<view class="field" id="field-deadlineDate"><text class="field-label">最晚送达时间（必填）</text><view class="deadline-options">
+<picker mode="date" value="{{form.deadlineDate}}" data-field="deadlineDate" bindchange="chooseDeadline" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}"><view class="picker-value {{errors.deadlineDate ? 'invalid' : ''}}">{{form.deadlineDate || '选择日期'}}</view></picker>
+<picker mode="time" value="{{form.deadlineTime}}" data-field="deadlineTime" bindchange="chooseDeadline" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}"><view class="picker-value {{errors.deadlineDate ? 'invalid' : ''}}">{{form.deadlineTime || '选择时间'}}</view></picker>
+</view><text class="hint">按设备当前时间选择，需晚于现在。</text><text wx:if="{{errors.deadlineDate}}" class="field-error">{{errors.deadlineDate}}</text></view>
+<view class="field" id="field-reward"><text class="field-label">{{isMock ? '模拟奖励（必填，元）' : '任务奖励（必填，元）'}}</text><input class="input {{errors.reward ? 'invalid' : ''}}" value="{{form.reward}}" data-field="reward" bindinput="onInput" bindblur="validateField" placeholder="大于0，最多两位小数" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" type="digit" /><text wx:if="{{errors.reward}}" class="field-error">{{errors.reward}}</text></view>
+<view class="field" id="field-description"><text class="field-label">普通任务说明（选填，公开）</text><textarea class="textarea {{errors.description ? 'invalid' : ''}}" value="{{form.description}}" data-field="description" bindinput="onInput" bindblur="validateField" placeholder="说明物品和工作量，勿填私密信息" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" auto-height cursor-spacing="24" /><text wx:if="{{errors.description}}" class="field-error">{{errors.description}}</text></view>
+</view>
+<view class="section section--private"><text class="section-title">本次任务交接信息</text><text class="small muted">{{isMock ? '仅自己和成功接单者可见，随本次任务保存。任务结束后默认隐藏完整联系方式。' : '当前仅发布者可查看，随本次任务保存。接单尚未开放，任务结束后隐藏交接信息。'}}</text>
+<view class="field" id="field-phone"><text class="field-label">本次手机号（必填，非公开）</text><input class="input {{errors.phone ? 'invalid' : ''}}" value="{{form.phone}}" data-field="phone" bindinput="onInput" bindblur="validateField" placeholder="{{isMock ? '演示可填000-TEST-A' : '本次任务手机号'}}" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" /><text class="hint">仅检查基本格式，不是短信或本人认证。</text><text wx:if="{{errors.phone}}" class="field-error">{{errors.phone}}</text></view>
+<view class="field" id="field-wechatId"><text class="field-label">本次微信号（选填，非公开）</text><input class="input {{errors.wechatId ? 'invalid' : ''}}" value="{{form.wechatId}}" data-field="wechatId" bindinput="onInput" bindblur="validateField" placeholder="补充交接方式" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" /><text wx:if="{{errors.wechatId}}" class="field-error">{{errors.wechatId}}</text></view>
+<view class="field" id="field-privateNote"><text class="field-label">私密交接说明（选填）</text><textarea class="textarea {{errors.privateNote ? 'invalid' : ''}}" value="{{form.privateNote}}" data-field="privateNote" bindinput="onInput" bindblur="validateField" placeholder="取件码、详细房间或特殊交接要求" maxlength="-1" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}" auto-height cursor-spacing="24" /><text wx:if="{{errors.privateNote}}" class="field-error">{{errors.privateNote}}</text></view>
+</view>
+<text class="hint">{{isMock ? '发布后不直接修改。草稿不持久保存，请勿填写真实隐私信息；滑动返回或关闭程序可能无法提醒。' : '发布后不直接修改。草稿与发布回执仅在本次运行中保留。若结果待确认，请勿重复发布；重启程序不能确认前次结果。'}}</text>
+<view wx:if="{{submitMessage}}" class="feedback">{{submitMessage}}</view>
+<view class="actions"><button class="primary" bindtap="submit" loading="{{isSubmitting}}" disabled="{{isSubmitting || resultUnknown || !session.authenticated}}">{{isSubmitting ? '正在发布' : resultUnknown ? '结果待确认，请勿重复发布' : (isMock ? '发布模拟任务' : '确认发布任务')}}</button><button bindtap="back" disabled="{{isSubmitting}}">{{dirty ? '放弃填写并返回' : '返回上一页'}}</button></view>
+</block></view>

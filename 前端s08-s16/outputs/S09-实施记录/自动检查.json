@@ -1,0 +1,61 @@
+{
+  "stage": "S09",
+  "status": "passed_mock_scope",
+  "date": "2026-11-17",
+  "scope": "Mock task hall, static compilation, and controlled behavior checks",
+  "checks": [
+    {
+      "name": "JavaScript syntax",
+      "status": "passed",
+      "count": 34
+    },
+    {
+      "name": "JSON parse",
+      "status": "passed",
+      "count": 18
+    },
+    {
+      "name": "WXML compile",
+      "status": "passed",
+      "count": 15,
+      "date": "2026-11-17"
+    },
+    {
+      "name": "WXSS compile with shared tokens",
+      "status": "passed",
+      "count": 16
+    },
+    {
+      "name": "Mock and page behavior",
+      "status": "passed",
+      "count": 6,
+      "details": [
+        "Seven available tasks paginate across two pages without duplicate IDs",
+        "Public task summaries exclude private contact fields",
+        "Oldest and newest sorting are inverse orders",
+        "Type filtering works and rejects a cursor bound to another filter",
+        "Page loads, appends, and resets on filter change",
+        "Native task card forwards taskId to detail navigation"
+      ]
+    },
+    {
+      "name": "WeChat DevTools runtime after require-path fix",
+      "status": "passed",
+      "details": "Hall startup, type filter, inverse sorting, refresh, two-page list, demo-001 detail route and back observed. Pull-down gesture returned to normal; callback checked separately. Tool/base-library errors recorded, not claimed zero-error."
+    },
+    {
+      "name": "Additional actual-page controlled behavior checks",
+      "count": 8,
+      "status": "passed",
+      "evidence": "补充行为检查.json"
+    }
+  ],
+  "realBackendConnected": false,
+  "notes": [
+    "No real endpoint, response code, or backend behavior was invented.",
+    "Repeated SdkReport network failures are DevTools telemetry, not business requests.",
+    "The more-error footer now excludes the end-of-list message.",
+    "DevTools logged subPageFrameEndTime null, SharedArrayBuffer deprecation and reportRealtimeAction unsupported. No source stack was established; tested UI remained functional.",
+    "Detail business state is still S10 work. Only demo-001 scaffold navigation was accepted in S09."
+  ]
+}

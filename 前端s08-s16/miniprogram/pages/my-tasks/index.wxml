@@ -1,0 +1,34 @@
+<import src="../../templates/mode.wxml" />
+<view class="page">
+  <template is="mode" data="{{modeLabel: modeLabel}}" />
+  <text class="title">我的任务</text>
+  <text class="muted small">查看自己的任务，继续约定好的交接。</text>
+  <view class="relationship-tabs" aria-label="任务关系">
+    <button class="relation {{relationship === 'published' ? 'selected' : ''}}" aria-pressed="{{relationship === 'published'}}" data-relationship="published" bindtap="chooseRelationship">我发布的</button>
+    <button class="relation {{relationship === 'accepted' ? 'selected' : ''}}" aria-pressed="{{relationship === 'accepted'}}" data-relationship="accepted" bindtap="chooseRelationship">我承接的</button>
+  </view>
+  <view wx:if="{{isMock && session.authenticated}}" class="list-controls">
+    <picker class="status-picker" range="{{statusOptions}}" range-key="label" value="{{statusIndex}}" bindchange="chooseStatus" aria-label="按任务状态筛选"><view class="status-value">{{statusLabel}} ▾</view></picker>
+    <button class="refresh" disabled="{{view.loading}}" bindtap="refreshList">{{view.loading ? '正在刷新' : '刷新'}}</button>
+  </view>
+  <text wx:if="{{view.loading && view.items.length}}" class="hint" role="status">正在更新当前列表…</text>
+  <page-state wx:if="{{view.pageState}}" state="{{view.pageState}}"
+    description="{{view.pageState === 'empty' ? (relationship === 'published' ? '这个状态下还没有你发布的任务。' : '这个状态下还没有你承接的任务。') : (view.pageState === 'unavailable' ? '真实任务接口尚未接入，暂时无法查询。' : '')}}"
+    action-text="{{view.pageState === 'empty' ? (relationship === 'published' ? '去发布任务' : '去任务大厅') : ''}}" bind:action="handleStateAction" />
+  <page-state wx:if="{{view.refreshError}}" state="error" title="刷新失败" description="已保留上次列表和筛选，内容可能已变化。请重试刷新后继续翻页。" action-text="重试刷新" bind:action="refreshList" />
+  <view wx:if="{{view.items.length}}" class="task-list">
+    <task-card wx:for="{{view.items}}" wx:key="id" task="{{item}}" bind:open="openTask" />
+    <page-state wx:if="{{view.moreError}}" state="error" title="这一页未加载成功" description="前面的任务已保留。可以重试，若列表已变化请刷新。" action-text="重试加载更多" bind:action="loadMore" />
+    <button wx:if="{{view.hasMore && !view.moreError && !view.refreshError}}" class="more" loading="{{view.loadingMore}}" disabled="{{view.loading || view.loadingMore}}" bindtap="loadMore">{{view.loadingMore ? '正在加载' : '加载更多'}}</button>
+    <text wx:if="{{!view.hasMore && !view.loading && !view.moreError && !view.refreshError}}" class="end-note">已显示全部符合条件的任务</text>
+  </view>
+  <view wx:if="{{isMock}}" class="preview">
+    <button class="preview-toggle" bindtap="togglePreview">{{showPreview ? '收起演示检查' : '演示检查：切换账号与响应'}}</button>
+    <view wx:if="{{showPreview}}" class="preview-panel">
+      <text class="hint">仅使用虚构账号。切换账号会清除两个视图的列表与筛选。</text>
+      <view class="account-grid"><button wx:for="{{mockAccounts}}" wx:key="id" class="account {{mockAccount === item.id ? 'account-selected' : ''}}" data-user-id="{{item.id}}" bindtap="switchMockAccount">{{item.label}}</button></view>
+      <picker range="{{mockScenarios}}" range-key="label" value="{{mockScenarioIndex}}" bindchange="chooseMockScenario"><view class="status-value">响应场景：{{mockScenarios[mockScenarioIndex].label}}</view></picker>
+    </view>
+    <text class="hint">以上为演示数据。联系方式仅在有权限的任务详情中展示。</text>
+  </view>
+</view>

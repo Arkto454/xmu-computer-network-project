@@ -1,0 +1,17 @@
+/* S02校园指示牌配色。组件单独引入，避免依赖页面样式穿透。 */
+.page, .fixed-actions, :host {
+  --color-primary: #17634f;
+  --color-text: #17332d;
+  --color-muted: #576c63;
+  --color-background: #f4f5ef;
+  --color-surface: #ffffff;
+  --color-border: #d8dfd8;
+  --color-warning: #8a4a17;
+  --color-danger: #a63732;
+  --text-title: 40rpx;
+  --text-body: 32rpx;
+  --text-small: 28rpx;
+  --space-small: 16rpx;
+  --space-medium: 24rpx;
+  --space-large: 32rpx;
+}

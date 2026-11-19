@@ -1,0 +1,12 @@
+[
+  {
+    "compiler": "wcc.exe",
+    "files": 15,
+    "result": "passed"
+  },
+  {
+    "compiler": "wcsc.exe",
+    "files": 16,
+    "result": "passed"
+  }
+]

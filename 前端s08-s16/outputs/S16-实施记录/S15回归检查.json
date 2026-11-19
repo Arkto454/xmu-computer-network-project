@@ -1,0 +1,62 @@
+{
+  "date": "2026-11-17",
+  "stage": "S15",
+  "cases": [
+    {
+      "name": "模块/应用启动与未登录我的页不调用微信、网络或存储；Mock不触达真实服务",
+      "status": "passed"
+    },
+    {
+      "name": "真实登录一次获取code/一次POST；防连点，无Bearer、自称学生ID或Mock回退；token不进入页面",
+      "status": "passed"
+    },
+    {
+      "name": "微信失败/空code不发送网络；重试重新获取code；页面取消前置/在途结果均不提交会话",
+      "status": "passed"
+    },
+    {
+      "name": "401微信失效、403禁用与503未配置/不可用各有提示；失败不自动重发、不设会话",
+      "status": "passed"
+    },
+    {
+      "name": "登录超时不自动重发，用户重试会重新获取微信code",
+      "status": "passed"
+    },
+    {
+      "name": "拒绝非OK/畸形响应、不安全或字符串ID、错误token类型与过期凭据",
+      "status": "passed"
+    },
+    {
+      "name": "me只发送当前真实Bearer，数值ID安全转字符串，昵称为空有效，不臆造enabled/手机号",
+      "status": "passed"
+    },
+    {
+      "name": "me网络失败保留身份但不宣称可用；重试可恢复，当前401清空账号",
+      "status": "passed"
+    },
+    {
+      "name": "A迟到200/401均不覆盖或退出B，me身份不一致清空当前会话",
+      "status": "passed"
+    },
+    {
+      "name": "me隐藏/卸载丢弃旧结果；真实退出仅本地清理，不调用不存在的退出或刷新接口",
+      "status": "passed"
+    },
+    {
+      "name": "真实有效期在前台读取/请求前失效，清理仅一次，旧会话不能读取token",
+      "status": "passed"
+    },
+    {
+      "name": "登录返回失败可重试返回，无需重登；真实资料编辑仍只读且无网络写操作",
+      "status": "passed"
+    },
+    {
+      "name": "五类真实编码显式映射；Mock编码保持独立，真实服务拒绝Mock会话",
+      "status": "passed"
+    }
+  ],
+  "jsFiles": 41,
+  "jsonFiles": 18,
+  "controlled": true,
+  "realWeChatTested": false
+}

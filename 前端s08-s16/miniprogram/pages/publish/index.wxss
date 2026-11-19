@@ -1,0 +1,14 @@
+.page--publish { padding-bottom: calc(64rpx + env(safe-area-inset-bottom)); }
+.section--private { border-top: 5rpx solid #17634f; }
+.field-error { display: block; margin-top: 10rpx; color: #a32d2d; font-size: 28rpx; }
+.invalid { border-color: #a32d2d; }
+.deadline-options { display: flex; flex-wrap: wrap; gap: 16rpx; }
+.deadline-options picker { flex: 1; min-width: 220rpx; }
+.feedback { margin-top: 24rpx; padding: 24rpx; border-left: 4rpx solid #a56721; background: #fff8e8; font-size: 28rpx; }
+.preview-panel { margin-top: 24rpx; }
+.preview-toggle { font-size: 26rpx; min-height: 64rpx; padding: 12rpx; }
+.preview-content { padding: 20rpx; border: 1rpx dashed #b9c6bc; }
+.preview-content > button, .preview-content picker { margin-top: 16rpx; }
+.account-options { display: flex; flex-wrap: wrap; gap: 12rpx; margin-top: 16rpx; }
+.account-options button { width: calc(50% - 6rpx); min-height: 72rpx; font-size: 26rpx; padding: 16rpx 8rpx; }
+.receipt > text { display: block; }

@@ -1,0 +1,20 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">个人资料</text><view class="note">资料选填，无需完善即可发布或接单。每次任务的交接方式仍需单独填写确认。</view>
+<view wx:if="{{!isMock}}" class="section"><text>真实资料接口待接入。</text></view>
+<view wx:elif="{{!session.authenticated}}" class="section"><text class="section-title">尚未登录</text><text>登录后可编辑自己的模拟资料。</text><view class="actions"><button class="primary" bindtap="goLogin">去登录</button></view></view>
+<view wx:elif="{{loading}}" class="section"><text>正在读取资料…</text></view>
+<view wx:elif="{{loadError}}" class="section"><text>资料读取失败。</text><button class="space" bindtap="loadProfile">重试读取</button></view>
+<view wx:elif="{{loaded}}" class="section">
+  <text class="section-title">{{session.userId === 'mock-a' ? '模拟同学 A' : session.userId === 'mock-b' ? '模拟同学 B' : '模拟同学 C'}}的可选资料</text>
+  <view class="field" id="field-nickname"><label class="field-label" for="nickname">昵称（选填）</label><input id="nickname" class="input" maxlength="-1" value="{{form.nickname}}" disabled="{{saving}}" data-field="nickname" bindinput="onInput" placeholder="输入你希望显示的昵称"/><text wx:if="{{errors.nickname}}" class="error">{{errors.nickname}}</text></view>
+  <view class="field" id="field-phone"><label class="field-label" for="phone">常用手机号（选填）</label><input id="phone" class="input" maxlength="-1" value="{{form.phone}}" disabled="{{saving}}" data-field="phone" bindinput="onInput" placeholder="演示请使用000-TEST-A"/><text wx:if="{{errors.phone}}" class="error">{{errors.phone}}</text></view>
+  <view class="field" id="field-wechatId"><label class="field-label" for="wechatId">微信号（选填）</label><input id="wechatId" class="input" maxlength="-1" value="{{form.wechatId}}" disabled="{{saving}}" data-field="wechatId" bindinput="onInput" placeholder="可留空"/><text wx:if="{{errors.wechatId}}" class="error">{{errors.wechatId}}</text></view>
+  <text class="hint space">未进行手机号归属认证。此处修改不会回写已有任务，也不会自动填入发布或接单表单。</text>
+  <view class="actions"><button class="primary" disabled="{{saving || !dirty}}" loading="{{saving}}" bindtap="save">{{saving ? '正在保存' : '保存模拟资料'}}</button></view>
+</view>
+<text wx:if="{{message}}" class="feedback" role="alert">{{message}}</text><text wx:if="{{guardNotice}}" class="hint">{{guardNotice}}</text>
+<text class="hint space">未保存的输入仅保留在当前页面；离开后不恢复。系统提醒不覆盖滑动返回和强制退出。</text>
+<view class="actions"><button disabled="{{saving}}" bindtap="back">{{dirty ? '放弃填写并返回' : '返回上一页'}}</button></view>
+<view wx:if="{{isMock && session.authenticated}}" class="section demo"><text class="field-label">演示检查（仅本地）</text><picker range="{{scenarios}}" range-key="label" value="{{scenarioIndex}}" disabled="{{saving || loading}}" bindchange="chooseScenario"><view class="picker-value">{{scenarios[scenarioIndex].label}}　⌄</view></picker><button class="space" disabled="{{saving || loading || dirty || !loaded}}" bindtap="fillExample">填入虚构样例</button><text class="hint">保存的模拟资料在重新编译后会清空，不会写入设备存储。</text></view>
+</view>

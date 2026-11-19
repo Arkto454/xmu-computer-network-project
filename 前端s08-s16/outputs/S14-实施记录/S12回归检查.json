@@ -1,0 +1,57 @@
+{
+  "date": "2026-11-17",
+  "stage": "S12",
+  "cases": [
+    {
+      "name": "实际Mock按A/B/C关系与8状态分页，列表响应无交接字段、详情兼容",
+      "status": "passed"
+    },
+    {
+      "name": "游标绑定账号/关系/状态/结果，非法筛选与任务变化拒绝旧翻页",
+      "status": "passed"
+    },
+    {
+      "name": "未登录与real不请求；初次onShow不重复，未知状态保持只读卡片",
+      "status": "passed"
+    },
+    {
+      "name": "双视图各自保留状态和已加载页，切换不串游标不重复查询",
+      "status": "passed"
+    },
+    {
+      "name": "快速关系/筛选切换，旧首屏与隐藏关系响应只写所属上下文",
+      "status": "passed"
+    },
+    {
+      "name": "刷新与旧翻页交错，连点/触底合并，错误不丢前页或误示结束",
+      "status": "passed"
+    },
+    {
+      "name": "首屏失败可重试，刷新失败保留并阻止旧游标续页，空态有关系入口",
+      "status": "passed"
+    },
+    {
+      "name": "换账号/退出同步清空双视图，A迟到不覆盖B，隐藏页切身份不请求",
+      "status": "passed"
+    },
+    {
+      "name": "返回刷新保留筛选且重建第一页，任务变化同时失效另一视图",
+      "status": "passed"
+    },
+    {
+      "name": "下拉刷新收尾归属，切关系/筛选/隐藏结束动画，卸载后无setData",
+      "status": "passed"
+    },
+    {
+      "name": "无效响应和游标不前进进入可恢复错误，正确taskId导航且无业务写入",
+      "status": "passed"
+    },
+    {
+      "name": "Mock场景切换使两视图失效，隐藏恢复正常且不清空任务库",
+      "status": "passed"
+    }
+  ],
+  "jsFiles": 39,
+  "jsonFiles": 18,
+  "realBackendConnected": false
+}

@@ -1,0 +1,35 @@
+<import src="../../templates/mode.wxml" />
+<view class="page profile-page">
+  <template is="mode" data="{{modeLabel: modeLabel}}" />
+  <view class="identity">
+    <text class="title">{{session.authenticated ? (displayName || accountLabel || '校园同学') : '你好，校园同学'}}</text>
+    <text class="muted">{{session.authenticated ? (isMock ? accountLabel + ' · 仅本地模拟身份' : '已使用微信身份登录') : (isMock ? '尚未登录，可先浏览任务。' : '尚未登录，请先使用微信登录。')}}</text>
+    <text wx:if="{{profileLoading}}" class="hint">正在读取昵称…</text>
+    <view wx:if="{{profileError}}" class="identity-error">
+      <text class="hint">{{isMock ? '昵称读取失败，当前模拟登录仍然有效。' : '资料读取失败，尚未确认当前账号可用，请重试。'}}</text>
+      <button class="retry-name" bindtap="reloadIdentity" disabled="{{profileLoading}}">重试读取昵称</button>
+    </view>
+    <button wx:if="{{!session.authenticated}}" class="primary login-action" bindtap="go" data-page="login">去登录</button>
+  </view>
+  <view class="account-state">
+    <text class="state-label">账号状态</text>
+    <text class="state-value">{{isMock ? (session.authenticated ? '模拟身份已登录' : '未登录') : (!session.authenticated ? '未登录或登录已失效' : profileVerified ? '资料查询通过' : '等待确认')}}</text>
+    <text class="hint">{{isMock ? (session.authenticated ? '仅本次运行有效，重新编译后需重新登录。' : '浏览大厅无需登录，发布时再登录即可。') : '登录仅保留在本次运行中；过期或服务重启后需要重新登录。'}}</text>
+  </view>
+  <view class="profile-menu">
+    <button class="profile-link" bindtap="go" data-page="profileEdit">
+      <view class="link-copy"><text class="link-title">个人资料</text><text class="link-description">{{isMock ? '昵称与常用联系方式，可选填写' : '资料修改待开放'}}</text></view><text class="link-chevron">›</text>
+    </button>
+    <button class="profile-link" bindtap="go" data-page="myTasks">
+      <view class="link-copy"><text class="link-title">我的任务</text><text class="link-description">查看我发布的与我承接的任务</text></view><text class="link-chevron">›</text>
+    </button>
+    <button class="profile-link" bindtap="go" data-page="earnings">
+      <view class="link-copy"><text class="link-title">{{isMock ? '模拟收益' : '收益'}}</text><text class="link-description">开发中，暂不提供汇总和明细</text></view><text class="link-chevron">›</text>
+    </button>
+  </view>
+  <view class="contact-note">
+    <text class="section-title">本次任务的联系方式</text>
+    <text>发布或接单时填写并确认，无需先完善个人资料。修改资料不会改变已有任务信息。</text>
+  </view>
+  <view class="actions" wx:if="{{session.authenticated}}"><button bindtap="logout">{{isMock ? '退出模拟登录' : '退出当前登录'}}</button></view>
+</view>

@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-17",
+  "scope": "S09 actual page handlers with controlled promises and wx stubs; no real network",
+  "cases": [
+    {
+      "name": "旧筛选首屏迟到不能覆盖新筛选",
+      "status": "passed"
+    },
+    {
+      "name": "旧翻页晚于刷新返回时不追加",
+      "status": "passed"
+    },
+    {
+      "name": "翻页失败保留列表与游标，重试同一页且按ID去重",
+      "status": "passed"
+    },
+    {
+      "name": "刷新失败保留旧列表和筛选，重试后恢复",
+      "status": "passed"
+    },
+    {
+      "name": "首屏错误可重试为空态，不残留旧卡片",
+      "status": "passed"
+    },
+    {
+      "name": "加载更多连点只发送一次，卸载后响应不回写",
+      "status": "passed"
+    },
+    {
+      "name": "下拉刷新完成时关闭原生刷新提示",
+      "status": "passed"
+    },
+    {
+      "name": "卡片点击将taskId带入详情路由",
+      "status": "passed"
+    }
+  ]
+}

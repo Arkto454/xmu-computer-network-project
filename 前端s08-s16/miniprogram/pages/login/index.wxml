@@ -1,0 +1,15 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">登录，开始校园互助</text><text class="muted">登录后返回{{returnTargetLabel}}，由你继续操作。</text>
+<view class="section" wx:if="{{isMock}}">
+  <text class="section-title">模拟账号登录</text><text class="hint">仅用于本地演示，不代表微信身份。无需头像授权，也无需先完善资料。</text>
+  <view wx:if="{{!session.authenticated}}" class="field"><text class="field-label">选择模拟账号</text><picker range="{{accounts}}" range-key="label" value="{{accountIndex}}" disabled="{{busy || navigating}}" bindchange="chooseAccount"><view class="picker-value">{{accounts[accountIndex].label}}　⌄</view></picker></view>
+  <text wx:else class="hint">当前已有模拟登录身份，可以直接返回。</text>
+  <view class="actions"><button class="primary" disabled="{{busy || navigating}}" loading="{{busy || navigating}}" bindtap="login">{{navigating ? '正在返回' : busy ? '正在模拟登录' : session.authenticated ? '返回' + returnTargetLabel : '使用模拟账号登录'}}</button></view>
+</view>
+<view wx:else class="section"><text class="section-title">微信登录</text><text class="hint">使用当前微信身份登录，无需头像或手机号授权。个人资料可稍后填写。</text><view class="actions"><button class="primary" disabled="{{busy || navigating}}" loading="{{busy || navigating}}" bindtap="login">{{navigating ? '正在返回' : busy ? '正在登录' : session.authenticated ? '返回' + returnTargetLabel : '微信登录'}}</button></view></view>
+<text wx:if="{{message}}" class="feedback" role="alert">{{message}}</text>
+<text class="hint space">登录成功仅返回页面，不会自动发布、接单或提交其他操作。</text>
+<view class="actions"><button disabled="{{navigating}}" bindtap="back">{{busy ? '取消本次登录并返回' : '返回上一页'}}</button></view>
+<view class="section demo" wx:if="{{isMock && !session.authenticated}}"><text class="field-label">演示响应</text><picker range="{{scenarios}}" range-key="label" value="{{scenarioIndex}}" disabled="{{busy || navigating}}" bindchange="chooseScenario"><view class="picker-value">{{scenarios[scenarioIndex].label}}　⌄</view></picker></view>
+</view>

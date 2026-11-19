@@ -1,0 +1,2 @@
+.feedback { display: block; padding: 24rpx; margin-top: 24rpx; border-left: 5rpx solid #9a561c; background: #fff8e8; font-size: 28rpx; }
+.demo { margin-top: 48rpx; background: transparent; }

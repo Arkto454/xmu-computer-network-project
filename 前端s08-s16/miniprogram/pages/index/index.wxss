@@ -1,0 +1,26 @@
+.intro { margin-bottom: 8rpx; }
+.list-heading { display: flex; align-items: center; justify-content: space-between; gap: 20rpx; margin-top: 38rpx; }
+.heading-copy { min-width: 0; }
+.heading-copy .section-title { display: block; margin-bottom: 2rpx; }
+.refresh-button { flex: 0 0 auto; width: auto; min-width: 112rpx; min-height: 68rpx; padding: 12rpx 22rpx; border: 1rpx solid #b9c6bc; border-radius: 8rpx; color: #17634f; background: #fff; font-size: 28rpx; }
+.refresh-button::after { border-color: #b9c6bc; border-radius: 8rpx; }
+.filters { width: calc(100% + 64rpx); margin: 20rpx -32rpx 0; white-space: nowrap; }
+.filter-track { display: inline-flex; gap: 12rpx; padding: 0 32rpx 4rpx; }
+.filter-button { flex: 0 0 auto; width: auto; min-width: 104rpx; min-height: 68rpx; padding: 12rpx 22rpx; border: 1rpx solid #b9c6bc; border-radius: 34rpx; color: #40574e; background: #fff; font-size: 26rpx; line-height: 1.5; }
+.filter-button::after { border-color: #b9c6bc; border-radius: 34rpx; }
+.filter-button--selected { border-color: #17634f; color: #fff; background: #17634f; }
+.filter-button--selected::after { border-color: #17634f; }
+.sort-control { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12rpx; margin-top: 20rpx; padding: 18rpx 0; border-bottom: 1rpx solid #d8dfd8; }
+.sort-label { flex: 0 0 auto; }
+.sort-segment { display: inline-flex; overflow: hidden; border: 1rpx solid #b9c6bc; border-radius: 8rpx; background: #fff; }
+.sort-button { width: auto; min-width: 128rpx; min-height: 64rpx; padding: 10rpx 16rpx; border-radius: 0; color: #40574e; background: #fff; font-size: 26rpx; line-height: 1.5; }
+.sort-button::after { border: 0; border-radius: 0; }
+.sort-button + .sort-button { border-left: 1rpx solid #b9c6bc; }
+.sort-button--selected { color: #17332d; background: #eaf0e7; font-weight: 650; }
+.notice { display: block; padding-top: 14rpx; color: #576c63; font-size: 26rpx; }
+.task-list { padding-bottom: 8rpx; }
+.task--pressed { opacity: .82; }
+.more-button { margin-top: 28rpx; border: 1rpx solid #b9c6bc; border-radius: 8rpx; color: #17634f; background: #fff; }
+.more-button::after { border-color: #b9c6bc; border-radius: 8rpx; }
+.end-note { display: block; margin-top: 28rpx; color: #576c63; font-size: 26rpx; text-align: center; }
+.preview-group { margin-top: 48rpx; }

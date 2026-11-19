@@ -1,0 +1,78 @@
+{
+  "date": "2026-11-18",
+  "stage": "S16-A",
+  "cases": [
+    {
+      "name": "未登录真实大厅/详情/发布不联网；真实输入锁定，Mock模块不联网",
+      "status": "passed"
+    },
+    {
+      "name": "列表GET类型/分页参数及Bearer映射；summary白名单不携带联系方式或身份",
+      "status": "passed"
+    },
+    {
+      "name": "拒绝Mock身份/ID、未知类型、旧排序、无效游标与分页，不发送请求",
+      "status": "passed"
+    },
+    {
+      "name": "列表响应页码/总数/条数/金额/ID格式错误拒绝；未知状态及原型名称安全降级",
+      "status": "passed"
+    },
+    {
+      "name": "详情只允许后端授予的本人进行中私密字段，其他人/结束/未知状态隐藏，无虚构操作",
+      "status": "passed"
+    },
+    {
+      "name": "详情ID/ownedByMe/publisherId不一致拒绝；404后不保留旧联系方式",
+      "status": "passed"
+    },
+    {
+      "name": "大厅账号双通知仅发一次新GET；A迟到200/401不污染或退出B",
+      "status": "passed"
+    },
+    {
+      "name": "大厅筛选丢弃晚响应、刷新失败保留当前列表、401清空列表和身份",
+      "status": "passed"
+    },
+    {
+      "name": "真实大厅隐藏/卸载丢弃晚结果；详情隐藏立即清私密字段，再显示重新获取",
+      "status": "passed"
+    },
+    {
+      "name": "真实表单对齐后端长度UTF16/号码/金额/未来日期/五类型；Mock约束独立",
+      "status": "passed"
+    },
+    {
+      "name": "发布一次POST白名单、BigDecimal十进制字符串、拒绝额外身份/状态/idempotency字段",
+      "status": "passed"
+    },
+    {
+      "name": "发布服务二次校验拒绝无效草稿，不发请求、不留下提交锁",
+      "status": "passed"
+    },
+    {
+      "name": "发布页防连点；导航失败保留真实回执，重开/返回只打开原任务；明确新任务后可重新填",
+      "status": "passed"
+    },
+    {
+      "name": "超时/断网/500/408/畸形成功均为结果未知；无自动重试，重开及切回原账号阻止重发",
+      "status": "passed"
+    },
+    {
+      "name": "发布400保留输入并可重试；401清空身份和输入，不回退Mock",
+      "status": "passed"
+    },
+    {
+      "name": "账号切换后的旧发布结果不进入B页面；A回到发布页仍为未知且不可重复提交",
+      "status": "passed"
+    },
+    {
+      "name": "未实现接单/取消/我的任务等真实操作显式拒绝且不联网",
+      "status": "passed"
+    }
+  ],
+  "jsFiles": 41,
+  "jsonFiles": 18,
+  "controlled": true,
+  "realBackendTested": false
+}
