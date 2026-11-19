@@ -13,10 +13,12 @@ import static cn.campus.errand.task.TaskContracts.*;
 public class TaskService {
     private final TaskMapper mapper;
     private final Clock clock;
+    private final TaskClaimService claims;
 
-    public TaskService(TaskMapper mapper, Clock taskClock) {
+    public TaskService(TaskMapper mapper, Clock taskClock, TaskClaimService claims) {
         this.mapper = mapper;
         this.clock = taskClock;
+        this.claims = claims;
     }
 
     @Transactional
@@ -49,7 +51,7 @@ public class TaskService {
 
     @Transactional(readOnly = true)
     public Page list(int page, int size, TaskType type) {
-        if (page < 1 || size < 1 || size > 100) throw invalid("page须大于等于1，size须在1至100之间");
+        validatePage(page, size);
         LocalDateTime now = utc(clock.instant());
         long total = mapper.countAvailable(type, now);
         long offset = ((long) page - 1) * size;
@@ -58,18 +60,82 @@ public class TaskService {
         return new Page(items, total, page, size);
     }
 
+    @Transactional(readOnly = true)
+    public Page listMine(long publisherId, int page, int size, TaskStatus status) {
+        validatePage(page, size);
+        LocalDateTime now = utc(clock.instant().truncatedTo(ChronoUnit.MICROS));
+        long total = mapper.countOwned(publisherId, status, now);
+        long offset = ((long) page - 1) * size;
+        List<Summary> items = offset >= total ? List.of() : mapper.findOwned(publisherId, status, now, offset, size)
+                .stream().map(this::summary).toList();
+        return new Page(items, total, page, size);
+    }
+
+    @Transactional(noRollbackFor = {TaskExpiredException.class, AlreadyAcceptedException.class})
+    public StateResult cancel(long publisherId, long taskId) {
+        if (taskId < 1) throw invalid("任务编号必须为正数");
+        TaskRecord task = mapper.lockOwned(taskId, publisherId);
+        if (task == null) throw notFound();
+        if (task.status == TaskStatus.CANCELLED) return new StateResult(task.id, TaskStatus.CANCELLED);
+        if (task.status == TaskStatus.EXPIRED) throw new TaskExpiredException();
+        if (task.status == TaskStatus.ACCEPTED) throw new AlreadyAcceptedException();
+        if (task.status != TaskStatus.WAITING) {
+            throw new ApiException(HttpStatus.CONFLICT, "TASK_STATE_CONFLICT", "当前任务状态不允许取消");
+        }
+        // 在取得行锁后取时，不能使用等待锁之前的旧时间作取消依据。
+        LocalDateTime now = utc(clock.instant().truncatedTo(ChronoUnit.MICROS));
+        claims.confirmIfDueLocked(task, now);
+        if (task.status == TaskStatus.EXPIRED) throw new TaskExpiredException();
+        if (task.status == TaskStatus.ACCEPTED) throw new AlreadyAcceptedException();
+        requireSingleChange(mapper.cancelAvailable(taskId, publisherId, now));
+        claims.settleLocked(taskId, ClaimOutcome.TASK_CANCELLED, now);
+        return new StateResult(taskId, TaskStatus.CANCELLED);
+    }
+
+    @Transactional(readOnly = true)
+    public Page listAccepted(long studentId, int page, int size, TaskStatus status) {
+        validatePage(page, size);
+        long total = mapper.countAccepted(studentId, status);
+        long offset = ((long) page - 1) * size;
+        List<Summary> items = offset >= total ? List.of() : mapper.findAccepted(studentId, status, offset, size)
+                .stream().map(this::summary).toList();
+        return new Page(items, total, page, size);
+    }
+
+    @Transactional
+    public int expireBatch(int size) {
+        if (size < 1 || size > 200) throw new IllegalArgumentException("过期批次须在1至200之间");
+        LocalDateTime now = utc(clock.instant().truncatedTo(ChronoUnit.MICROS));
+        int changed = 0;
+        for (long taskId : mapper.findDueIds(now, size)) {
+            if (mapper.expireIfDue(taskId, now) == 1) {
+                claims.settleLocked(taskId, ClaimOutcome.TASK_EXPIRED, now);
+                changed++;
+            }
+        }
+        return changed;
+    }
+
     public Detail detail(long viewerId, long taskId) {
         if (taskId < 1) throw invalid("任务编号必须为正数");
-        TaskRecord task = mapper.findById(taskId);
+        TaskRecord task = mapper.findDetailById(taskId);
         if (task == null) throw notFound();
         TaskStatus status = effectiveStatus(task, clock.instant());
         boolean ownedByMe = task.publisherId == viewerId;
-        if (ended(status) && !ownedByMe) throw notFound();
-        PrivateInfo privateInfo = ownedByMe && !ended(status)
-                ? new PrivateInfo(task.publisherPhone, task.publisherWechat, task.privateInstructions) : null;
+        boolean acceptedByMe = task.runnerId != null && task.runnerId == viewerId;
+        boolean related = ownedByMe || acceptedByMe;
+        if (ended(status) && !related) throw notFound();
+        PrivateInfo privateInfo = related && !ended(status)
+                ? new PrivateInfo(task.publisherPhone, task.publisherWechat, task.privateInstructions,
+                                  task.runnerPhone, task.runnerWechat) : null;
+        Instant pickedUpAt = related && task.pickedUpAt != null ? instant(task.pickedUpAt) : null;
+        var cancellation = related && task.cancellationId != null
+                ? new TaskCancellationContracts.Summary(task.cancellationId, task.cancellationStatus,
+                        task.cancellationRequesterId, task.cancellationStatus == TaskCancellationContracts.Status.AWAITING_REVIEW)
+                : null;
         return new Detail(task.id, task.publisherId, task.title, task.type, task.pickupLocation,
                 task.deliveryLocation, instant(task.deadlineAt), task.rewardAmount, task.description,
-                status, instant(task.createdAt), ownedByMe, privateInfo);
+                status, instant(task.createdAt), ownedByMe, acceptedByMe, pickedUpAt, cancellation, privateInfo);
     }
 
     private Summary summary(TaskRecord task) {
@@ -86,6 +152,19 @@ public class TaskService {
     private static LocalDateTime utc(Instant instant) { return LocalDateTime.ofInstant(instant, ZoneOffset.UTC); }
     private static Instant instant(LocalDateTime time) { return time.toInstant(ZoneOffset.UTC); }
     private static String optionalText(String value) { return value == null || value.isBlank() ? null : value.trim(); }
+    private void validatePage(int page, int size) {
+        if (page < 1 || size < 1 || size > 100) throw invalid("page须大于等于1，size须在1至100之间");
+    }
+    private void requireSingleChange(int changed) {
+        if (changed != 1) throw new IllegalStateException("任务状态更新未生效");
+    }
     private ApiException invalid(String message) { return new ApiException(HttpStatus.BAD_REQUEST, "INVALID_REQUEST", message); }
     private ApiException notFound() { return new ApiException(HttpStatus.NOT_FOUND, "TASK_NOT_FOUND", "任务不存在或不可查看"); }
+
+    // 截止窗口后的取消请求可能先确定了接单结果，返回冲突时仍需提交该结果。
+    private static final class AlreadyAcceptedException extends ApiException {
+        AlreadyAcceptedException() {
+            super(HttpStatus.CONFLICT, "TASK_STATE_CONFLICT", "任务已接单，无法直接取消");
+        }
+    }
 }

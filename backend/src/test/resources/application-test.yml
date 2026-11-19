@@ -10,6 +10,11 @@ spring:
     password: ""
     driver-class-name: org.h2.Driver
 app:
+  task:
+    claim:
+      scheduling-enabled: false
+    expiration:
+      enabled: false
   admin:
     bootstrap:
       enabled: false

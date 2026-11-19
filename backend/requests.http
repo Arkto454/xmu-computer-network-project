@@ -6,6 +6,9 @@
 @studentAccessToken = REPLACE_WITH_STUDENT_ACCESS_TOKEN
 @taskId = REPLACE_WITH_CREATED_TASK_ID
 @taskDeadline = 2099-12-31T10:00:00Z
+@claimRequestId = REPLACE_WITH_UUID_FOR_THIS_ATTEMPT
+@cancellationRequestId = REPLACE_WITH_UUID_FOR_THIS_CANCELLATION
+@cancellationId = REPLACE_WITH_RETURNED_CANCELLATION_ID
 
 ### 应用与数据库健康检查
 GET {{baseUrl}}/api/health
@@ -63,3 +66,71 @@ Authorization: Bearer {{studentAccessToken}}
 ### 用发布者凭据查看完整信息；换另一学生凭据后不返回privateInfo
 GET {{baseUrl}}/api/student/tasks/{{taskId}}
 Authorization: Bearer {{studentAccessToken}}
+
+### 我发布的任务：省略status查询本人全部状态；列表不含私密字段
+GET {{baseUrl}}/api/student/tasks/mine?page=1&size=20&status=WAITING
+Authorization: Bearer {{studentAccessToken}}
+
+### 本人取消尚未接单且未过期的任务；重复请求仍返回CANCELLED
+POST {{baseUrl}}/api/student/tasks/{{taskId}}/cancel
+Authorization: Bearer {{studentAccessToken}}
+
+### 本人已取消的历史任务
+GET {{baseUrl}}/api/student/tasks/mine?page=1&size=20&status=CANCELLED
+Authorization: Bearer {{studentAccessToken}}
+
+### 使用接单学生凭据提交。202 或超时后重发同一请求，保留原编号和表单
+POST {{baseUrl}}/api/student/tasks/{{taskId}}/claim
+Authorization: Bearer {{studentAccessToken}}
+Content-Type: application/json
+
+{
+  "requestId": "{{claimRequestId}}",
+  "runnerPhone": "13900000000",
+  "runnerWechat": "demo_runner"
+}
+
+### 我接单的任务
+GET {{baseUrl}}/api/student/tasks/accepted?page=1&size=20
+Authorization: Bearer {{studentAccessToken}}
+
+### 正式接单者确认取件
+POST {{baseUrl}}/api/student/tasks/{{taskId}}/pickup
+Authorization: Bearer {{studentAccessToken}}
+
+### 发布者或接单者发起取消。重试沿用原编号
+POST {{baseUrl}}/api/student/tasks/{{taskId}}/cancellations
+Authorization: Bearer {{studentAccessToken}}
+Content-Type: application/json
+
+{
+  "requestId": "{{cancellationRequestId}}",
+  "reason": "需要协商取消"
+}
+
+### 双方查看最近一次申请
+GET {{baseUrl}}/api/student/tasks/{{taskId}}/cancellations/latest
+Authorization: Bearer {{studentAccessToken}}
+
+### 使用另一方学生凭据同意。继续任务用 DECLINE，发起人撤回用 WITHDRAW
+POST {{baseUrl}}/api/student/tasks/{{taskId}}/cancellations/{{cancellationId}}/actions
+Authorization: Bearer {{studentAccessToken}}
+Content-Type: application/json
+
+{
+  "action": "AGREE"
+}
+
+### 管理员查询待审核取消
+GET {{baseUrl}}/api/admin/task-cancellations?status=AWAITING_REVIEW&page=1&size=20
+Authorization: Bearer {{accessToken}}
+
+### 管理员确认物品去向后审核。驳回用 REJECT
+POST {{baseUrl}}/api/admin/task-cancellations/{{cancellationId}}/decision
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "decision": "APPROVE",
+  "reason": "双方已确认物品退回"
+}

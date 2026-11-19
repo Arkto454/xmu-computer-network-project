@@ -1,6 +1,6 @@
 # 校园互助跑腿后端
 
-已实现管理员登录、学生微信登录后端，以及任务发布、分页列表、详情。真实小程序联调等待 AppID、AppSecret 和有效临时 code。说明见 [学生登录](./STUDENT_LOGIN.md)与[任务基础接口](./TASK_API.md)。
+当前版本 0.6.0-SNAPSHOT，已实现身份认证、任务发布、抢单及重试、确认取件、双方取消和管理员审核。真实小程序联调等待 AppID、AppSecret 和有效临时 code。说明见 [学生登录](./STUDENT_LOGIN.md)、[任务基础接口](./TASK_API.md)、[任务管理接口](./TASK_MANAGEMENT.md)、[接单接口](./TASK_CLAIM.md)与[取件和取消接口](../后端设计计划.md#182-接口约定)。
 
 ## 1 当前实现
 
@@ -13,6 +13,9 @@
 | 学生微信登录后端 | 接收 code，由微信身份查找或创建学生并签发独立凭据；真实微信联调待配置 |
 | 当前学生查询 | 学生凭据校验和公开资料查询；隔离测试已验证 |
 | 任务基础接口 | 学生发布、分页大厅、详情与私密交接信息隔离；H2和独立MySQL测试通过 |
+| 任务管理 | 本人发布列表、状态筛选、取消及重复取消反馈；到期待接任务后台分批持久化 |
+| 抢单与重试 | 确认窗口、发布者取消优先、唯一接单归属、原编号重试、本人接单列表与双方详情权限 |
+| 取件与取消 | 接单者确认取件，双方协商取消，取件后由管理员审核并保留处理记录 |
 | 失败反馈 | 区分请求格式错误、登录失败、未认证与服务异常，不返回密码哈希 |
 
 技术版本：Spring Boot 3.5.16、MyBatis Starter 3.0.5、MySQL Connector/J、Spring Security Crypto。源码以 Java 17 为编译目标，本机使用 Java 25.0.3 验证。
@@ -34,16 +37,19 @@ src/main/java/cn/campus/errand/
     AdminBootstrap.java        首次账号初始化
   student/                     微信身份交换、学生资料与独立学生凭据
   task/
-    TaskController.java        发布、大厅与详情接口
-    TaskService.java           校验、任务保存与私密字段过滤
+    TaskController.java        发布、大厅、详情、本人列表、取消与接单
+    TaskService.java           校验、任务保存、取消事务与私密字段过滤
     TaskMapper.java            任务数据库操作
     TaskContracts.java         公开摘要、受控详情与发布表单
+    TaskExpirationScheduler.java  启动补偿与定时分批过期
+    TaskClaimService.java      登记申请、确认接单、保存与重放结果
+    TaskClaimScheduler.java    结清待确认申请与重启补偿
   config/WebConfig.java        管理员/学生接口身份拦截与密码编码器
   common/                      统一响应、异常反馈与健康检查
 src/main/resources/
   application.yml              公共配置，数据库参数可由环境变量覆盖
   schema.sql                   幂等创建管理员表，不删除已有表或数据
-  schema-mysql.sql             幂等创建学生表和任务表
+  schema-mysql.sql             幂等创建学生、任务、接单申请与归属表
 src/test/                      身份、任务和微信适配的隔离测试
 application-local.properties   本机私有配置，已被 .gitignore 排除
 ```
@@ -66,11 +72,11 @@ application-local.properties   本机私有配置，已被 .gitignore 排除
 
 编译和测试可先使用 IDEA：打开 Maven 工具窗口，确认该项目的 Maven Runner 使用 JDK25，执行 Lifecycle → verify。也可直接运行 CampusErrandApplication，运行配置的工作目录设为 backend，以读取本机配置。
 
-本轮已生成 0.3.0-SNAPSHOT 的可执行 JAR，在 PowerShell 中可直接启动：
+当前可执行 JAR 为 0.6.0-SNAPSHOT，在 PowerShell 中可直接启动。
 
 ```powershell
 Set-Location 'D:\计网项目和实验\backend'
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.3.0-SNAPSHOT.jar
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.6.0-SNAPSHOT.jar
 ```
 
 上述启动命令明确指定本机 Java 路径，无须修改 Windows 或 IDEA 终端的 Path、JAVA_HOME。队友需替换为自己机器上的 JDK 路径。
@@ -78,7 +84,7 @@ Set-Location 'D:\计网项目和实验\backend'
 默认地址为 http://localhost:8080。若端口被占用：
 
 ```powershell
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.3.0-SNAPSHOT.jar --server.port=8081
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.6.0-SNAPSHOT.jar --server.port=8081
 ```
 
 在 IDEA 中可运行单个测试类，或通过 Maven verify 运行全量测试。若要使用终端 Maven，先执行 .\mvnw.cmd -version，确认显示 Java 17 或更高版本，再运行：
@@ -150,4 +156,8 @@ HTTP 200 返回当前管理员公开资料。
 - 真实 MySQL 8.0.46 与可执行 JAR 完成 5 项 HTTP 验证：健康、正确登录、带凭据查询、不带凭据拒绝、错误密码拒绝。
 - 当前测试报告位于 target/surefire-reports，MySQL 联调结果位于 target/mysql-smoke-results.txt；target 可由 clean 清除。
 
-管理员接口已由使用者通过 PowerShell 验收。学生模块的真实微信联调边界见 STUDENT_LOGIN.md，任务模块的接口与当前验证记录见 TASK_API.md。第三部分 A 完成后共 77 个测试通过，任务模块 48 项另在独立临时 MySQL 库通过。终端环境保持用户原状，运行时明确指定 JDK。
+管理员接口已由使用者通过 PowerShell 验收，第三部分 A 的 48 项任务测试也已由用户复跑通过。当前第三部分 B 完成后全量 112 项测试通过；A/B 任务合计 83 项另在独立临时 MySQL 库通过，真实定时扫描及重启补偿也已用新 JAR 验证。B 的用户验收仍待进行，说明见 TASK_MANAGEMENT.md。学生真实微信与小程序端到端联调仍待完成。终端环境保持用户原状，运行时明确指定 JDK。
+
+2026-11-19 抢单后端完成，全量 123 项通过，独立 MySQL 中任务相关 94 项通过。0.5 JAR 已验证重启后可结清待确认申请。第四部分功能及复跑方法见 [接单接口](./TASK_CLAIM.md)。
+
+0.6 新增确认取件、双方取消和客服审核。全量 131 项通过，独立 MySQL 任务相关 102 项通过。可以在 IDEA 运行 TaskCancellationIntegrationTest 复跑新增的 8 项测试。交付码、扫码完成及模拟结算接口待实现。

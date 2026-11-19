@@ -20,4 +20,11 @@ public class TaskRecord {
     public TaskStatus status;
     public LocalDateTime createdAt;
     public LocalDateTime updatedAt;
+    public Long runnerId;
+    public String runnerPhone;
+    public String runnerWechat;
+    public LocalDateTime pickedUpAt;
+    public Long cancellationId;
+    public TaskCancellationContracts.Status cancellationStatus;
+    public Long cancellationRequesterId;
 }

@@ -18,6 +18,14 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 app:
+  task:
+    claim:
+      window-ms: 1000
+      scheduling-enabled: true
+      fixed-delay-ms: 250
+    expiration:
+      enabled: true
+      fixed-delay-ms: 30000
   student:
     token-ttl: 1h
   wechat:
