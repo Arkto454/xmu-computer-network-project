@@ -1,6 +1,6 @@
 # 校园互助跑腿后端
 
-当前版本 0.6.0-SNAPSHOT，已实现身份认证、任务发布、抢单及重试、确认取件、双方取消和管理员审核。真实小程序联调等待 AppID、AppSecret 和有效临时 code。说明见 [学生登录](./STUDENT_LOGIN.md)、[任务基础接口](./TASK_API.md)、[任务管理接口](./TASK_MANAGEMENT.md)、[接单接口](./TASK_CLAIM.md)与[取件和取消接口](../后端设计计划.md#182-接口约定)。
+当前版本 0.7.0-SNAPSHOT，已实现身份认证、任务发布、抢单及重试、确认取件、双方取消和管理员审核，以及交付码、扫码确认和模拟结算。真实小程序联调等待 AppID、AppSecret 和有效临时 code。说明见 [学生登录](./STUDENT_LOGIN.md)、[任务基础接口](./TASK_API.md)、[任务管理接口](./TASK_MANAGEMENT.md)、[接单接口](./TASK_CLAIM.md)、[取件和取消接口](../后端设计计划.md#182-接口约定)及[交付与模拟结算](../后端设计计划.md#19-第五部分-交付确认与模拟结算)。
 
 ## 1 当前实现
 
@@ -16,6 +16,7 @@
 | 任务管理 | 本人发布列表、状态筛选、取消及重复取消反馈；到期待接任务后台分批持久化 |
 | 抢单与重试 | 确认窗口、发布者取消优先、唯一接单归属、原编号重试、本人接单列表与双方详情权限 |
 | 取件与取消 | 接单者确认取件，双方协商取消，取件后由管理员审核并保留处理记录 |
+| 交付与模拟结算 | 交付码签发、刷新与停用；发布者扫码核验后确认；结算明细与收益汇总 |
 | 失败反馈 | 区分请求格式错误、登录失败、未认证与服务异常，不返回密码哈希 |
 
 技术版本：Spring Boot 3.5.16、MyBatis Starter 3.0.5、MySQL Connector/J、Spring Security Crypto。源码以 Java 17 为编译目标，本机使用 Java 25.0.3 验证。
@@ -72,11 +73,11 @@ application-local.properties   本机私有配置，已被 .gitignore 排除
 
 编译和测试可先使用 IDEA：打开 Maven 工具窗口，确认该项目的 Maven Runner 使用 JDK25，执行 Lifecycle → verify。也可直接运行 CampusErrandApplication，运行配置的工作目录设为 backend，以读取本机配置。
 
-当前可执行 JAR 为 0.6.0-SNAPSHOT，在 PowerShell 中可直接启动。
+当前可执行 JAR 为 0.7.0-SNAPSHOT，在 PowerShell 中可直接启动。
 
 ```powershell
 Set-Location 'D:\计网项目和实验\backend'
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.6.0-SNAPSHOT.jar
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.7.0-SNAPSHOT.jar
 ```
 
 上述启动命令明确指定本机 Java 路径，无须修改 Windows 或 IDEA 终端的 Path、JAVA_HOME。队友需替换为自己机器上的 JDK 路径。
@@ -84,7 +85,7 @@ Set-Location 'D:\计网项目和实验\backend'
 默认地址为 http://localhost:8080。若端口被占用：
 
 ```powershell
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.6.0-SNAPSHOT.jar --server.port=8081
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.7.0-SNAPSHOT.jar --server.port=8081
 ```
 
 在 IDEA 中可运行单个测试类，或通过 Maven verify 运行全量测试。若要使用终端 Maven，先执行 .\mvnw.cmd -version，确认显示 Java 17 或更高版本，再运行：
@@ -160,4 +161,6 @@ HTTP 200 返回当前管理员公开资料。
 
 2026-11-19 抢单后端完成，全量 123 项通过，独立 MySQL 中任务相关 94 项通过。0.5 JAR 已验证重启后可结清待确认申请。第四部分功能及复跑方法见 [接单接口](./TASK_CLAIM.md)。
 
-0.6 新增确认取件、双方取消和客服审核。全量 131 项通过，独立 MySQL 任务相关 102 项通过。可以在 IDEA 运行 TaskCancellationIntegrationTest 复跑新增的 8 项测试。交付码、扫码完成及模拟结算接口待实现。
+0.6 新增确认取件、双方取消和客服审核。全量 131 项通过，独立 MySQL 任务相关 102 项通过。可以在 IDEA 运行 TaskCancellationIntegrationTest 复跑新增的 8 项测试。
+
+0.7 新增交付与模拟结算。全量 143 项通过，独立 MySQL 任务相关 114 项通过；另验证了从 0.6 的数据库结构升级时保留已有任务。可以在 IDEA 运行 TaskDeliveryIntegrationTest 复跑新增的 12 项测试，真实小程序扫码待联调。

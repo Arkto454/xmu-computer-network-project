@@ -133,9 +133,13 @@ public class TaskService {
                 ? new TaskCancellationContracts.Summary(task.cancellationId, task.cancellationStatus,
                         task.cancellationRequesterId, task.cancellationStatus == TaskCancellationContracts.Status.AWAITING_REVIEW)
                 : null;
+        var settlement = status == TaskStatus.COMPLETED && related && task.settledAt != null
+                ? new TaskDeliveryContracts.Settlement(task.settlementAmount, instant(task.settledAt)) : null;
+        Instant completedAt = settlement == null ? null : settlement.settledAt();
         return new Detail(task.id, task.publisherId, task.title, task.type, task.pickupLocation,
                 task.deliveryLocation, instant(task.deadlineAt), task.rewardAmount, task.description,
-                status, instant(task.createdAt), ownedByMe, acceptedByMe, pickedUpAt, cancellation, privateInfo);
+                status, instant(task.createdAt), ownedByMe, acceptedByMe, pickedUpAt, cancellation, completedAt,
+                settlement, privateInfo);
     }
 
     private Summary summary(TaskRecord task) {

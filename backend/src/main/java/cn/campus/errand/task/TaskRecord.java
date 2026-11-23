@@ -27,4 +27,6 @@ public class TaskRecord {
     public Long cancellationId;
     public TaskCancellationContracts.Status cancellationStatus;
     public Long cancellationRequesterId;
+    public BigDecimal settlementAmount;
+    public LocalDateTime settledAt;
 }

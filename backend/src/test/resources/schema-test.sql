@@ -94,3 +94,23 @@ CREATE TABLE IF NOT EXISTS task_cancellation_request_key (
     PRIMARY KEY (student_id, request_id),
     CONSTRAINT fk_cancellation_request_key FOREIGN KEY (cancellation_id) REFERENCES task_cancellation(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS task_delivery_code (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    code_version BIGINT NOT NULL,
+    payload_digest CHAR(64) NOT NULL,
+    image_png BLOB,
+    expires_at TIMESTAMP(6) NOT NULL,
+    CONSTRAINT fk_delivery_assignment FOREIGN KEY (task_id) REFERENCES task_assignment(task_id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS task_settlement (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    runner_id BIGINT NOT NULL,
+    amount DECIMAL(10,2) NOT NULL,
+    settled_at TIMESTAMP(6) NOT NULL,
+    CONSTRAINT fk_settlement_assignment FOREIGN KEY (task_id) REFERENCES task_assignment(task_id) ON DELETE CASCADE,
+    CONSTRAINT fk_settlement_runner FOREIGN KEY (runner_id) REFERENCES student_user(id),
+    CONSTRAINT ck_settlement_amount_positive CHECK (amount > 0)
+);
+CREATE INDEX IF NOT EXISTS idx_settlement_runner ON task_settlement(runner_id, settled_at, task_id);

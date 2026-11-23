@@ -21,13 +21,15 @@ public class TaskCancellationService {
     private final TaskMapper tasks;
     private final TaskClaimMapper assignments;
     private final TaskCancellationMapper cancellations;
+    private final TaskDeliveryMapper delivery;
     private final Clock clock;
 
     public TaskCancellationService(TaskMapper tasks, TaskClaimMapper assignments,
-                                   TaskCancellationMapper cancellations, Clock taskClock) {
+                                   TaskCancellationMapper cancellations, TaskDeliveryMapper delivery, Clock taskClock) {
         this.tasks = tasks;
         this.assignments = assignments;
         this.cancellations = cancellations;
+        this.delivery = delivery;
         this.clock = taskClock;
     }
 
@@ -145,7 +147,10 @@ public class TaskCancellationService {
 
         LocalDateTime now = now();
         requireOne(cancellations.recordReview(cancellationId, next, adminId, input.reason().strip(), now));
-        if (next == Status.APPROVED) transition(task, TaskStatus.CLOSED, now);
+        if (next == Status.APPROVED) {
+            transition(task, TaskStatus.CLOSED, now);
+            delivery.clearImage(taskId);
+        }
         return detail(getRequest(taskId, cancellationId), task.status);
     }
 

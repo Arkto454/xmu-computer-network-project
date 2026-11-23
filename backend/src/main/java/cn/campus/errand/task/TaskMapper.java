@@ -107,11 +107,13 @@ public interface TaskMapper {
 
     @Select("""
             SELECT t.*, t.task_type AS type, a.runner_id, a.runner_phone, a.runner_wechat, p.picked_up_at,
-                   c.id AS cancellation_id, c.status AS cancellation_status, c.requester_id AS cancellation_requester_id
+                   c.id AS cancellation_id, c.status AS cancellation_status, c.requester_id AS cancellation_requester_id,
+                   s.amount AS settlement_amount, s.settled_at
             FROM errand_task t
             LEFT JOIN task_assignment a ON t.id=a.task_id
             LEFT JOIN task_pickup p ON p.task_id=t.id
             LEFT JOIN task_cancellation c ON c.id=(SELECT MAX(id) FROM task_cancellation WHERE task_id=t.id)
+            LEFT JOIN task_settlement s ON s.task_id=t.id
             WHERE t.id=#{id}
             """)
     TaskRecord findDetailById(long id);

@@ -62,6 +62,9 @@ public interface TaskCancellationMapper {
     int recordReview(@Param("id") long id, @Param("status") Status status, @Param("reviewerId") long reviewerId,
                      @Param("reason") String reason, @Param("now") LocalDateTime now);
 
+    @Update("UPDATE task_cancellation SET status='TASK_FINISHED' WHERE id=#{id} AND status='AWAITING_PEER'")
+    int finishWaitingForPeer(long id);
+
     @Select("SELECT COUNT(*) FROM task_cancellation WHERE status=#{status}")
     long countByStatus(Status status);
 
