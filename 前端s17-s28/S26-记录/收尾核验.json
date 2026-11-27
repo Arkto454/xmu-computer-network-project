@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-27",
+  "sourceFiles": 4,
+  "newCases": 17,
+  "historicalCases": 206,
+  "totalCases": 223,
+  "acceptedStages": 13,
+  "S26": "in progress: implementation and controlled checks complete",
+  "live": "real compile, unauthenticated hall/my-tasks and return passed",
+  "realClosure": "pending",
+  "realAccountDisable": "pending",
+  "realDualAccount": "pending",
+  "remoteFetch": "failed twice: connection reset; local d566123 inspected",
+  "configChanged": false,
+  "backendChanged": false,
+  "businessWrites": false,
+  "mode": "real",
+  "authenticated": false,
+  "pushed": false
+}

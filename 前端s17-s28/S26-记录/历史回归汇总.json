@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-27",
+  "results": [
+    {
+      "stage": "S16",
+      "passed": 17
+    },
+    {
+      "stage": "S15",
+      "passed": 13
+    },
+    {
+      "stage": "S13",
+      "passed": 13
+    },
+    {
+      "stage": "S12",
+      "passed": 12
+    },
+    {
+      "stage": "S11",
+      "passed": 10
+    },
+    {
+      "stage": "S10",
+      "passed": 9
+    },
+    {
+      "stage": "S09",
+      "passed": 8
+    },
+    {
+      "stage": "S14",
+      "passed": 7
+    },
+    {
+      "stage": "S06",
+      "passed": 13
+    }
+  ],
+  "controlled": true,
+  "S09Fixture": "explicit Mock mode; original assertions preserved",
+  "realBackendTested": false,
+  "extra": [
+    {
+      "stage": "S17-接单接口",
+      "passed": 14
+    },
+    {
+      "stage": "S18-原请求恢复",
+      "passed": 16
+    },
+    {
+      "stage": "S20-取件与交付码",
+      "passed": 17
+    },
+    {
+      "stage": "S21-扫码核对与确认",
+      "passed": 23
+    },
+    {
+      "stage": "S22-模拟收益与结算",
+      "passed": 19
+    },
+    {
+      "stage": "S24-S25-通知核对与网络恢复",
+      "passed": 15
+    }
+  ],
+  "totalHistoricalCases": 206,
+  "S17Fixture": "S18 storage-aware harness reused, all 14 assertions preserved",
+  "root": "S26 isolated working copy"
+}

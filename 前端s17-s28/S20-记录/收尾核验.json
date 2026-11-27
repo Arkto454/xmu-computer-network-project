@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-27",
+  "sourceFiles": 7,
+  "controlledCases": 149,
+  "s20RerunCases": 17,
+  "historicalCases": 132,
+  "acceptedStages": 13,
+  "liveS20": "single-account pickup, server PNG, refresh, revoke, reopen, natural expiry and periodic scroll preservation passed",
+  "backendBusinessChanges": false,
+  "testTasksWritten": [
+    900000
+  ],
+  "realDualAccount": "pending",
+  "pushed": false,
+  "finalTaskStatus": "PENDING_CONFIRMATION",
+  "finalCodeStatus": "EXPIRED",
+  "scrollFixLive": "passed after full recompile"
+}

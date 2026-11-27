@@ -1,0 +1,15 @@
+# 本地配置、依赖、私密运行文件和生成产物
+**/project.private.config.json
+**/node_modules/
+**/.env
+**/.env.*
+**/application-local.properties
+**/application-local.yml
+**/application-local.yaml
+**/*.log
+**/*.pid
+**/*.db
+**/*.mv.db
+**/*.jar
+**/target/
+**/改动前备份/

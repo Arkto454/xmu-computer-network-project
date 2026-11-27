@@ -1,0 +1,30 @@
+[
+  {
+    "path": "services/delivery.js",
+    "sha256": "6c71b41f221c0327d066d29c6349b4759418d7252398bafd8dcfb62c828a34c8"
+  },
+  {
+    "path": "services/real-tasks.js",
+    "sha256": "7d121b8c993606ef16b11938ca34757ec8958fc071c82baf1332e91359c3a273"
+  },
+  {
+    "path": "services/index.js",
+    "sha256": "c52024eb98513254681efe799a9f2abcff4b23dd74fbb690b6fc8c6fa1eb8e54"
+  },
+  {
+    "path": "pages/task-detail/index.js",
+    "sha256": "0892353909a48a1243573959b983fb2db8bc2c0c0f79044b558c645b9404b133"
+  },
+  {
+    "path": "pages/delivery-code/index.js",
+    "sha256": "d4fc6ce9e364340f51d914f218c8647ab2be397f92dcf58d8c898deb2eeae30c"
+  },
+  {
+    "path": "pages/delivery-code/index.wxml",
+    "sha256": "f44fd7f27d9452bd8aa104f63076fbf0113da18b3a098ac0c9fb248cb4f7d846"
+  },
+  {
+    "path": "pages/delivery-code/index.wxss",
+    "sha256": "e1424e7a3d803a6aad69372ce3d445e61838d4265f31a18f10eb0419779e1dec"
+  }
+]

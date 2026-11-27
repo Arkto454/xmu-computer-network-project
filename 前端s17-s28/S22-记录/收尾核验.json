@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-27",
+  "sourceFiles": 9,
+  "s22Cases": 19,
+  "historicalCases": 172,
+  "totalControlledCases": 191,
+  "acceptedStages": 13,
+  "liveReal": "unauthenticated gate, WeChat login, zero earnings and manual refresh passed",
+  "liveMock": "nonzero row, correct task navigation and return reload passed",
+  "realNonzeroAndMultipage": "pending",
+  "realDualAccount": "pending",
+  "businessWrites": false,
+  "backendSourceChanged": false,
+  "configRestored": true,
+  "mode": "real",
+  "compilerMode": "normal",
+  "pushed": false
+}

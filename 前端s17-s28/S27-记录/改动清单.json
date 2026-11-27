@@ -1,0 +1,14 @@
+[
+  {
+    "path": "pages/task-detail/index.js",
+    "sha256": "e40aff59cc3a9c53ab29e24148afebb43efe81623b4b0b46adfe69ff2811be82"
+  },
+  {
+    "path": "pages/scan-confirm/index.js",
+    "sha256": "0dd13589a484dd36c22fe0b378ab1b17747a73bd5345733313dccef458b719c1"
+  },
+  {
+    "path": "pages/publish/index.wxml",
+    "sha256": "19ae0a819f024c6e2c3fdd19a149deeccaf3c80ab34172e25dc819b7f53db483"
+  }
+]

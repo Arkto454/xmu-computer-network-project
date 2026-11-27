@@ -1,0 +1,38 @@
+[
+  {
+    "path": "services/network-recovery.js",
+    "sha256": "56102d93c24b83a37b45a6de611114e7bc2dd9314fc19e59eb0b2b5b0d636520"
+  },
+  {
+    "path": "utils/scaffold.js",
+    "sha256": "05c5f426e1aaadff507997ce1c5d3d4834eb2fdf1e82143dbe34803fe5c2a1cf"
+  },
+  {
+    "path": "app.js",
+    "sha256": "5bb60b69f3df4ea63e6a09468511ac8d13f4901e80cad2f3aac93350ce560ea1"
+  },
+  {
+    "path": "pages/index/index.js",
+    "sha256": "cb885885e51868ab1e113c4d4332f3cecd8a57d84646e62d559dc3f48d4982c4"
+  },
+  {
+    "path": "pages/my-tasks/index.js",
+    "sha256": "271bb67bda46586616d5b1ce36e594c86262a1df622e224226b810dd01d96b31"
+  },
+  {
+    "path": "pages/task-detail/index.js",
+    "sha256": "bf3d077223215756488cc241ed2a5b785cf88a1549356f94ec4e8b2892582fdf"
+  },
+  {
+    "path": "pages/earnings/index.js",
+    "sha256": "db9b4f6e8e804fde3fb3d4db2a7b3886fe575eb7092f36ace40cc2f781fa1832"
+  },
+  {
+    "path": "pages/delivery-code/index.js",
+    "sha256": "39bf2a55eef5c2fac5760cc756159498cc8d3ea32b5180c1b1bb6c6b8ec3bcd0"
+  },
+  {
+    "path": "pages/scan-confirm/index.js",
+    "sha256": "19ee929476277feb0addd6cb4c3d5d4c8b428ec469c120c406f551a3f2fa9d8b"
+  }
+]

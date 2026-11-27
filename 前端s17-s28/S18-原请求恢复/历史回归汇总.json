@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-24",
+  "results": [
+    {
+      "stage": "S16",
+      "passed": 17
+    },
+    {
+      "stage": "S15",
+      "passed": 13
+    },
+    {
+      "stage": "S13",
+      "passed": 13
+    },
+    {
+      "stage": "S12",
+      "passed": 12
+    },
+    {
+      "stage": "S11",
+      "passed": 10
+    },
+    {
+      "stage": "S10",
+      "passed": 9
+    },
+    {
+      "stage": "S09",
+      "passed": 8
+    },
+    {
+      "stage": "S14",
+      "passed": 7
+    },
+    {
+      "stage": "S06",
+      "passed": 13
+    }
+  ],
+  "controlled": true,
+  "S09Fixture": "explicit Mock mode; original assertions preserved",
+  "realBackendTested": false
+}

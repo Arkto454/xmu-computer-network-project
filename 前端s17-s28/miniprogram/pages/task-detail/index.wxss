@@ -1,0 +1,15 @@
+.page--detail-footer { padding-bottom: calc(300rpx + env(safe-area-inset-bottom)); }
+.detail-line { display: block; overflow-wrap: anywhere; }
+.overdue-note { display: block; margin-top: 16rpx; color: #8a4a17; font-size: 28rpx; }
+.contact-block + .contact-block { margin-top: 28rpx; padding-top: 24rpx; border-top: 1rpx solid #d8dfd8; }
+.timeline-item { margin-top: 20rpx; padding-left: 20rpx; border-left: 4rpx solid #17634f; }
+.detail-footer { display: flex; flex-direction: column; gap: 16rpx; }
+.demo-panel { margin-bottom: 24rpx; }
+.demo-toggle { font-size: 26rpx; min-height: 64rpx; padding: 14rpx 18rpx; }
+.demo-controls { margin-top: 16rpx; padding: 20rpx; border: 1rpx dashed #b9c6bc; }
+.account-options { display: flex; flex-wrap: wrap; gap: 12rpx; margin: 16rpx 0; }
+.account-options button { width: calc(50% - 6rpx); font-size: 28rpx; }
+.claim-form label { display: block; margin-top: 24rpx; font-size: 28rpx; }
+.claim-form input { margin-top: 12rpx; padding: 16rpx; min-height: 60rpx; border: 1rpx solid #b9c6bc; border-radius: 8rpx; }
+.claim-form button { margin-top: 20rpx; }
+.claim-error { display: block; margin-top: 16rpx; color: #9a342a; font-size: 28rpx; }

@@ -1,0 +1,69 @@
+{
+  "date": "2026-11-27",
+  "stage": "S25 HTTP recovery subset",
+  "cases": [
+    {
+      "name": "导入与启动仅注册监听，不请求/登录/建Socket；重复启动不重复注册",
+      "status": "passed"
+    },
+    {
+      "name": "仅明确断网到联网触发；无效事件、初次联网、网络类型变化不刷新",
+      "status": "passed"
+    },
+    {
+      "name": "短时间多次网络波动合并；在途恢复请求不重复发起",
+      "status": "passed"
+    },
+    {
+      "name": "只刷新当前可见页，登录/发布页与隐藏/卸载页不刷新",
+      "status": "passed"
+    },
+    {
+      "name": "应用后台不自动查询，回前台依靠当前页onShow重读",
+      "status": "passed"
+    },
+    {
+      "name": "恢复队列遇换账号/退出/离页，旧代次不发请求或复活数据",
+      "status": "passed"
+    },
+    {
+      "name": "停止监听仅移除本人回调；旧监听在重启后也不能触发",
+      "status": "passed"
+    },
+    {
+      "name": "大厅网络恢复仅GET首屏并保留筛选，不重发发布",
+      "status": "passed"
+    },
+    {
+      "name": "我的任务保留关系/状态，刷新待确认摘要但不确认原申请",
+      "status": "passed"
+    },
+    {
+      "name": "恢复首屏替代旧在途列表/收益响应，迟到结果不覆盖",
+      "status": "passed"
+    },
+    {
+      "name": "详情正在业务确认或发送时不打断；未知写结果恢复只GET",
+      "status": "passed"
+    },
+    {
+      "name": "交付码恢复先清旧图并读取；申请/刷新/停用不会自动提交",
+      "status": "passed"
+    },
+    {
+      "name": "扫码页恢复清核对，扫描原生界面或确认框中不干预、不调用相机/确认",
+      "status": "passed"
+    },
+    {
+      "name": "Mock无网络监听或恢复请求；不支持网络API仍可手动查询",
+      "status": "passed"
+    },
+    {
+      "name": "恢复请求失败可手动重试，不自动轮询；临时网络监听不保存凭据或内容",
+      "status": "passed"
+    }
+  ],
+  "controlled": true,
+  "realNetworkToggleTested": false,
+  "webSocketImplemented": false
+}

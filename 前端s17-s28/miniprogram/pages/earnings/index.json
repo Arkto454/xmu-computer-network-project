@@ -1,0 +1,5 @@
+{
+  "navigationBarTitleText": "模拟收益",
+  "enablePullDownRefresh": true,
+  "usingComponents": {"page-state":"/components/page-state/index"}
+}

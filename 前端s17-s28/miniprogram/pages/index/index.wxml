@@ -1,0 +1,87 @@
+<import src="../../templates/mode.wxml" />
+<view class="page">
+  <template is="mode" data="{{modeLabel: modeLabel}}" />
+  <view class="intro">
+    <text class="title">今天，顺路帮个忙</text>
+    <text class="muted">看看取送地点，找到适合你的任务。</text>
+  </view>
+
+  <view class="actions">
+    <button class="primary" bindtap="go" data-page="publish">＋ 发布任务</button>
+  </view>
+
+  <view class="list-heading">
+    <view class="heading-copy">
+      <text class="section-title">可接任务</text>
+      <text class="small muted">按发布时间排序</text>
+    </view>
+    <button class="refresh-button" bindtap="refreshList" disabled="{{isRefreshing}}">刷新</button>
+  </view>
+
+  <scroll-view class="filters" scroll-x="true" show-scrollbar="false" aria-label="按任务类型筛选">
+    <view class="filter-track">
+      <button wx:for="{{typeOptions}}" wx:key="value"
+        class="filter-button {{selectedType === item.value ? 'filter-button--selected' : ''}}"
+        aria-pressed="{{selectedType === item.value}}" data-value="{{item.value}}" bindtap="chooseType">{{item.label}}</button>
+    </view>
+  </scroll-view>
+
+  <view class="sort-control" aria-label="发布时间顺序">
+    <text class="small muted sort-label">发布时间</text>
+    <view class="sort-segment">
+      <button wx:for="{{sortOptions}}" wx:key="value"
+        class="sort-button {{sortOrder === item.value ? 'sort-button--selected' : ''}}"
+        aria-pressed="{{sortOrder === item.value}}" data-value="{{item.value}}" bindtap="chooseSort">{{item.label}}</button>
+    </view>
+  </view>
+
+  <text wx:if="{{isRefreshing}}" class="notice" role="status">正在刷新…</text>
+  <view wx:if="{{pageState === 'auth'}}" class="section"><text>真实任务大厅需要微信登录。</text><button class="primary" bindtap="go" data-page="login">微信登录后查看任务</button></view>
+  <page-state wx:if="{{pageState && pageState !== 'unavailable' && pageState !== 'auth'}}" state="{{pageState}}"
+    action-text="{{pageState === 'empty' ? '去发布任务' : ''}}"
+    description="{{pageState === 'empty' ? '当前筛选下暂时没有待接任务。' : ''}}"
+    bind:action="handleStateAction" />
+  <page-state wx:if="{{refreshError}}" state="error" title="刷新失败"
+    description="已保留当前列表和筛选条件。可以重试刷新。" action-text="重试刷新" bind:action="handleStateAction" />
+
+  <view wx:if="{{tasks.length}}" class="task-list">
+    <view wx:for="{{tasks}}" wx:key="id" class="task" role="button" aria-label="查看任务：{{item.title}}" hover-class="task--pressed" data-task-id="{{item.id}}" bindtap="openTask">
+      <view class="row">
+        <view class="row-main"><text class="task-title">{{item.title}}</text><text class="badge">{{item.typeName}}</text></view>
+        <view><text class="amount">¥{{item.rewardText}}</text><text class="amount-label">{{isMock ? '模拟奖励' : '任务奖励'}}</text></view>
+      </view>
+      <view class="route">
+        <view class="route-stop"><text class="stop-label">取</text><text>{{item.pickupLocation}}</text></view>
+        <view class="route-stop"><text class="stop-label stop-end">送</text><text>{{item.deliveryLocation}}</text></view>
+      </view>
+      <view class="meta"><text>{{item.deadlineText}}</text><text wx:if="{{item.publishTimeText}}">发布于 {{item.publishTimeText}}</text><text class="badge">{{item.statusText}}</text></view>
+    </view>
+    <page-state wx:if="{{moreError}}" state="error" title="这一页没有加载成功"
+      description="已保留前面的任务，可以重试加载这一页。" action-text="重试加载更多" bind:action="handleStateAction" />
+    <button wx:if="{{hasMore && !moreError}}" class="more-button" loading="{{isLoadingMore}}" disabled="{{isLoadingMore}}" bindtap="loadMore">
+      {{isLoadingMore ? '正在加载' : (moreError ? '重试加载更多' : '加载更多')}}
+    </button>
+    <text wx:if="{{!hasMore && !moreError}}" class="end-note">{{isMock ? '已显示全部符合条件的演示任务' : '已加载至本次列表末尾，刷新可查看变化'}}</text>
+  </view>
+
+  <text wx:if="{{isMock}}" class="hint">以上是固定演示数据，不代表真实任务。</text>
+  <text wx:if="{{!isMock}}" class="hint">当前仅支持最新发布排序。任务变化时可手动刷新。</text>
+
+  <view wx:if="{{uiPreview}}" class="preview-group">
+    <text class="title">组件检查</text><text class="hint">仅开发预览，使用虚构信息，不产生业务操作。</text>
+    <view class="task" role="button" aria-label="查看任务：{{uiPreview.longTask.title}}">
+      <view class="row"><view class="row-main"><text class="task-title">{{uiPreview.longTask.title}}</text><text class="badge">{{uiPreview.longTask.typeName}}</text></view><view><text class="amount">¥{{uiPreview.longTask.rewardText}}</text><text class="amount-label">{{isMock ? '模拟奖励' : '任务奖励'}}</text></view></view>
+      <view class="route"><view class="route-stop"><text class="stop-label">取</text><text>{{uiPreview.longTask.pickupLocation}}</text></view><view class="route-stop"><text class="stop-label stop-end">送</text><text>{{uiPreview.longTask.deliveryLocation}}</text></view></view>
+      <view class="meta"><text>{{uiPreview.longTask.deadlineText}}</text><text class="badge">{{uiPreview.longTask.statusText}}</text></view>
+    </view>
+    <view class="section"><text class="section-title">状态与超时</text>
+      <view wx:for="{{uiPreview.statuses}}" wx:key="*this" class="space"><text class="badge">{{item}}</text></view>
+      <view class="space"><text class="badge">已取件</text><text class="badge tag--warning">已超时</text></view>
+    </view>
+    <page-state state="loading" />
+    <page-state state="empty" />
+    <page-state state="{{previewState}}" description="{{previewState === 'error' ? uiPreview.longError : '重新加载已触发，现在展示空列表预览。'}}" bind:action="retryPreview" />
+    <text class="hint">预览重试次数：{{previewRetries}}</text>
+    <page-state state="unknown" />
+  </view>
+</view>

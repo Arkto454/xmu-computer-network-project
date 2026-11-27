@@ -1,0 +1,100 @@
+{
+  "date": "2026-11-27",
+  "stage": "S21",
+  "cases": [
+    {
+      "name": "扫码服务校验身份/本任务格式及长度，无效输入不联网",
+      "status": "passed"
+    },
+    {
+      "name": "核验与确认均POST且载荷只在JSON请求体，不在URL",
+      "status": "passed"
+    },
+    {
+      "name": "拒绝错任务、异常状态/金额/时间和畸形结算回执",
+      "status": "passed"
+    },
+    {
+      "name": "已完成核验允许无expiresAt；服务错误消息不回显扫码内容",
+      "status": "passed"
+    },
+    {
+      "name": "发布者待确认开放扫码；接单者、访客、审核和终态不开放",
+      "status": "passed"
+    },
+    {
+      "name": "详情扫码入口仅导航，路由仅含taskId",
+      "status": "passed"
+    },
+    {
+      "name": "未登录/Mock/非法编号不请求不调相机；非发布者或暂停只读",
+      "status": "passed"
+    },
+    {
+      "name": "进入页面只查任务，明确点击才调相机；扫码取消/拒绝无核验或确认POST",
+      "status": "passed"
+    },
+    {
+      "name": "非二维码、其他任务码、URL和超长内容本地拒绝，不回显内容",
+      "status": "passed"
+    },
+    {
+      "name": "扫码先核对权限，再POST核验，再查详情；核验通过仍未完成且不泄漏载荷",
+      "status": "passed"
+    },
+    {
+      "name": "扫码后任务已审核或角色变化，不发送核验",
+      "status": "passed"
+    },
+    {
+      "name": "核验后任务变化、核验信息不符或过期均清空，不能确认",
+      "status": "passed"
+    },
+    {
+      "name": "核验超时、无效/过期码仅重读任务，不自动核验或确认",
+      "status": "passed"
+    },
+    {
+      "name": "核对倒计时到期清载荷并禁止确认，不自动请求",
+      "status": "passed"
+    },
+    {
+      "name": "确认框取消不POST；连点仅一个确认框，过期后不提交",
+      "status": "passed"
+    },
+    {
+      "name": "最终确认再查权限/状态；审核、关闭或预查失败不得POST",
+      "status": "passed"
+    },
+    {
+      "name": "明确确认后只提交一次，再查完成状态；模拟金额不累加",
+      "status": "passed"
+    },
+    {
+      "name": "确认超时后只GET；查询失败保留待查询，手动查询完成不重发",
+      "status": "passed"
+    },
+    {
+      "name": "确认遇过期/已更新或畸形回执，清旧核对且不自动再确认",
+      "status": "passed"
+    },
+    {
+      "name": "原生扫码遮页/返回两种回调顺序均重新校验；不在隐藏页核验",
+      "status": "passed"
+    },
+    {
+      "name": "扫码/核验期间换账号、离页、卸载或导航到别页，迟到结果不复活",
+      "status": "passed"
+    },
+    {
+      "name": "确认框后换账号/离页不提交；已发确认的迟到响应不写新账号",
+      "status": "passed"
+    },
+    {
+      "name": "页面卸载后不setData，核验迟到响应不能回写",
+      "status": "passed"
+    }
+  ],
+  "controlled": true,
+  "realDualAccountTested": false
+}

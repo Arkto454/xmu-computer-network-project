@@ -1,0 +1,77 @@
+{
+  "date": "2026-11-27",
+  "stage": "S26",
+  "cases": [
+    {
+      "name": "关闭审核查询校验身份和编号，只向当前任务发送GET",
+      "status": "passed"
+    },
+    {
+      "name": "仅取白名单原因和时间，不传递审核人/申请理由/私密字段",
+      "status": "passed"
+    },
+    {
+      "name": "拒绝错任务/错申请/非关闭/未通过/空或超长原因/无效时间",
+      "status": "passed"
+    },
+    {
+      "name": "发布者与接单者关闭详情均隐藏私密和动作，只显示无收益说明",
+      "status": "passed"
+    },
+    {
+      "name": "关闭详情立即保留终态，辅助查询后展示原因和时间",
+      "status": "passed"
+    },
+    {
+      "name": "辅助失败或错审核不抹去终态，刷新可恢复，旧原因先清空",
+      "status": "passed"
+    },
+    {
+      "name": "缺少或异常关闭摘要不追加请求，不虚构原因时间",
+      "status": "passed"
+    },
+    {
+      "name": "进行中/完成/访客不读取关闭审核，不因异常收益字段显示关闭收益",
+      "status": "passed"
+    },
+    {
+      "name": "辅助401清会话，普通401不谎报禁用，旧账号401不退出新账号",
+      "status": "passed"
+    },
+    {
+      "name": "刷新取代旧审核请求，迟到原因不覆盖新结果",
+      "status": "passed"
+    },
+    {
+      "name": "离页和卸载丢弃辅助结果，账号切换立即清空",
+      "status": "passed"
+    },
+    {
+      "name": "关闭时隐藏待确认接单表单和联系方式，不重发原接单申请",
+      "status": "passed"
+    },
+    {
+      "name": "取件请求被关闭并发拒绝后只读刷新，清空私密与动作",
+      "status": "passed"
+    },
+    {
+      "name": "旧交付码读取期间关闭，二次核对丢弃图片且无定时器或写入",
+      "status": "passed"
+    },
+    {
+      "name": "扫码核验在途关闭，清空核对结果且不允许确认",
+      "status": "passed"
+    },
+    {
+      "name": "我的发布和接单列表映射CLOSED筛选，不泄露审核原因私密信息",
+      "status": "passed"
+    },
+    {
+      "name": "只有明确ACCOUNT_DISABLED提示禁用；登录不成功且普通401仍提示重登",
+      "status": "passed"
+    }
+  ],
+  "controlled": true,
+  "realAdminClosure": false,
+  "realAccountDisable": false
+}

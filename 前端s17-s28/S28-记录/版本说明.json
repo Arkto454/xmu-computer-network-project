@@ -1,0 +1,38 @@
+{
+  "id": "20261127-S28-review",
+  "date": "2026-11-27",
+  "kind": "review checkpoint; not final freeze",
+  "mode": "real",
+  "httpBaseUrl": "http://127.0.0.1:18080",
+  "wsConfigured": false,
+  "backendSource": "local d566123 /0.7.0; no remote fetch this turn",
+  "acceptedStages": 13,
+  "sourceFileCount": 95,
+  "sourceChanged": false,
+  "controlledChecks": {
+    "inheritedFrom": "S27",
+    "total": 231,
+    "rerunThisTurn": false
+  },
+  "compile": {
+    "inheritedFrom": "S27",
+    "js": 47,
+    "json": 18,
+    "wxml": 15,
+    "wxss": 16,
+    "rerunThisTurn": false
+  },
+  "health": {
+    "path": "/api/health",
+    "code": "OK",
+    "application": "UP",
+    "database": "UP"
+  },
+  "cleanDirectoryImport": "pending",
+  "realPhone": "pending",
+  "realDualAccount": "pending",
+  "realClosure": "pending",
+  "realNonzeroSettlement": "pending",
+  "noticeProtocol": "blocked",
+  "pushed": false
+}

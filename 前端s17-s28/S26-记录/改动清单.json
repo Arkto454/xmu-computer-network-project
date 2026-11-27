@@ -1,0 +1,18 @@
+[
+  {
+    "path": "services/real-tasks.js",
+    "sha256": "d55b01ba45bf6067dfb157b9ab951079573e5d404757ac7ff95d7e7aaa142dbf"
+  },
+  {
+    "path": "services/index.js",
+    "sha256": "e9978ddc1458c6dbd7db7ac6d4200f02074cd9399a6bb8afdfce47a4d9265c41"
+  },
+  {
+    "path": "pages/task-detail/index.js",
+    "sha256": "280c7989f6d6a8edca68e5b66f3b94c349644743f87cbd64082f8864b27b030e"
+  },
+  {
+    "path": "pages/task-detail/index.wxml",
+    "sha256": "2aee9ec1421f3aac734c86629da19d17d3285ff34da55b724af48863447a11b9"
+  }
+]

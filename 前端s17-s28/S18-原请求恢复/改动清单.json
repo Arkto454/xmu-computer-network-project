@@ -1,0 +1,30 @@
+[
+  {
+    "file": "utils\\pending-claims.js",
+    "sha256": "28A46C6EAA2E00CB63C532E34A8C6FAC1AA18ED8C4480B227E1DB4F98CE6D379"
+  },
+  {
+    "file": "services\\claim.js",
+    "sha256": "A51C3F997F21822877FB248F7662AA8275E37C6D9F57FA2365313561AE264F48"
+  },
+  {
+    "file": "services\\index.js",
+    "sha256": "01B9EDAFDED8711904BA1A286091E37435830BD6D62B872CFC0127F4F11C2B28"
+  },
+  {
+    "file": "pages\\my-tasks\\index.js",
+    "sha256": "420411C276988C5C5A3ADE8082479B9D158408751332958185FFCC9451C2F161"
+  },
+  {
+    "file": "pages\\my-tasks\\index.wxml",
+    "sha256": "BD68C7D7EEC70794661BB5F1BAE491675B0189AF39CE7E2220EF673A0B2F3F06"
+  },
+  {
+    "file": "pages\\task-detail\\index.js",
+    "sha256": "3FC3BC3B194222E25120BD3390A3F597A2A682A4E3817A7863F82B4A4A2016FA"
+  },
+  {
+    "file": "pages\\task-detail\\index.wxml",
+    "sha256": "4615149ED6469E57CED5A75C752DD5669EFA23BD681A8DBE54274B0BB6C5B41C"
+  }
+]

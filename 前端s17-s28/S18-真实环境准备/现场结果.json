@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-24",
+  "backendVersion": "0.7.0-SNAPSHOT",
+  "mavenTests": 143,
+  "realWeChatAccounts": 1,
+  "localH2Persistent": true,
+  "s18RestartRecovery": "passed-local-live",
+  "s18PendingCleanup": "passed-local-live",
+  "s16Cancel": "passed-local-live-fixture",
+  "backendRestart401": "passed-local-live",
+  "realDualAccount": "pending",
+  "deviceNetworkFailure": "pending",
+  "normalPublishButtonToWrite": "pending",
+  "syntheticTaskIds": [
+    900000,
+    900001
+  ],
+  "acceptedStageCount": 13
+}

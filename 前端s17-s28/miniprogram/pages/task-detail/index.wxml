@@ -1,0 +1,52 @@
+<import src="../../templates/mode.wxml" />
+<view class="page {{task ? 'page--detail-footer' : ''}}">
+  <template is="mode" data="{{modeLabel: modeLabel}}" />
+  <view wx:if="{{isMock}}" class="demo-panel">
+    <button class="demo-toggle" bindtap="togglePreview">{{showPreview ? '收起演示检查' : '演示检查：切换账号与任务'}}</button>
+    <view wx:if="{{showPreview}}" class="demo-controls">
+      <text class="small muted">仅切换虚构演示身份，不登录真实微信账号。</text>
+      <view class="account-options"><button wx:for="{{mockAccounts}}" wx:key="id" class="{{mockAccount === item.id ? 'primary' : ''}}" data-user-id="{{item.id}}" bindtap="switchMockAccount">{{item.label}}</button></view>
+      <picker range="{{mockTasks}}" range-key="label" value="{{mockTaskIndex}}" bindchange="chooseMockTask"><view class="picker-value">任务：{{mockTasks[mockTaskIndex].label}} ▾</view></picker>
+      <picker range="{{mockScenarios}}" range-key="label" value="{{mockScenarioIndex}}" bindchange="chooseMockScenario"><view class="picker-value space">响应场景：{{mockScenarios[mockScenarioIndex].label}} ▾</view></picker>
+    </view>
+  </view>
+  <view wx:if="{{pageState === 'auth'}}" class="section"><text>{{message}}</text><button class="primary" bindtap="go" data-page="login">微信登录后查看详情</button></view>
+  <page-state wx:if="{{pageState && pageState !== 'auth'}}" state="{{pageState}}" title="{{pageState === 'unavailable' ? '暂时无法查看任务' : ''}}" description="{{message}}" busy="{{isLoading}}" bind:action="reloadDetail" />
+  <block wx:if="{{task}}">
+    <view class="row space"><status-tag status="{{task.statusText}}" overdue="{{task.overdue}}" /><text class="badge">{{policy.roleLabel}}</text></view>
+    <view class="row space"><view class="row-main"><text class="small muted">{{task.typeName}}</text><text class="title">{{task.title}}</text></view><view><text class="amount">¥{{task.rewardText}}</text><text class="amount-label">{{isMock ? '模拟奖励' : '任务奖励'}}</text></view></view>
+    <text class="small muted">任务编号：{{task.id}}</text>
+    <view class="section"><view class="route-stop"><text class="stop-label">取</text><text>{{task.pickupLocation}}</text></view><view class="route-stop"><text class="stop-label stop-end">送</text><text>{{task.deliveryLocation}}</text></view><text class="hint">{{task.deadlineText}}</text><text wx:if="{{task.overdue}}" class="overdue-note">已超时 · 仍保留当前任务进度</text></view>
+    <view class="section"><text class="section-title">任务双方</text><text class="detail-line">发布者：{{task.ownerLabel}}</text><text class="detail-line">接单者：{{task.runnerLabel}}</text></view>
+    <view class="section"><text class="section-title">公开任务说明</text><text>{{task.description || '未填写公开说明。'}}</text></view>
+    <view class="section"><text class="section-title">本次交接信息</text>
+      <view wx:for="{{policy.contacts}}" wx:key="key" class="contact-block"><text class="subtitle">{{item.label}}</text><text class="detail-line">手机号：{{item.phone || '未提供'}}</text><text class="detail-line">微信号：{{item.wechatId || '未填写'}}</text><text class="detail-line">私密说明：{{item.note || '未填写'}}</text></view>
+      <text wx:if="{{!policy.contacts.length}}" class="small muted">{{policy.terminal ? '任务已结束，默认隐藏完整联系方式和私密说明。' : '仅发布者本人和成功接单者可查看本次交接信息。'}}</text>
+    </view>
+    <view class="section"><text class="section-title">状态记录</text><view wx:for="{{task.phaseRecords}}" wx:key="key" class="timeline-item"><text class="detail-line">{{item.label}}</text><text class="small muted">{{item.timeText}}</text></view><text wx:if="{{!task.phaseRecords.length}}" class="small muted">暂无可展示的状态记录。</text></view>
+    <view wx:if="{{task.closeReason}}" class="section"><text class="section-title">结束原因</text><text>{{task.closeReason}}</text></view>
+    <view wx:if="{{task.closedAtText || task.closureMessage}}" class="section"><text class="section-title">关闭审核记录</text><text wx:if="{{task.closedAtText}}" class="detail-line">关闭时间：{{task.closedAtText}}</text><text wx:if="{{task.closureMessage}}" class="small muted" role="status">{{task.closureMessage}}</text></view>
+    <view wx:if="{{task.settlementStatus}}" class="section"><text class="section-title">模拟结算</text><text>{{task.settlementStatus}}</text></view>
+    <text class="hint">{{policy.message}}</text>
+  </block>
+  <view wx:if="{{!isMock && claimRecoveryError}}" class="section"><text role="alert">{{claimRecoveryError}}</text><button loading="{{isLoading}}" disabled="{{isLoading || actionBusy}}" bindtap="reloadDetail">刷新详情并重试读取</button></view>
+  <view wx:if="{{!isMock && showClaimForm}}" class="section claim-form">
+    <text class="section-title">本次接单联系方式</text>
+    <text class="small muted">手机号必填，微信号选填。仅实际接单成功后作为本任务交接信息保存；无需先完善个人资料。</text>
+    <text class="hint">为在重启后找回申请，待确认期间会在本机暂存本次联系方式；结果确认后清理。</text>
+    <label for="claim-phone">手机号</label><input id="claim-phone" value="{{claimPhone}}" maxlength="32" disabled="{{actionBusy || claimPending}}" data-field="claimPhone" bindinput="onClaimInput" placeholder="7—15 位数字，可带前导 +" />
+    <label for="claim-wechat">微信号（选填）</label><input id="claim-wechat" value="{{claimWechat}}" maxlength="65" disabled="{{actionBusy || claimPending}}" data-field="claimWechat" bindinput="onClaimInput" placeholder="最多 64 字" />
+    <text wx:if="{{claimError}}" class="claim-error" role="alert">{{claimError}}</text>
+    <text wx:if="{{claimPending}}" class="hint">已找回原接单申请，联系方式已锁定。请稍候，再手动确认原请求。每次点击仅确认一次，网络恢复后也可继续。</text>
+    <button class="primary" loading="{{actionBusy}}" disabled="{{actionBusy || isLoading}}" bindtap="submitClaim">{{claimPending ? '确认原接单结果' : '确认申请接单'}}</button>
+    <button wx:if="{{!claimPending}}" disabled="{{actionBusy}}" bindtap="hideClaimForm">暂不接单</button>
+    <text class="hint">接单结果确认前，请勿重新申请或改动原联系方式。</text>
+  </view>
+  <view wx:if="{{!isMock && actionMessage}}" class="section"><text role="status">{{actionMessage}}</text></view>
+  <view class="actions"><button bindtap="back">返回上一页</button><button bindtap="go" data-page="hall">回任务大厅</button></view>
+</view>
+<view wx:if="{{task}}" class="fixed-actions detail-footer">
+  <button wx:for="{{policy.actions}}" wx:key="key" wx:if="{{isMock || item.key !== 'accept' || !showClaimForm}}" class="primary" disabled="{{isLoading || actionBusy || claimPending || claimBlocked}}" data-action="{{item.key}}" bindtap="previewAction">{{item.label}}{{isMock ? ' · 演示预览' : ''}}</button>
+  <button wx:if="{{policy.canLogin}}" class="primary" bindtap="go" data-page="login">登录后接单</button>
+  <button disabled="{{isLoading || actionBusy}}" loading="{{isLoading}}" bindtap="reloadDetail">刷新详情</button>
+</view>

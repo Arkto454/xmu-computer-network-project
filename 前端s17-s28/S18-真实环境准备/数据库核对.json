@@ -1,0 +1,12 @@
+{
+  "date": "2026-11-24",
+  "taskId": 900000,
+  "taskStatus": "ACCEPTED",
+  "claimRows": 1,
+  "assignmentRows": 1,
+  "stagedContacts": 0,
+  "database": "isolated local H2 file",
+  "realWeChatStudents": 1,
+  "publisher": "synthetic fixture",
+  "realDualAccountTested": false
+}

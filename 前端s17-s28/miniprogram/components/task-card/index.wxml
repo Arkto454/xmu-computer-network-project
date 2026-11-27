@@ -1,0 +1,11 @@
+<view wx:if="{{task}}" class="task-card" role="button" aria-label="查看任务：{{task.title}}" hover-class="task-card--pressed" bindtap="open">
+  <view class="card-heading">
+    <view class="heading-main"><text class="task-title">{{task.title}}</text><text class="type">{{task.typeName}}</text></view>
+    <view class="reward"><text class="amount">¥{{task.rewardText}}</text><text class="reward-label">模拟奖励</text></view>
+  </view>
+  <view class="route">
+    <view class="route-stop"><text class="stop-label">取</text><text class="location">{{task.pickupLocation}}</text></view>
+    <view class="route-stop"><text class="stop-label stop-label--end">送</text><text class="location">{{task.deliveryLocation}}</text></view>
+  </view>
+  <view class="card-footer"><view class="card-times"><text class="deadline">{{task.deadlineText}}</text><text wx:if="{{task.publishTimeText}}" class="published">发布于 {{task.publishTimeText}}</text></view><status-tag status="{{task.statusText}}" overdue="{{task.overdue}}" /></view>
+</view>

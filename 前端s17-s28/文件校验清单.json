@@ -1,0 +1,718 @@
+[
+  {
+    "path": ".gitattributes",
+    "sha256": "e8d3831c5252897e102e5d62ea1f5916f71594346c0ca75ac44ba792317f1151"
+  },
+  {
+    "path": ".gitignore",
+    "sha256": "6c43b55250ef7917353d0439ac7df33c2d7c792e6f6aa72ed79125d18a903800"
+  },
+  {
+    "path": "miniprogram/app.js",
+    "sha256": "5bb60b69f3df4ea63e6a09468511ac8d13f4901e80cad2f3aac93350ce560ea1"
+  },
+  {
+    "path": "miniprogram/app.json",
+    "sha256": "cc8b70e47a2e1483b18f86327939e19ff5482cc8b513afe55f8bdd372ad96e78"
+  },
+  {
+    "path": "miniprogram/app.wxss",
+    "sha256": "33cead80d3c63c69cb4874f433682f4903383771896e8580d1c678cf12b10d0a"
+  },
+  {
+    "path": "miniprogram/components/page-state/index.js",
+    "sha256": "63d6133901c7ba23d7d6692c9c42dcfa534cdfe94b77c69e483164253a32a588"
+  },
+  {
+    "path": "miniprogram/components/page-state/index.json",
+    "sha256": "3f316a87b9b912d079b5aec883d345185014d5aaaadd2fc8845ff502b97ca0e0"
+  },
+  {
+    "path": "miniprogram/components/page-state/index.wxml",
+    "sha256": "9f81c76dee5a6705caf855b9116031762010bb7c30efbb5c869621cc83b12f09"
+  },
+  {
+    "path": "miniprogram/components/page-state/index.wxss",
+    "sha256": "4d76e2641b5775bed34b1a124effb66053091d1da5514a8b5e1263320c80ca3f"
+  },
+  {
+    "path": "miniprogram/components/status-tag/index.js",
+    "sha256": "97fe86d5a0f8a24569e6a17f0412070562bdac00bda2a9a571c9b0d0f920913c"
+  },
+  {
+    "path": "miniprogram/components/status-tag/index.json",
+    "sha256": "3f316a87b9b912d079b5aec883d345185014d5aaaadd2fc8845ff502b97ca0e0"
+  },
+  {
+    "path": "miniprogram/components/status-tag/index.wxml",
+    "sha256": "55316a6c0bbfd4b4433bad4f23f32ad21b7d2479f4d5a163420195afa605642b"
+  },
+  {
+    "path": "miniprogram/components/status-tag/index.wxss",
+    "sha256": "4d0336736e59fb274bf6b89bfc3cb80a1b15c75da92c0134367392b041052968"
+  },
+  {
+    "path": "miniprogram/components/task-card/index.js",
+    "sha256": "114931a5d45f1d6aa83a99f473cf24ee289f31866a60f40086d132629faf1011"
+  },
+  {
+    "path": "miniprogram/components/task-card/index.json",
+    "sha256": "bfcc6bae717a9b19f39388da741afd0c405dbae02bfafd4ba8d32cd1b4d9fcb9"
+  },
+  {
+    "path": "miniprogram/components/task-card/index.wxml",
+    "sha256": "808ec067d004416159c0b9b8a385833849d0a66bd3cf83cb09ad9d28f1478e01"
+  },
+  {
+    "path": "miniprogram/components/task-card/index.wxss",
+    "sha256": "bf8afe31f59094d95efb47f0c9a721bdcd6451bebbf03cf0031bdae60cba2d43"
+  },
+  {
+    "path": "miniprogram/config/demo.js",
+    "sha256": "10ac6211fa97b1b7776aba7d62d45887f9d6d981609dba9bb2e09f358ac33054"
+  },
+  {
+    "path": "miniprogram/config/env.js",
+    "sha256": "c4836c2c3f6af0f191bce90aed95b228647a57090e8b7098d8fa07fe82315375"
+  },
+  {
+    "path": "miniprogram/config/task-types.js",
+    "sha256": "cd5e3b54c305d27af74cce9bdf2d46f017bfa208057875cd41c96e94cc82138b"
+  },
+  {
+    "path": "miniprogram/config/ui-preview.js",
+    "sha256": "b39e8c9f3bb3b1f89f0d02627ced654e2a4324166f33d2b2930f3b122fb7ce06"
+  },
+  {
+    "path": "miniprogram/mocks/fixtures.js",
+    "sha256": "9b7b993883f551e15a8a816ff2a5664aec377922efae821e8897b0c9c57e0421"
+  },
+  {
+    "path": "miniprogram/mocks/scenarios.js",
+    "sha256": "eb24196ba499a2cd3abd17eec7b8b005d7b4b342d1f7652f49a86653f728173d"
+  },
+  {
+    "path": "miniprogram/mocks/service.js",
+    "sha256": "1fb62e1d68f547fc651f827239f7530effd06789f5dfc9d36444aea06dae9f94"
+  },
+  {
+    "path": "miniprogram/pages/delivery-code/index.js",
+    "sha256": "39bf2a55eef5c2fac5760cc756159498cc8d3ea32b5180c1b1bb6c6b8ec3bcd0"
+  },
+  {
+    "path": "miniprogram/pages/delivery-code/index.json",
+    "sha256": "24927578ce5dacb144cfc04b2fd3b4e49dcc6ac37e11a2953207488e572dc69c"
+  },
+  {
+    "path": "miniprogram/pages/delivery-code/index.wxml",
+    "sha256": "f44fd7f27d9452bd8aa104f63076fbf0113da18b3a098ac0c9fb248cb4f7d846"
+  },
+  {
+    "path": "miniprogram/pages/delivery-code/index.wxss",
+    "sha256": "e1424e7a3d803a6aad69372ce3d445e61838d4265f31a18f10eb0419779e1dec"
+  },
+  {
+    "path": "miniprogram/pages/earnings/index.js",
+    "sha256": "db9b4f6e8e804fde3fb3d4db2a7b3886fe575eb7092f36ace40cc2f781fa1832"
+  },
+  {
+    "path": "miniprogram/pages/earnings/index.json",
+    "sha256": "1a0180b48facc7b7423321aa31447b88f6a79c547f568488328510fab6eb232b"
+  },
+  {
+    "path": "miniprogram/pages/earnings/index.wxml",
+    "sha256": "f411c77466ec7d77d8c6a2e095ae7157b5e51363d73acceff13304d955832982"
+  },
+  {
+    "path": "miniprogram/pages/earnings/index.wxss",
+    "sha256": "f6af1589a28ad0464eacf51ab36ef940a2b02891a35012a7c34a3a6ac62a9d57"
+  },
+  {
+    "path": "miniprogram/pages/index/index.js",
+    "sha256": "cb885885e51868ab1e113c4d4332f3cecd8a57d84646e62d559dc3f48d4982c4"
+  },
+  {
+    "path": "miniprogram/pages/index/index.json",
+    "sha256": "221ef4107e48ca6ffafce97aff5a51bfbba679b77b66e6f65d36fedf4694914d"
+  },
+  {
+    "path": "miniprogram/pages/index/index.wxml",
+    "sha256": "10b6730f898b7a9f5523e4393553d4d1f429f8d2361b8a4d888ed5b9cb652bcb"
+  },
+  {
+    "path": "miniprogram/pages/index/index.wxss",
+    "sha256": "b2d73d5af3c1b277e6e9fb4de273b32b3ee7e0dd380aa1a49f407beb2e2d4d74"
+  },
+  {
+    "path": "miniprogram/pages/login/index.js",
+    "sha256": "db616885d6016fa0cf9547ffa1a4c9941d87e4ded5997ca5b1fe6b732e6df903"
+  },
+  {
+    "path": "miniprogram/pages/login/index.json",
+    "sha256": "62f0d98866ae302e6c463fceaa4b2e98866d543b843076fb06db71f16dc128e3"
+  },
+  {
+    "path": "miniprogram/pages/login/index.wxml",
+    "sha256": "4056c7333b3d49eb1068df842012eb208d5748f3bc1dd2997c402e5f4f440e0b"
+  },
+  {
+    "path": "miniprogram/pages/login/index.wxss",
+    "sha256": "72cedbc80a7c126cbe479b25aa0a9ab35fc629ee760982de8a85c0d254f8953e"
+  },
+  {
+    "path": "miniprogram/pages/logs/logs.js",
+    "sha256": "b0fcd9c392692663317fa6c61d937f9840a88662b449c0e666dee502cb7b58aa"
+  },
+  {
+    "path": "miniprogram/pages/logs/logs.json",
+    "sha256": "df9d91912cd42ae9ec5ea6058b2dcabc6388da3ffc277f3beda38c61076f8a58"
+  },
+  {
+    "path": "miniprogram/pages/logs/logs.wxml",
+    "sha256": "f4ca0cc28c3a54fbba91b4d12d8c77c621c06938ea1c73194c05d48d8a1d54d5"
+  },
+  {
+    "path": "miniprogram/pages/logs/logs.wxss",
+    "sha256": "38e7b6ca879f43dc8fe9af3df6bed9f5440280753a01c9bf5ef303ad09b5dcbb"
+  },
+  {
+    "path": "miniprogram/pages/my-tasks/index.js",
+    "sha256": "271bb67bda46586616d5b1ce36e594c86262a1df622e224226b810dd01d96b31"
+  },
+  {
+    "path": "miniprogram/pages/my-tasks/index.json",
+    "sha256": "855611cf69e7c5f3b05e4613615a7969843e868e072393d24f2ab694307d27c1"
+  },
+  {
+    "path": "miniprogram/pages/my-tasks/index.wxml",
+    "sha256": "bd68c7d7eec70794661bb5f1bae491675b0189af39ce7e2220ef673a0b2f3f06"
+  },
+  {
+    "path": "miniprogram/pages/my-tasks/index.wxss",
+    "sha256": "bba9ef7f549d59244124e897c456effa8a8a2f0b57b3d17003663254d0a18921"
+  },
+  {
+    "path": "miniprogram/pages/profile/index.js",
+    "sha256": "3e4fd0dec4537dbbffca99c6e795c23e1b423982bd3072a7a60aedb6abbe44c6"
+  },
+  {
+    "path": "miniprogram/pages/profile/index.json",
+    "sha256": "a3f7ab58bd094a022e990559edc5b1535979f6a44b5d356ac01de55663816e49"
+  },
+  {
+    "path": "miniprogram/pages/profile/index.wxml",
+    "sha256": "558b0748a87ec1078837bdc71a2512c737f1a91d391c19595f8bd03bb983231f"
+  },
+  {
+    "path": "miniprogram/pages/profile/index.wxss",
+    "sha256": "9d99f20ef900f727ca2c167f1c1d1a821e411be319f4303865378388e1ad444d"
+  },
+  {
+    "path": "miniprogram/pages/profile-edit/index.js",
+    "sha256": "ee95f4a3aa3917b6df982d1e4cdc7ca03ea57ebb0f997ae32fbe9404bb5f6794"
+  },
+  {
+    "path": "miniprogram/pages/profile-edit/index.json",
+    "sha256": "72661439c95f029590391af801e1226ea5941eaa776b350823fa27cb4f6937ca"
+  },
+  {
+    "path": "miniprogram/pages/profile-edit/index.wxml",
+    "sha256": "a3b325d02a11230742c4364a55f27690fcff965afe15b9563f182b9ec2a8aa56"
+  },
+  {
+    "path": "miniprogram/pages/profile-edit/index.wxss",
+    "sha256": "b3da39f6698c3bc31378f26e473eb4f457038d1a5fbe4d1e794dfc5d4449662c"
+  },
+  {
+    "path": "miniprogram/pages/publish/index.js",
+    "sha256": "620cb023225c16480ff84f129eb66a257a4ae97dfcab0297e7cad41ecd9b9c89"
+  },
+  {
+    "path": "miniprogram/pages/publish/index.json",
+    "sha256": "1ca39279313e1bef097a884b45e86073639826aa9339b0cd58eab455ab119dcc"
+  },
+  {
+    "path": "miniprogram/pages/publish/index.wxml",
+    "sha256": "19ae0a819f024c6e2c3fdd19a149deeccaf3c80ab34172e25dc819b7f53db483"
+  },
+  {
+    "path": "miniprogram/pages/publish/index.wxss",
+    "sha256": "b6833119d0cac4a5b9838d1e51b6baca4d3cf896e16c235d329535bcb21cb694"
+  },
+  {
+    "path": "miniprogram/pages/scan-confirm/index.js",
+    "sha256": "0dd13589a484dd36c22fe0b378ab1b17747a73bd5345733313dccef458b719c1"
+  },
+  {
+    "path": "miniprogram/pages/scan-confirm/index.json",
+    "sha256": "2896ba57bc1c10ca789a66f43c20494f15fab67216c43f8271af8bad59ef3450"
+  },
+  {
+    "path": "miniprogram/pages/scan-confirm/index.wxml",
+    "sha256": "9c46e83164a8882f0ddb98853f3d19562803803c23bc796b597db42e5587e23e"
+  },
+  {
+    "path": "miniprogram/pages/scan-confirm/index.wxss",
+    "sha256": "2472b452a3b4f51d91a9019fe43ecd0b0ab209cd218d89b4294c6734030b6c6c"
+  },
+  {
+    "path": "miniprogram/pages/task-detail/index.js",
+    "sha256": "e40aff59cc3a9c53ab29e24148afebb43efe81623b4b0b46adfe69ff2811be82"
+  },
+  {
+    "path": "miniprogram/pages/task-detail/index.json",
+    "sha256": "4edeb49537c03653979efb5a93feed0e44dfdf3f3293deb59e88ea8921b97b58"
+  },
+  {
+    "path": "miniprogram/pages/task-detail/index.wxml",
+    "sha256": "2aee9ec1421f3aac734c86629da19d17d3285ff34da55b724af48863447a11b9"
+  },
+  {
+    "path": "miniprogram/pages/task-detail/index.wxss",
+    "sha256": "875b7d891f5118b7ad327a8c91ea84eff7d8a1c4bd5334d0849c6c6316c3c1a9"
+  },
+  {
+    "path": "miniprogram/project.config.json",
+    "sha256": "98577842a3972e525faed7aa7f8e5a00dea76be043da3a5845ad11720bee067e"
+  },
+  {
+    "path": "miniprogram/services/auth.js",
+    "sha256": "ae6cc72df8e47aa308b12cf2bb328f45a076489841fcddd9b65cdd86f7322517"
+  },
+  {
+    "path": "miniprogram/services/claim.js",
+    "sha256": "a51c3f997f21822877fb248f7662aa8275e37c6d9f57fa2365313561ae264f48"
+  },
+  {
+    "path": "miniprogram/services/delivery-confirmation.js",
+    "sha256": "05a98507e565862baca360703e31a2aa31c5736b54bff547f9dbef7e9b831ad9"
+  },
+  {
+    "path": "miniprogram/services/delivery.js",
+    "sha256": "6c71b41f221c0327d066d29c6349b4759418d7252398bafd8dcfb62c828a34c8"
+  },
+  {
+    "path": "miniprogram/services/errors.js",
+    "sha256": "579ec1544a54f3db03c300ecc8ac0644c8ee6b7f8f3963bb8e3d3a757722ef69"
+  },
+  {
+    "path": "miniprogram/services/index.js",
+    "sha256": "e9978ddc1458c6dbd7db7ac6d4200f02074cd9399a6bb8afdfce47a4d9265c41"
+  },
+  {
+    "path": "miniprogram/services/mock.js",
+    "sha256": "2b25bb4828f9a1c0be9a7c1e0bdf060ba51ad4a182c09a21f84f17a034f82972"
+  },
+  {
+    "path": "miniprogram/services/network-recovery.js",
+    "sha256": "56102d93c24b83a37b45a6de611114e7bc2dd9314fc19e59eb0b2b5b0d636520"
+  },
+  {
+    "path": "miniprogram/services/real-auth.js",
+    "sha256": "77dc25a66fde3ca593813ed3e0641cb794adec5523c434a0187f9a35328b4b2c"
+  },
+  {
+    "path": "miniprogram/services/real-tasks.js",
+    "sha256": "d55b01ba45bf6067dfb157b9ab951079573e5d404757ac7ff95d7e7aaa142dbf"
+  },
+  {
+    "path": "miniprogram/services/real.js",
+    "sha256": "252335447775c9a5d6c61f97da00c590f30e17b01c74e48dc830280712ff68b0"
+  },
+  {
+    "path": "miniprogram/services/request.js",
+    "sha256": "92baa0f03d24ba075973da3d37d4ce32ac93dca40198791b236180cb0fd9c62f"
+  },
+  {
+    "path": "miniprogram/services/session-request.js",
+    "sha256": "4d8d5489b6dc2e851412c384f993554d662faf4892ecf268e755fff0a4289771"
+  },
+  {
+    "path": "miniprogram/services/settlement.js",
+    "sha256": "bc70c54da7f1d2f61c5c28be3d2c990cc545857da9f1f84aadbcc27d172371ca"
+  },
+  {
+    "path": "miniprogram/sitemap.json",
+    "sha256": "2812d3c18f15b8cca2b70e3001514c315daaa1f888f60295d8d8a55d16a69faf"
+  },
+  {
+    "path": "miniprogram/styles/tokens.wxss",
+    "sha256": "0f7b1803f9e4f0a69b75027aca8a518f7c2cd203347254944a419b99384fc469"
+  },
+  {
+    "path": "miniprogram/templates/mode.wxml",
+    "sha256": "dde3a16a8f5487fb7c8a9b12880c8568df0e33021563a410d5a1beb03e3f6f7f"
+  },
+  {
+    "path": "miniprogram/utils/login-navigation.js",
+    "sha256": "b7ff640a37cceb1ce53a90f9a028efda2c909275cea2ed128fbb56ff9cada75f"
+  },
+  {
+    "path": "miniprogram/utils/money.js",
+    "sha256": "b596608fd3d80b73aa6b0a8a03a2348818bf9d778a1dd3aa0cfcac0e7b991843"
+  },
+  {
+    "path": "miniprogram/utils/navigation.js",
+    "sha256": "8e4ee738e1f2a4f68406b3956e37696e14f8429f81a0cbf15450970e73e5a935"
+  },
+  {
+    "path": "miniprogram/utils/page-session.js",
+    "sha256": "3ee563f9a612a3dc1a57974bd90ffec590daf248a3e390c980dd5959e1178ca6"
+  },
+  {
+    "path": "miniprogram/utils/pending-claims.js",
+    "sha256": "28a46c6eaa2e00cb63c532e34a8c6fac1aa18ed8c4480b227e1db4f98ce6d379"
+  },
+  {
+    "path": "miniprogram/utils/publish-form.js",
+    "sha256": "61785cffbbd9473b6bedf8fd407fe90cfd99ce215107940b78bbb8f88c18af92"
+  },
+  {
+    "path": "miniprogram/utils/scaffold.js",
+    "sha256": "05c5f426e1aaadff507997ce1c5d3d4834eb2fdf1e82143dbe34803fe5c2a1cf"
+  },
+  {
+    "path": "miniprogram/utils/session.js",
+    "sha256": "8b99fc975d4c17d59d6c88b8287337ef8f99486aa2e9bf443cfebfa034c5d040"
+  },
+  {
+    "path": "miniprogram/utils/task-state.js",
+    "sha256": "f890d53ad639e933f4ca0e995c9c41eb664c49ae004d5168ca09859fbb2fec86"
+  },
+  {
+    "path": "miniprogram/utils/time.js",
+    "sha256": "4fd29e02a0fb1e93c95bce76abe120a944d12973d9ace5244895029236bbbbad"
+  },
+  {
+    "path": "miniprogram/utils/util.js",
+    "sha256": "87b2004360bd30330618f52a86a68d5d9f2d7d5456d638d9d337338973d0b06c"
+  },
+  {
+    "path": "README.md",
+    "sha256": "10a4437410fe1cdfbae89b90d4e73744996ac70c7fa24a8c942154042debb8dd"
+  },
+  {
+    "path": "S17-接单接口/编译检查.json",
+    "sha256": "2dece13ae9d84b773175d6df99763940846224ef6e2a63ebccdce18c007fb5b4"
+  },
+  {
+    "path": "S17-接单接口/自动检查.json",
+    "sha256": "5376c809ae125194750b21157eb71e4bca9eca76da54acb4cc799523640bab50"
+  },
+  {
+    "path": "S18-原请求恢复/历史回归汇总.json",
+    "sha256": "3909e0c4d75ba6d4ad806c5b9cc49fb15997772d5a9b20221da094c7f3653bd3"
+  },
+  {
+    "path": "S18-原请求恢复/实施说明.md",
+    "sha256": "175fc54e5c8e60bb4ad1d77ea101e137d3b4c714d8f1c974cfb1ec9d5c458554"
+  },
+  {
+    "path": "S18-原请求恢复/收尾核验.json",
+    "sha256": "0d6b77ef62fd793b54691c739dff3392d45acabbce31db4b1daea477a89dccdf"
+  },
+  {
+    "path": "S18-原请求恢复/改动清单.json",
+    "sha256": "5bbf76861d3a30c10f41d9dd08291530930812ae3fbace148fa3a4e9c7bc31b3"
+  },
+  {
+    "path": "S18-原请求恢复/编译检查.json",
+    "sha256": "18a254ca36571619dd16a6d6600f88d57a98ada854a708d3294fbceac3dfda27"
+  },
+  {
+    "path": "S18-原请求恢复/自动检查.json",
+    "sha256": "d15351f453f12eed9d98e7b9b64f7c74767b8213b013eceda28bec38b609eac5"
+  },
+  {
+    "path": "S18-真实环境准备/数据库核对.json",
+    "sha256": "c34ac08daf59b14ca85d08716cdd74fb719da2210bacf005ef5fa781cc2419ae"
+  },
+  {
+    "path": "S18-真实环境准备/现场结果.json",
+    "sha256": "410ea7dfca8924c12c9fe138d29021853b189cddfca1ee3a404e05390b16fdb5"
+  },
+  {
+    "path": "S18-真实环境准备/现场验收.md",
+    "sha256": "4021cf9cb432134d3714b73488d5b51e215e4970ed06dcba31050b5c4e7e61b9"
+  },
+  {
+    "path": "S20-记录/S21接续要点.md",
+    "sha256": "ed5b522a71101ef243e1ff4966e05cff60823469240cda632c72ad0c0d093f89"
+  },
+  {
+    "path": "S20-记录/单账号现场验收-20261127.md",
+    "sha256": "ad56626b5cc1454bac4393676e72f39a38e6ba3cf33e5990d8296ed4e5e0910c"
+  },
+  {
+    "path": "S20-记录/历史回归汇总.json",
+    "sha256": "0098901e373c4d81294cae8eb10f7cedeec98c3fd419c5faca5addc32de84051"
+  },
+  {
+    "path": "S20-记录/实施说明.md",
+    "sha256": "b0f6baaa0aa782425efd0b8d927c01d41b8bbf1a0f0082f458d46774c5181610"
+  },
+  {
+    "path": "S20-记录/执行表检查.json",
+    "sha256": "c76d98be51c9dd05c1fc5b798d826f38fdb410da0339fbb13659ef1561eb27b9"
+  },
+  {
+    "path": "S20-记录/收尾核验.json",
+    "sha256": "06677599ea9da657a3e7438bcbd5fac6e54eb621a7f8a1363b73aea90a5b871c"
+  },
+  {
+    "path": "S20-记录/改动清单.json",
+    "sha256": "9fd2344da7b70026444f997edce947ad734443200df51e7eaead376ef274cd04"
+  },
+  {
+    "path": "S20-记录/现场记录.md",
+    "sha256": "5ca90a38fad9ec3cb2abc57071cc7d54fc078cb72e93c62186b8b1d823fe7589"
+  },
+  {
+    "path": "S20-记录/登录连接恢复-20261127.md",
+    "sha256": "622ee029011a23cf4703c6b078e0f6670888341452296631ca45295822bf60a4"
+  },
+  {
+    "path": "S20-记录/编译检查.json",
+    "sha256": "743520be27a725d6174cc3159ff89103247b450c08d0d6095dc2a7f157983338"
+  },
+  {
+    "path": "S20-记录/自动检查.json",
+    "sha256": "137500bc6435c063d1e00ad5d29d1893906ab0a8bbba92ec01cc20b95fee89f4"
+  },
+  {
+    "path": "S21-记录/历史回归汇总.json",
+    "sha256": "babde48477194d43c12071d95af930d54b8feec3e350babe6ee1bb802d7a5592"
+  },
+  {
+    "path": "S21-记录/双账号验收步骤.md",
+    "sha256": "46f32a6085f2d4fff6bede150ab752c709a6804f0d35095706d1aca048293678"
+  },
+  {
+    "path": "S21-记录/实施说明.md",
+    "sha256": "084527cb88121763264ea47acbb9a691519c18c8073458cfca482b6e4c588886"
+  },
+  {
+    "path": "S21-记录/执行表检查.json",
+    "sha256": "06a41c9863af2d6fefedbc4a93a13e59100a415ed03b9f06a5efa0f980439abf"
+  },
+  {
+    "path": "S21-记录/收尾核验.json",
+    "sha256": "12117c65de321e3b6107fea38378bc7831918dcb5ae3fc340ecf9de156bddc1a"
+  },
+  {
+    "path": "S21-记录/改动清单.json",
+    "sha256": "37e075923e00678445d7d0b38340f36a09efdca2263052366fac853ade94ccb1"
+  },
+  {
+    "path": "S21-记录/现场记录.md",
+    "sha256": "19b192885d55bf87929fdc95e1887555a2c723612d3c203a90fc2dacd7ea6158"
+  },
+  {
+    "path": "S21-记录/编译检查.json",
+    "sha256": "17b0080f961e14a0a940f1a3959ca6bb6a14b9f75091fe5af437defc065f7ec5"
+  },
+  {
+    "path": "S21-记录/自动检查.json",
+    "sha256": "deba01bee691318604bcac52491faf9883ad1158795e6cbac0c451b814c6fb0a"
+  },
+  {
+    "path": "S22-记录/历史回归汇总.json",
+    "sha256": "df858d3246db1a8c8abda0ea72a2711536193151ece6f92ca33301b82b7bf9db"
+  },
+  {
+    "path": "S22-记录/实施说明.md",
+    "sha256": "fcf564d9e29b5e14975bba33557cbe9a497f312133859f3ff4fa37587f44d8a1"
+  },
+  {
+    "path": "S22-记录/执行表检查.json",
+    "sha256": "c127974622a608fc2c5e0300538b66532266f3c1ca3eb86c62bd6a47f38ef11f"
+  },
+  {
+    "path": "S22-记录/收尾核验.json",
+    "sha256": "b8db604d051df1ff2b52d6f3f9c2426d337d38fa377f1609d73ecd25658993af"
+  },
+  {
+    "path": "S22-记录/改动清单.json",
+    "sha256": "51543ba150fda5ebc5b850320902949d6aaa3a3486e217c13e30fde810250554"
+  },
+  {
+    "path": "S22-记录/现场记录.md",
+    "sha256": "cf8e66a2781be58928168bf31f25107d413067587393f05cf8c286235389b2ae"
+  },
+  {
+    "path": "S22-记录/编译检查.json",
+    "sha256": "3d4fd3dc73f11dba91132d968434249283f0a06a25447ebbba3418721b1bb472"
+  },
+  {
+    "path": "S22-记录/自动检查.json",
+    "sha256": "7585276c14d781410bc48f20cf5468ccae9b1d07ba44b6e2282dbef26c037c80"
+  },
+  {
+    "path": "S24-S25-记录/历史回归汇总.json",
+    "sha256": "44d35a1f2bd8c5ef4443d4130f3dda0208ad86157d85cb38a7362b7d4b05646e"
+  },
+  {
+    "path": "S24-S25-记录/后端通知接口待确认.md",
+    "sha256": "d9ff7ae95024e51c2586cb80cb3b73156e8d1a900d8ab3132416af70ef5f48b7"
+  },
+  {
+    "path": "S24-S25-记录/实施说明.md",
+    "sha256": "7f4a7546af9188d25ff8470b95d1ca931d2c5d61e8b4a24831f518f88bea72b8"
+  },
+  {
+    "path": "S24-S25-记录/执行表检查.json",
+    "sha256": "4f41f397479fddbe36be8e1a9959aee7b8bf357fa72dd132457ebefc66fe3244"
+  },
+  {
+    "path": "S24-S25-记录/收尾核验.json",
+    "sha256": "87e6d6bbc3359685b8cf7cb5739955ff71906b3bbd4c52a3a8ed3c810fcfb01b"
+  },
+  {
+    "path": "S24-S25-记录/改动清单.json",
+    "sha256": "00429160c32c93678959181189164ae8efb3c7aa259504246c5c333f55e48d5e"
+  },
+  {
+    "path": "S24-S25-记录/现场记录.md",
+    "sha256": "c218cad53a95cd70043229354aeebcf5fba6369bf58851a1a8850b7bb7275c5b"
+  },
+  {
+    "path": "S24-S25-记录/编译检查.json",
+    "sha256": "2511a9e46336b08439b7093c4198be3677219ca10f2dc4dac20a83139bf77d3e"
+  },
+  {
+    "path": "S24-S25-记录/自动检查.json",
+    "sha256": "ac587d0bcbb854ad5421b1f4ad0ba54f10443b8d897d87432e1c50d109343cd1"
+  },
+  {
+    "path": "S26-记录/历史回归汇总.json",
+    "sha256": "f47d0e26577a9c5c93afbbafe01b9889b99861c651be641e508616a0dfc69786"
+  },
+  {
+    "path": "S26-记录/实施说明.md",
+    "sha256": "45415497c4e94f503aa4c173ef9efdf0a44a937c3660c08a67d84b47f5409537"
+  },
+  {
+    "path": "S26-记录/执行表检查.json",
+    "sha256": "0de194d6ba3159b331e0a4444a0a90e3fe98ed5b2daddb96ecf82130459c15bc"
+  },
+  {
+    "path": "S26-记录/收尾核验.json",
+    "sha256": "e470c5f6dad266da698b0b59130dc4fee744fb76469052aeb282fec8390750ef"
+  },
+  {
+    "path": "S26-记录/改动清单.json",
+    "sha256": "60c05cc5131df3456f11a49287e04f6a5d6b49e0cca3e287849022e8626b0236"
+  },
+  {
+    "path": "S26-记录/现场记录.md",
+    "sha256": "e987e647d8322e14396a1c2706b637cb42b460ecdd187bb9e0e7a16b28553b11"
+  },
+  {
+    "path": "S26-记录/真实验收步骤.md",
+    "sha256": "d1b7023333650d9d3266ee9e0d62603f988352081e7ffc2d33dacf07f9e810b7"
+  },
+  {
+    "path": "S26-记录/编译检查.json",
+    "sha256": "2511a9e46336b08439b7093c4198be3677219ca10f2dc4dac20a83139bf77d3e"
+  },
+  {
+    "path": "S26-记录/自动检查.json",
+    "sha256": "2f6e0d527d06dd79d9bd5a508a71a2c8c1d0b4fa59df75861222f6ca8da64110"
+  },
+  {
+    "path": "S27-记录/历史回归汇总.json",
+    "sha256": "90109996edf1b569022f96cdd2ade9d737b8947972e2cb9e036117f642c2b901"
+  },
+  {
+    "path": "S27-记录/实施说明.md",
+    "sha256": "2564bfb6c6c140252ff3303c42a598af480b2c204450a305fada54ef97f45bed"
+  },
+  {
+    "path": "S27-记录/执行表检查.json",
+    "sha256": "39ea40f5480eda9d2ba2a4bb9d65eba8977639103409e579a20f5e22e0a92bc9"
+  },
+  {
+    "path": "S27-记录/收尾核验.json",
+    "sha256": "b007974e7ec8eec3cf138a9ea70fa7715ef0bb026b48e4d6a76936e03238b588"
+  },
+  {
+    "path": "S27-记录/改动清单.json",
+    "sha256": "d53ec1ce269fddfe8ebd8d9608e54007f197174df78b789b6cf165397d131433"
+  },
+  {
+    "path": "S27-记录/现场记录.md",
+    "sha256": "5751db3705dc37b0c09caa40ba56bdb44644dfc4b5299fe18c08bd276a013392"
+  },
+  {
+    "path": "S27-记录/编译检查.json",
+    "sha256": "2511a9e46336b08439b7093c4198be3677219ca10f2dc4dac20a83139bf77d3e"
+  },
+  {
+    "path": "S27-记录/缺陷与待验清单.md",
+    "sha256": "722dffbb3bade084701a94a9bb40ee8f15d33dc1b564fcf00ac03029cd6e36f4"
+  },
+  {
+    "path": "S27-记录/自动检查.json",
+    "sha256": "edd7519c52103cd710ba8f387d5a2a8422434bc78dcdb5e8c9b1005a93002d2d"
+  },
+  {
+    "path": "S28-记录/开始这里.md",
+    "sha256": "f88cdc688e458ae3d9e635c11af31ff79004785c9dac7595be840a335b276f1a"
+  },
+  {
+    "path": "S28-记录/执行表检查.json",
+    "sha256": "5041507d995af9d04f2f1bbf31f7b6e7c386b0c13f8739304a0f3bce62fd8d07"
+  },
+  {
+    "path": "S28-记录/检查记录.json",
+    "sha256": "d563f2e2e12ad514b95dffdf8ee9f222e9d13ba7e966a30f4647b399ed716f72"
+  },
+  {
+    "path": "S28-记录/源码清单.json",
+    "sha256": "72c89bd73145399e80e37a6208264ac766c6139396c8be7a794a92c14ab90edc"
+  },
+  {
+    "path": "S28-记录/版本说明.json",
+    "sha256": "73deea5dcdcda76c252616700cdedfd92921a26f4a83748c7fb52a67aad645df"
+  },
+  {
+    "path": "S28-记录/联调交接清单.md",
+    "sha256": "67e6374bccd3c423dfc4b860d0aabf955b1d9f8fa4a2e977d29f133cdcdef136"
+  },
+  {
+    "path": "S28-记录/运行说明.md",
+    "sha256": "c3705ed446f0c19be080eb269ec60a84a2b7cc441e420372735cfec1c241d640"
+  },
+  {
+    "path": "S28-记录/遗留与门槛.md",
+    "sha256": "a8600f6b35d5e872ab145f5ab00f90d7d061fb503878c1d337181d45f085a569"
+  },
+  {
+    "path": "S28-记录/阶段演示步骤.md",
+    "sha256": "7c09afd1a203b1c56a7c58bfa7b7dbf34ae0878efc596b073c7c5541bf0ffcd4"
+  },
+  {
+    "path": "前端开发任务卡.md",
+    "sha256": "601ff9908e0fafbbffaeb418739ed9487eaac3f6b24678e8c23a9eccfc4a9742"
+  },
+  {
+    "path": "前端开发执行表.xlsx",
+    "sha256": "2565c5f97b59c0dbfe46b4bc14541f1a6f6931df1aab305f4b161b472897dd9d"
+  },
+  {
+    "path": "前端开发进度.md",
+    "sha256": "48db4493fce5ea4a28a65b2f38a08a4134581202e2060b6415d0b9d073348040"
+  },
+  {
+    "path": "后端交付进展-20261124.md",
+    "sha256": "a84e7a641fa49c47e13637ba8a997b7ae723a7ab923e3a7dbd8722ac9d0235cb"
+  },
+  {
+    "path": "校园互助跑腿系统前端设计计划.md",
+    "sha256": "84b2f1ab2bc7548a3d1dc0263c135484971cfa3eee80653c90c179b58dc7cb77"
+  },
+  {
+    "path": "需求对齐记录-v0.3.md",
+    "sha256": "2f0e5ace1826f3fb49325e61e87561371222b962bf2be3552734aff40cf4ab9b"
+  }
+]

@@ -1,0 +1,16 @@
+.identity { padding-bottom: 28rpx; }
+.login-action { margin-top: 24rpx; }
+.account-state { padding: 24rpx 0; border-top: 1rpx solid #d8dfd8; border-bottom: 1rpx solid #d8dfd8; }
+.state-label { display: block; color: #576c63; font-size: 28rpx; }
+.state-value { display: block; margin-top: 6rpx; font-size: 32rpx; font-weight: 650; }
+.profile-menu { margin-top: 28rpx; background: #fff; border: 1rpx solid #d8dfd8; border-radius: 12rpx; overflow: hidden; }
+.profile-menu .profile-link { display: flex; width: 100%; margin: 0; align-items: center; justify-content: space-between; gap: 24rpx; padding: 24rpx; border-radius: 0; text-align: left; }
+.profile-link::after { border: 0; }
+.profile-link + .profile-link { border-top: 1rpx solid #d8dfd8; }
+.link-copy { flex: 1; min-width: 0; }
+.link-title { display: block; font-size: 32rpx; font-weight: 650; }
+.link-description { display: block; margin-top: 6rpx; font-size: 26rpx; color: #576c63; }
+.link-chevron { flex-shrink: 0; font-size: 40rpx; color: #576c63; }
+.contact-note { margin-top: 32rpx; padding: 24rpx 0 0; border-top: 1rpx solid #d8dfd8; font-size: 28rpx; color: #576c63; }
+.contact-note .section-title { margin-bottom: 12rpx; color: #17332d; }
+.retry-name { margin-top: 16rpx; }

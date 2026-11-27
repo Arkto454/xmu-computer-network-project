@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-27",
+  "stage": "S22",
+  "cases": [
+    {
+      "name": "服务校验身份/页码/大小，非法输入不联网；查询只用本人GET",
+      "status": "passed"
+    },
+    {
+      "name": "零汇总只接受真实0与空明细，响应白名单去除私密内容",
+      "status": "passed"
+    },
+    {
+      "name": "拒绝负数/精度/超大金额、异常分页总数、重复编号和错误时间",
+      "status": "passed"
+    },
+    {
+      "name": "未登录不请求，登录入口只导航；初次失败不伪装零收益",
+      "status": "passed"
+    },
+    {
+      "name": "成功零收益显示明确空态；重复刷新不增加汇总或明细",
+      "status": "passed"
+    },
+    {
+      "name": "分页取后端汇总而不累加，最后一页与重复触底不重复请求",
+      "status": "passed"
+    },
+    {
+      "name": "连点刷新合并；下拉刷新首屏/空态/失败都停止动画",
+      "status": "passed"
+    },
+    {
+      "name": "刷新失败保留旧汇总/明细，暂停翻页；成功刷新替换而非追加",
+      "status": "passed"
+    },
+    {
+      "name": "翻页失败保留列表，手动重试同一页；不显示错误的全部加载提示",
+      "status": "passed"
+    },
+    {
+      "name": "翻页发现汇总/总数/重复明细/顺序变化，停止混合并提示刷新",
+      "status": "passed"
+    },
+    {
+      "name": "刷新取代在途翻页，旧页迟到不追加或覆盖新汇总",
+      "status": "passed"
+    },
+    {
+      "name": "末页所有明细与汇总金额不符，保留旧列表并要求刷新，不伪造总额",
+      "status": "passed"
+    },
+    {
+      "name": "明细只允许打开当前列表任务，路由仅taskId",
+      "status": "passed"
+    },
+    {
+      "name": "离页清收益、停止下拉；返回重新取首屏，已完成后能显示新结算",
+      "status": "passed"
+    },
+    {
+      "name": "换账号/401同步清空，旧响应及旧401不污染新账号",
+      "status": "passed"
+    },
+    {
+      "name": "卸载后不setData，迟到响应不回写，无自动轮询或业务POST",
+      "status": "passed"
+    },
+    {
+      "name": "Mock按已完成且已结算的承接关系统计；新增模拟结算刷新，不重复累加",
+      "status": "passed"
+    },
+    {
+      "name": "Mock支持分页、失败重试且无真实请求；换账号不沿用旧收益",
+      "status": "passed"
+    },
+    {
+      "name": "已完成参与方详情只展示校验后的服务端模拟结算；访客和未完成隐藏",
+      "status": "passed"
+    }
+  ],
+  "controlled": true,
+  "realSettledTaskTested": false
+}

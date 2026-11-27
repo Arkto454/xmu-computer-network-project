@@ -1,0 +1,20 @@
+<import src="../../templates/mode.wxml" />
+<view class="page"><template is="mode" data="{{modeLabel: modeLabel}}" />
+<text class="title">交付码</text><text class="muted">任务编号：{{taskId || '未提供'}}</text>
+<view wx:if="{{task}}" class="section"><text class="section-title">{{task.title}}</text><text class="detail-line">{{task.status}}</text><text class="detail-line">取：{{task.pickupLocation}}</text><text class="detail-line">送：{{task.deliveryLocation}}</text></view>
+<view wx:if="{{pageState === 'auth'}}" class="section"><text>{{message}}</text><button class="primary" bindtap="go" data-page="login">微信登录</button></view>
+<view wx:elif="{{pageState === 'mock'}}" class="section"><text>{{message}}</text></view>
+<page-state wx:elif="{{pageState}}" state="{{pageState}}" description="{{message}}" busy="{{loading}}" bind:action="reload" />
+<view wx:else class="section code-panel">
+  <text wx:if="{{message}}" class="hint" role="status">{{message}}</text>
+  <view wx:if="{{imageSrc}}" class="code-frame"><image class="delivery-image {{imageReady ? '' : 'image-loading'}}" src="{{imageSrc}}" mode="aspectFit" show-menu-by-longpress="{{false}}" data-src="{{imageSrc}}" bindload="codeLoaded" binderror="codeFailed" /><text wx:if="{{!imageReady}}">正在显示交付码…</text></view>
+  <block wx:if="{{imageSrc && imageReady}}"><text class="countdown">剩余 {{remainingText}}</text><text class="hint">预计 {{expiresText}} 到期，仅供本任务发布者现场扫码。</text></block>
+  <text wx:if="{{codeStatus === 'EXPIRED'}}" class="section-title">交付码已过期</text>
+  <button wx:if="{{canRequest}}" class="primary" data-action="request" bindtap="act" disabled="{{loading || busy}}" loading="{{busy}}">确认到达，申请交付</button>
+  <button wx:if="{{canRefresh}}" class="primary" data-action="refresh" bindtap="act" disabled="{{loading || busy}}">{{codeStatus === 'EXPIRED' ? '生成新交付码' : '刷新交付码'}}</button>
+  <button wx:if="{{canRevoke}}" data-action="revoke" bindtap="act" disabled="{{loading || busy}}">停用当前交付码</button>
+</view>
+<text wx:if="{{notice}}" class="hint" role="status">{{notice}}</text>
+<text class="hint">有效期与是否可用以服务端为准。请保持设备时间准确；离开页面后不保留图片，返回时重新读取。</text>
+<view class="actions"><button bindtap="reload" disabled="{{loading || busy}}" loading="{{loading}}">重新查询任务与交付码</button><button bindtap="back">返回上一页</button></view>
+</view>

@@ -1,0 +1,96 @@
+{
+  "date": "2026-11-27",
+  "acceptedCount": 13,
+  "S17": "进行中",
+  "S18": "进行中",
+  "sourceCodeAndControlledChecks": "passed",
+  "liveValidation": "read-only /api/health application/database UP; no UI run this turn",
+  "unrelatedCellsPreserved": true,
+  "formulasStylesNativeFeaturesPreserved": true,
+  "changedCells": [
+    {
+      "sheet": 1,
+      "cell": "C2"
+    },
+    {
+      "sheet": 1,
+      "cell": "B2"
+    },
+    {
+      "sheet": 1,
+      "cell": "C4"
+    },
+    {
+      "sheet": 2,
+      "cell": "P29"
+    },
+    {
+      "sheet": 2,
+      "cell": "M29"
+    },
+    {
+      "sheet": 2,
+      "cell": "F29"
+    },
+    {
+      "sheet": 2,
+      "cell": "L29"
+    },
+    {
+      "sheet": 2,
+      "cell": "N29"
+    },
+    {
+      "sheet": 2,
+      "cell": "I29"
+    },
+    {
+      "sheet": 2,
+      "cell": "O29"
+    },
+    {
+      "sheet": 7,
+      "cell": "C26"
+    },
+    {
+      "sheet": 7,
+      "cell": "F26"
+    },
+    {
+      "sheet": 7,
+      "cell": "I26"
+    },
+    {
+      "sheet": 7,
+      "cell": "B26"
+    },
+    {
+      "sheet": 7,
+      "cell": "A26"
+    },
+    {
+      "sheet": 7,
+      "cell": "H26"
+    },
+    {
+      "sheet": 7,
+      "cell": "E26"
+    },
+    {
+      "sheet": 7,
+      "cell": "G26"
+    },
+    {
+      "sheet": 7,
+      "cell": "D26"
+    }
+  ],
+  "S28": "进行中",
+  "blockedCount": 1,
+  "controlledCases": 231,
+  "checksInheritedFrom": "S27; not rerun this turn",
+  "sourceChanged": false,
+  "completeFreeze": false,
+  "cleanDirectoryImport": "pending",
+  "realDualAccount": "pending"
+}

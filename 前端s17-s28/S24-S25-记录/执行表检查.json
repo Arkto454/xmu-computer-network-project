@@ -1,0 +1,125 @@
+{
+  "date": "2026-11-27",
+  "acceptedCount": 13,
+  "S17": "进行中",
+  "S18": "进行中",
+  "sourceCodeAndControlledChecks": "passed",
+  "liveValidation": "startup and unauthenticated navigation passed",
+  "unrelatedCellsPreserved": true,
+  "formulasStylesNativeFeaturesPreserved": true,
+  "changedCells": [
+    {
+      "sheet": 1,
+      "cell": "C2"
+    },
+    {
+      "sheet": 1,
+      "cell": "C4"
+    },
+    {
+      "sheet": 1,
+      "cell": "B2"
+    },
+    {
+      "sheet": 2,
+      "cell": "F26"
+    },
+    {
+      "sheet": 2,
+      "cell": "N26"
+    },
+    {
+      "sheet": 2,
+      "cell": "N25"
+    },
+    {
+      "sheet": 2,
+      "cell": "M26"
+    },
+    {
+      "sheet": 2,
+      "cell": "O25"
+    },
+    {
+      "sheet": 2,
+      "cell": "I25"
+    },
+    {
+      "sheet": 2,
+      "cell": "I26"
+    },
+    {
+      "sheet": 2,
+      "cell": "P25"
+    },
+    {
+      "sheet": 2,
+      "cell": "O26"
+    },
+    {
+      "sheet": 2,
+      "cell": "F25"
+    },
+    {
+      "sheet": 2,
+      "cell": "L26"
+    },
+    {
+      "sheet": 2,
+      "cell": "P26"
+    },
+    {
+      "sheet": 2,
+      "cell": "M25"
+    },
+    {
+      "sheet": 2,
+      "cell": "L25"
+    },
+    {
+      "sheet": 7,
+      "cell": "C23"
+    },
+    {
+      "sheet": 7,
+      "cell": "D23"
+    },
+    {
+      "sheet": 7,
+      "cell": "G23"
+    },
+    {
+      "sheet": 7,
+      "cell": "I23"
+    },
+    {
+      "sheet": 7,
+      "cell": "H23"
+    },
+    {
+      "sheet": 7,
+      "cell": "B23"
+    },
+    {
+      "sheet": 7,
+      "cell": "E23"
+    },
+    {
+      "sheet": 7,
+      "cell": "A23"
+    },
+    {
+      "sheet": 7,
+      "cell": "F23"
+    }
+  ],
+  "S24": "阻塞",
+  "S25": "进行中",
+  "blockedCount": 1,
+  "controlledCases": 206,
+  "recoveryCases": 15,
+  "historicalCases": 191,
+  "realNetworkToggle": "pending",
+  "webSocket": "blocked: F11 contract absent",
+  "realDualAccount": "pending"
+}

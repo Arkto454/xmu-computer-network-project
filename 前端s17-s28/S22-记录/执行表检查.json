@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-27",
+  "acceptedCount": 13,
+  "S17": "进行中",
+  "S18": "进行中",
+  "sourceCodeAndControlledChecks": "passed",
+  "liveValidation": "real zero earnings and refresh, Mock nonzero and task navigation passed",
+  "unrelatedCellsPreserved": true,
+  "formulasStylesNativeFeaturesPreserved": true,
+  "changedCells": [
+    {
+      "sheet": 1,
+      "cell": "C4"
+    },
+    {
+      "sheet": 1,
+      "cell": "C2"
+    },
+    {
+      "sheet": 1,
+      "cell": "B2"
+    },
+    {
+      "sheet": 2,
+      "cell": "I23"
+    },
+    {
+      "sheet": 2,
+      "cell": "N23"
+    },
+    {
+      "sheet": 2,
+      "cell": "M23"
+    },
+    {
+      "sheet": 2,
+      "cell": "O23"
+    },
+    {
+      "sheet": 2,
+      "cell": "L23"
+    },
+    {
+      "sheet": 2,
+      "cell": "F23"
+    },
+    {
+      "sheet": 2,
+      "cell": "P23"
+    },
+    {
+      "sheet": 7,
+      "cell": "C22"
+    },
+    {
+      "sheet": 7,
+      "cell": "D22"
+    },
+    {
+      "sheet": 7,
+      "cell": "H22"
+    },
+    {
+      "sheet": 7,
+      "cell": "E22"
+    },
+    {
+      "sheet": 7,
+      "cell": "A22"
+    },
+    {
+      "sheet": 7,
+      "cell": "I22"
+    },
+    {
+      "sheet": 7,
+      "cell": "B22"
+    },
+    {
+      "sheet": 7,
+      "cell": "F22"
+    },
+    {
+      "sheet": 7,
+      "cell": "G22"
+    }
+  ],
+  "S22": "进行中",
+  "controlledCases": 191,
+  "s22Cases": 19,
+  "historicalCases": 172,
+  "realNonzero": "pending",
+  "realDualAccount": "pending"
+}

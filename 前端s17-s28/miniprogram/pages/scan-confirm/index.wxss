@@ -1,0 +1,4 @@
+.scan-button { margin-top: 28rpx; }
+.detail-line { display: block; margin-top: 12rpx; line-height: 1.6; overflow-wrap: anywhere; }
+.review-panel { margin-top: 32rpx; padding-top: 28rpx; border-top: 1rpx solid #b9c6bc; }
+.complete-title { display: block; margin-top: 24rpx; font-size: 34rpx; font-weight: 650; color: #17634f; }

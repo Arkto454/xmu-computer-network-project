@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-27",
+  "sourceFiles": 9,
+  "newControlledCases": 15,
+  "historicalCases": 191,
+  "totalControlledCases": 206,
+  "acceptedStages": 13,
+  "S24": "blocked: F11 endpoint and protocol absent in latest origin/main d566123",
+  "S25": "in progress: HTTP network recovery subset",
+  "live": "startup and unauthenticated page navigation passed",
+  "realNetworkToggle": "pending",
+  "webSocketImplemented": false,
+  "businessWrites": false,
+  "backendSourceChanged": false,
+  "configChanged": false,
+  "mode": "real",
+  "pushed": false
+}

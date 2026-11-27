@@ -1,0 +1,38 @@
+[
+  {
+    "path": "services/settlement.js",
+    "sha256": "bc70c54da7f1d2f61c5c28be3d2c990cc545857da9f1f84aadbcc27d172371ca"
+  },
+  {
+    "path": "services/real-tasks.js",
+    "sha256": "17b714c92ed41bc5490a16b521349d0a39fb47eab4bae02ef0d8674112e607e1"
+  },
+  {
+    "path": "services/index.js",
+    "sha256": "290a9e00897899b8683979cbe10305a29e5e8608c0374f3ae19cf5fe71c8a38a"
+  },
+  {
+    "path": "mocks/service.js",
+    "sha256": "1fb62e1d68f547fc651f827239f7530effd06789f5dfc9d36444aea06dae9f94"
+  },
+  {
+    "path": "pages/profile/index.wxml",
+    "sha256": "558b0748a87ec1078837bdc71a2512c737f1a91d391c19595f8bd03bb983231f"
+  },
+  {
+    "path": "pages/earnings/index.js",
+    "sha256": "a456cd303aa75f81df2e81f922cde37a5636e1c3b7b5594ff181694e25743287"
+  },
+  {
+    "path": "pages/earnings/index.json",
+    "sha256": "1a0180b48facc7b7423321aa31447b88f6a79c547f568488328510fab6eb232b"
+  },
+  {
+    "path": "pages/earnings/index.wxml",
+    "sha256": "f411c77466ec7d77d8c6a2e095ae7157b5e51363d73acceff13304d955832982"
+  },
+  {
+    "path": "pages/earnings/index.wxss",
+    "sha256": "f6af1589a28ad0464eacf51ab36ef940a2b02891a35012a7c34a3a6ac62a9d57"
+  }
+]

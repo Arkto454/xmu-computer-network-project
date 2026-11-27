@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-27",
+  "sourceFilesUnchanged": 96,
+  "publicSourceFiles": 95,
+  "archiveCRC": "passed",
+  "archiveHashes": "matched",
+  "pages": 10,
+  "tabs": 3,
+  "mode": "real",
+  "privateProjectConfig": "excluded",
+  "nativeImportFromCleanDirectory": "pending",
+  "businessChecks": "231 inherited S27; not rerun this turn",
+  "health": "/api/health OK application/database UP",
+  "completeFreeze": false,
+  "acceptedStages": 13,
+  "uiActionsThisTurn": false,
+  "backendChanged": false,
+  "pushed": false
+}

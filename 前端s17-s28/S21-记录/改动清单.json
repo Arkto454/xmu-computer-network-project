@@ -1,0 +1,34 @@
+[
+  {
+    "path": "services/delivery-confirmation.js",
+    "sha256": "05a98507e565862baca360703e31a2aa31c5736b54bff547f9dbef7e9b831ad9"
+  },
+  {
+    "path": "services/real-tasks.js",
+    "sha256": "b1633316634344c136befbdb523b4b574cbc7d5615b776e163f33623afb15608"
+  },
+  {
+    "path": "services/index.js",
+    "sha256": "5061d2b49247d0b542ffb010698fdf7ef15d81f153020a9a9a47a7a6d482c407"
+  },
+  {
+    "path": "pages/task-detail/index.js",
+    "sha256": "275305767dd2ab70c62505b16bb7858f2cef8849a3909358bcfdc3e9d62e69b4"
+  },
+  {
+    "path": "pages/scan-confirm/index.js",
+    "sha256": "e2bb2cc13e40036a122beaeaf0867ad03c1dcf08bb1cd1e91fb164c19bf22ad7"
+  },
+  {
+    "path": "pages/scan-confirm/index.json",
+    "sha256": "2896ba57bc1c10ca789a66f43c20494f15fab67216c43f8271af8bad59ef3450"
+  },
+  {
+    "path": "pages/scan-confirm/index.wxml",
+    "sha256": "9c46e83164a8882f0ddb98853f3d19562803803c23bc796b597db42e5587e23e"
+  },
+  {
+    "path": "pages/scan-confirm/index.wxss",
+    "sha256": "2472b452a3b4f51d91a9019fe43ecd0b0ab209cd218d89b4294c6734030b6c6c"
+  }
+]

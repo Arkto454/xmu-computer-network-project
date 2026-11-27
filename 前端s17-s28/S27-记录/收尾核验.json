@@ -1,0 +1,19 @@
+{
+  "date": "2026-11-27",
+  "sourceFiles": 3,
+  "newCases": 8,
+  "historicalCases": 223,
+  "totalCases": 231,
+  "acceptedStages": 13,
+  "S27": "in progress: independent boundaries and simulator subset",
+  "simulator": "320x568 long content/detail footer/error entry/publish bottom; restored390x844",
+  "realModeRestored": true,
+  "temporaryFixturesRestored": true,
+  "configsUnchanged": true,
+  "authenticated": false,
+  "realPhoneKeyboard": "pending",
+  "realDualAccount": "pending",
+  "backendChanged": false,
+  "businessWrites": false,
+  "pushed": false
+}
