@@ -1,6 +1,6 @@
 # 校园互助跑腿后端
 
-当前版本 0.9.0-SNAPSHOT，已实现身份、任务主流程、交付结算、管理员任务管理和 WebSocket 在线提醒。接口与联调说明见[管理员任务管理](../后端设计计划.md#20-第六部分-管理员任务管理)和[在线提醒](../后端设计计划.md#21-第六部分-在线状态提醒与断线恢复)，真实小程序联调等待 AppID、AppSecret 和有效临时 code。
+当前版本 0.10.0-SNAPSHOT，已实现身份、任务主流程、交付结算、管理员任务管理、WebSocket 在线提醒和大厅 Redis 缓存。接口与联调说明见[管理员任务管理](../后端设计计划.md#20-第六部分-管理员任务管理)、[在线提醒](../后端设计计划.md#21-第六部分-在线状态提醒与断线恢复)及[大厅缓存](../后端设计计划.md#22-第六部分-任务大厅-redis-缓存)，真实小程序联调等待 AppID、AppSecret 和有效临时 code。
 
 ## 1 当前实现
 
@@ -19,6 +19,7 @@
 | 交付与模拟结算 | 交付码签发、刷新与停用；发布者扫码核验后确认；结算明细与收益汇总 |
 | 管理员任务管理 | 任务编号与状态查询、详情时间线、直接关闭任务并结束待处理取消申请 |
 | 在线提醒 | 原生 WebSocket、学生身份认证、多连接、心跳和事务提交后异步发送 |
+| 大厅缓存 | 公开分页摘要、最多 10 秒有效期、提交后失效、Lua 版本校验与 Redis 故障回退 |
 | 失败反馈 | 区分请求格式错误、登录失败、未认证与服务异常，不返回密码哈希 |
 
 技术版本：Spring Boot 3.5.16、MyBatis Starter 3.0.5、MySQL Connector/J、Spring Security Crypto。源码以 Java 17 为编译目标，本机使用 Java 25.0.3 验证。
@@ -75,11 +76,11 @@ application-local.properties   本机私有配置，已被 .gitignore 排除
 
 编译和测试可先使用 IDEA：打开 Maven 工具窗口，确认该项目的 Maven Runner 使用 JDK25，执行 Lifecycle → verify。也可直接运行 CampusErrandApplication，运行配置的工作目录设为 backend，以读取本机配置。
 
-当前可执行 JAR 为 0.9.0-SNAPSHOT，在 PowerShell 中可直接启动。
+当前可执行 JAR 为 0.10.0-SNAPSHOT，在 PowerShell 中可直接启动。
 
 ```powershell
 Set-Location 'D:\计网项目和实验\backend'
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.9.0-SNAPSHOT.jar
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.10.0-SNAPSHOT.jar
 ```
 
 上述启动命令明确指定本机 Java 路径，无须修改 Windows 或 IDEA 终端的 Path、JAVA_HOME。队友需替换为自己机器上的 JDK 路径。
@@ -87,7 +88,7 @@ Set-Location 'D:\计网项目和实验\backend'
 默认地址为 http://localhost:8080。若端口被占用：
 
 ```powershell
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.9.0-SNAPSHOT.jar --server.port=8081
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.10.0-SNAPSHOT.jar --server.port=8081
 ```
 
 在 IDEA 中可运行单个测试类，或通过 Maven verify 运行全量测试。若要使用终端 Maven，先执行 .\mvnw.cmd -version，确认显示 Java 17 或更高版本，再运行：
@@ -174,3 +175,15 @@ HTTP 200 返回当前管理员公开资料。
 0.9 新增在线提醒。全量 167 项、独立 MySQL 任务用例 138 项通过，其中 TaskSocketIntegrationTest 包含 11 项真实 WebSocket 场景。
 
 连接地址为 `ws://localhost:8080/ws/student/tasks`，部署 HTTPS 时使用对应的 `wss://` 地址。握手使用学生 Authorization 请求头，建立成功返回 READY，支持 PING/PONG 心跳。消息包含 eventId、eventType、taskId、occurredAt，收到后查询 HTTP 接口。关闭码 4401 表示需要重新登录。具体事件和前端恢复规则见[后端设计第 21 节](../后端设计计划.md#21-第六部分-在线状态提醒与断线恢复)。
+
+0.10 新增大厅缓存。使用独立 Redis 实例全量验证 183 项通过，独立 MySQL 任务用例 154 项通过，其中缓存专项 14 项、故障回退 2 项。普通测试使用隔离数据库并关闭缓存，Redis 专项在指定 TEST_REDIS_PORT 后执行。
+
+Redis 默认使用 localhost:6379。运行缓存时配置可用的 REDIS_HOST、REDIS_PORT 与 REDIS_PASSWORD，也可在被 Git 忽略的 application-local.properties 中设置 spring.data.redis 对应配置。TASK_CACHE_ENABLED 默认 true，Redis 连接故障时查询回到 MySQL。
+
+复跑真实 Redis 专项时，在 backend 目录设置当前终端变量。命名空间由测试随机生成，测试数据写入独立实例。
+
+```powershell
+$env:JAVA_HOME = 'C:\Program Files\Java\jdk-25.0.3'
+$env:TEST_REDIS_PORT = '6379'
+.\mvnw.cmd verify
+```

@@ -16,12 +16,15 @@ public class TaskService {
     private final Clock clock;
     private final TaskClaimService claims;
     private final TaskNotifications notifications;
+    private final TaskHallService hall;
 
-    public TaskService(TaskMapper mapper, Clock taskClock, TaskClaimService claims, TaskNotifications notifications) {
+    public TaskService(TaskMapper mapper, Clock taskClock, TaskClaimService claims, TaskNotifications notifications,
+                       TaskHallService hall) {
         this.mapper = mapper;
         this.clock = taskClock;
         this.claims = claims;
         this.notifications = notifications;
+        this.hall = hall;
     }
 
     @Transactional
@@ -53,15 +56,8 @@ public class TaskService {
         return new Created(task.id, task.status);
     }
 
-    @Transactional(readOnly = true)
     public Page list(int page, int size, TaskType type) {
-        validatePage(page, size);
-        LocalDateTime now = utc(clock.instant());
-        long total = mapper.countAvailable(type, now);
-        long offset = ((long) page - 1) * size;
-        List<Summary> items = offset >= total ? List.of() : mapper.findAvailable(type, now, offset, size)
-                .stream().map(this::summary).toList();
-        return new Page(items, total, page, size);
+        return hall.list(page, size, type);
     }
 
     @Transactional(readOnly = true)
@@ -71,7 +67,7 @@ public class TaskService {
         long total = mapper.countOwned(publisherId, status, now);
         long offset = ((long) page - 1) * size;
         List<Summary> items = offset >= total ? List.of() : mapper.findOwned(publisherId, status, now, offset, size)
-                .stream().map(this::summary).toList();
+                .stream().map(TaskService::summary).toList();
         return new Page(items, total, page, size);
     }
 
@@ -103,7 +99,7 @@ public class TaskService {
         long total = mapper.countAccepted(studentId, status);
         long offset = ((long) page - 1) * size;
         List<Summary> items = offset >= total ? List.of() : mapper.findAccepted(studentId, status, offset, size)
-                .stream().map(this::summary).toList();
+                .stream().map(TaskService::summary).toList();
         return new Page(items, total, page, size);
     }
 
@@ -152,7 +148,7 @@ public class TaskService {
                 settlement, closure, confirmation, privateInfo);
     }
 
-    private Summary summary(TaskRecord task) {
+    static Summary summary(TaskRecord task) {
         return new Summary(task.id, task.title, task.type, task.pickupLocation, task.deliveryLocation,
                 instant(task.deadlineAt), task.rewardAmount, task.status, instant(task.createdAt));
     }

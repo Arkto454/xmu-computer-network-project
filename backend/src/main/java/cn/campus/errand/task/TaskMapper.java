@@ -38,6 +38,20 @@ public interface TaskMapper {
             """)
     long countAvailable(@Param("type") TaskType type, @Param("now") LocalDateTime now);
 
+    @Select("""
+            <script>
+            SELECT COUNT(*) AS total, MIN(deadline_at) AS next_deadline
+            FROM errand_task WHERE status='WAITING' AND deadline_at &gt; #{now}
+            <if test="type != null">AND task_type=#{type}</if>
+            </script>
+            """)
+    AvailableStats availableStats(@Param("type") TaskType type, @Param("now") LocalDateTime now);
+
+    class AvailableStats {
+        public long total;
+        public LocalDateTime nextDeadline;
+    }
+
     // 大厅查询不读取私密列，后续缓存也只能使用 Summary。
     @Select("""
             <script>

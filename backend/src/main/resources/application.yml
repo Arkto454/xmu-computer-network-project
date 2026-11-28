@@ -9,6 +9,13 @@ spring:
     url: ${DB_URL:jdbc:mysql://localhost:3306/campus_errand?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai}
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:}
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      password: ${REDIS_PASSWORD:}
+      connect-timeout: 200ms
+      timeout: 200ms
   sql:
     init:
       mode: always
@@ -19,6 +26,10 @@ mybatis:
     map-underscore-to-camel-case: true
 app:
   task:
+    cache:
+      enabled: ${TASK_CACHE_ENABLED:true}
+      ttl: 10s
+      namespace: ${TASK_CACHE_NAMESPACE:campus-errand:hall:v1}
     delivery:
       window-ms: 1000
       scheduling-enabled: true
