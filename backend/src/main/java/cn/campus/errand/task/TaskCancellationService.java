@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import static cn.campus.errand.task.TaskCancellationContracts.*;
+import static cn.campus.errand.realtime.TaskNotice.Type.*;
 
 @Service
 public class TaskCancellationService {
@@ -23,14 +24,17 @@ public class TaskCancellationService {
     private final TaskCancellationMapper cancellations;
     private final TaskDeliveryMapper delivery;
     private final Clock clock;
+    private final TaskNotifications notifications;
 
     public TaskCancellationService(TaskMapper tasks, TaskClaimMapper assignments,
-                                   TaskCancellationMapper cancellations, TaskDeliveryMapper delivery, Clock taskClock) {
+                                   TaskCancellationMapper cancellations, TaskDeliveryMapper delivery, Clock taskClock,
+                                   TaskNotifications notifications) {
         this.tasks = tasks;
         this.assignments = assignments;
         this.cancellations = cancellations;
         this.delivery = delivery;
         this.clock = taskClock;
+        this.notifications = notifications;
     }
 
     @Transactional
@@ -46,6 +50,7 @@ public class TaskCancellationService {
         LocalDateTime now = now();
         requireOne(cancellations.recordPickup(taskId, now));
         transition(task, TaskStatus.PICKED_UP, now);
+        notifications.changed(taskId, PICKED_UP);
         return new PickupResult(taskId, task.status, instant(now));
     }
 
@@ -70,6 +75,7 @@ public class TaskCancellationService {
             request.status = Status.AWAITING_PEER;
             request.createdAt = now();
             requireOne(cancellations.insert(request));
+            notifications.changed(taskId, CANCELLATION_UPDATED);
         }
         try {
             // 同时发起的两个编号都关联这份申请，稍后重试不会另开一份。
@@ -114,12 +120,14 @@ public class TaskCancellationService {
         };
         requireOne(cancellations.recordStudentAction(cancellationId, next, action, studentId, now));
         if (next == Status.CANCELLED) transition(task, TaskStatus.CANCELLED, now);
+        notifications.changed(taskId, next == Status.CANCELLED ? TASK_CANCELLED : CANCELLATION_UPDATED);
         return detail(getRequest(taskId, cancellationId), task.status);
     }
 
     @Transactional(readOnly = true)
     public Page adminList(Status status, int page, int size) {
-        if (status != Status.AWAITING_REVIEW && status != Status.APPROVED && status != Status.REJECTED) {
+        if (status != Status.AWAITING_REVIEW && status != Status.APPROVED && status != Status.REJECTED
+                && status != Status.ADMIN_CLOSED) {
             throw invalid("审核列表支持待审核、已通过或已驳回");
         }
         if (page < 1 || size < 1 || size > 100) throw invalid("页码须为正数，每页最多 100 条");
@@ -151,6 +159,7 @@ public class TaskCancellationService {
             transition(task, TaskStatus.CLOSED, now);
             delivery.clearImage(taskId);
         }
+        notifications.changed(taskId, next == Status.APPROVED ? TASK_CLOSED : CANCELLATION_UPDATED);
         return detail(getRequest(taskId, cancellationId), task.status);
     }
 
@@ -180,7 +189,7 @@ public class TaskCancellationService {
         return time == null ? null : time.toInstant(ZoneOffset.UTC);
     }
 
-    private static Detail detail(TaskCancellationRecord request, TaskStatus taskStatus) {
+    static Detail detail(TaskCancellationRecord request, TaskStatus taskStatus) {
         return new Detail(request.id, request.taskId, taskStatus, request.status, request.requesterId,
                 request.reason, instant(request.createdAt), request.studentAction, request.studentActionBy,
                 instant(request.studentActionAt), request.reviewerId, request.reviewReason, instant(request.reviewedAt),

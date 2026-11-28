@@ -8,17 +8,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import static cn.campus.errand.task.TaskContracts.*;
+import static cn.campus.errand.realtime.TaskNotice.Type.*;
 
 @Service
 public class TaskService {
     private final TaskMapper mapper;
     private final Clock clock;
     private final TaskClaimService claims;
+    private final TaskNotifications notifications;
 
-    public TaskService(TaskMapper mapper, Clock taskClock, TaskClaimService claims) {
+    public TaskService(TaskMapper mapper, Clock taskClock, TaskClaimService claims, TaskNotifications notifications) {
         this.mapper = mapper;
         this.clock = taskClock;
         this.claims = claims;
+        this.notifications = notifications;
     }
 
     @Transactional
@@ -46,6 +49,7 @@ public class TaskService {
         task.createdAt = utc(now);
         task.updatedAt = task.createdAt;
         mapper.insert(task);
+        notifications.changed(task.id, TASK_PUBLISHED);
         return new Created(task.id, task.status);
     }
 
@@ -89,6 +93,7 @@ public class TaskService {
         if (task.status == TaskStatus.ACCEPTED) throw new AlreadyAcceptedException();
         requireSingleChange(mapper.cancelAvailable(taskId, publisherId, now));
         claims.settleLocked(taskId, ClaimOutcome.TASK_CANCELLED, now);
+        notifications.changed(taskId, TASK_CANCELLED);
         return new StateResult(taskId, TaskStatus.CANCELLED);
     }
 
@@ -110,6 +115,7 @@ public class TaskService {
         for (long taskId : mapper.findDueIds(now, size)) {
             if (mapper.expireIfDue(taskId, now) == 1) {
                 claims.settleLocked(taskId, ClaimOutcome.TASK_EXPIRED, now);
+                notifications.changed(taskId, TASK_EXPIRED);
                 changed++;
             }
         }
@@ -136,10 +142,14 @@ public class TaskService {
         var settlement = status == TaskStatus.COMPLETED && related && task.settledAt != null
                 ? new TaskDeliveryContracts.Settlement(task.settlementAmount, instant(task.settledAt)) : null;
         Instant completedAt = settlement == null ? null : settlement.settledAt();
+        var closure = related && task.closedAt != null ? new AdminTaskContracts.Closure(task.closedBy,
+                task.closeReason, task.closedFrom, instant(task.closedAt)) : null;
+        var confirmation = related && task.confirmationOutcome != null
+                ? new TaskDeliveryContracts.ConfirmationProgress(task.confirmationOutcome, instant(task.confirmationClosesAt)) : null;
         return new Detail(task.id, task.publisherId, task.title, task.type, task.pickupLocation,
                 task.deliveryLocation, instant(task.deadlineAt), task.rewardAmount, task.description,
                 status, instant(task.createdAt), ownedByMe, acceptedByMe, pickedUpAt, cancellation, completedAt,
-                settlement, privateInfo);
+                settlement, closure, confirmation, privateInfo);
     }
 
     private Summary summary(TaskRecord task) {

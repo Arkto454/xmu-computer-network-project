@@ -1,6 +1,6 @@
 # 校园互助跑腿后端
 
-当前版本 0.7.0-SNAPSHOT，已实现身份认证、任务发布、抢单及重试、确认取件、双方取消和管理员审核，以及交付码、扫码确认和模拟结算。真实小程序联调等待 AppID、AppSecret 和有效临时 code。说明见 [学生登录](./STUDENT_LOGIN.md)、[任务基础接口](./TASK_API.md)、[任务管理接口](./TASK_MANAGEMENT.md)、[接单接口](./TASK_CLAIM.md)、[取件和取消接口](../后端设计计划.md#182-接口约定)及[交付与模拟结算](../后端设计计划.md#19-第五部分-交付确认与模拟结算)。
+当前版本 0.9.0-SNAPSHOT，已实现身份、任务主流程、交付结算、管理员任务管理和 WebSocket 在线提醒。接口与联调说明见[管理员任务管理](../后端设计计划.md#20-第六部分-管理员任务管理)和[在线提醒](../后端设计计划.md#21-第六部分-在线状态提醒与断线恢复)，真实小程序联调等待 AppID、AppSecret 和有效临时 code。
 
 ## 1 当前实现
 
@@ -17,6 +17,8 @@
 | 抢单与重试 | 确认窗口、发布者取消优先、唯一接单归属、原编号重试、本人接单列表与双方详情权限 |
 | 取件与取消 | 接单者确认取件，双方协商取消，取件后由管理员审核并保留处理记录 |
 | 交付与模拟结算 | 交付码签发、刷新与停用；发布者扫码核验后确认；结算明细与收益汇总 |
+| 管理员任务管理 | 任务编号与状态查询、详情时间线、直接关闭任务并结束待处理取消申请 |
+| 在线提醒 | 原生 WebSocket、学生身份认证、多连接、心跳和事务提交后异步发送 |
 | 失败反馈 | 区分请求格式错误、登录失败、未认证与服务异常，不返回密码哈希 |
 
 技术版本：Spring Boot 3.5.16、MyBatis Starter 3.0.5、MySQL Connector/J、Spring Security Crypto。源码以 Java 17 为编译目标，本机使用 Java 25.0.3 验证。
@@ -73,11 +75,11 @@ application-local.properties   本机私有配置，已被 .gitignore 排除
 
 编译和测试可先使用 IDEA：打开 Maven 工具窗口，确认该项目的 Maven Runner 使用 JDK25，执行 Lifecycle → verify。也可直接运行 CampusErrandApplication，运行配置的工作目录设为 backend，以读取本机配置。
 
-当前可执行 JAR 为 0.7.0-SNAPSHOT，在 PowerShell 中可直接启动。
+当前可执行 JAR 为 0.9.0-SNAPSHOT，在 PowerShell 中可直接启动。
 
 ```powershell
 Set-Location 'D:\计网项目和实验\backend'
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.7.0-SNAPSHOT.jar
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.9.0-SNAPSHOT.jar
 ```
 
 上述启动命令明确指定本机 Java 路径，无须修改 Windows 或 IDEA 终端的 Path、JAVA_HOME。队友需替换为自己机器上的 JDK 路径。
@@ -85,7 +87,7 @@ Set-Location 'D:\计网项目和实验\backend'
 默认地址为 http://localhost:8080。若端口被占用：
 
 ```powershell
-& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.7.0-SNAPSHOT.jar --server.port=8081
+& 'C:\Program Files\Java\jdk-25.0.3\bin\java.exe' -jar .\target\campus-errand-backend-0.9.0-SNAPSHOT.jar --server.port=8081
 ```
 
 在 IDEA 中可运行单个测试类，或通过 Maven verify 运行全量测试。若要使用终端 Maven，先执行 .\mvnw.cmd -version，确认显示 Java 17 或更高版本，再运行：
@@ -164,3 +166,11 @@ HTTP 200 返回当前管理员公开资料。
 0.6 新增确认取件、双方取消和客服审核。全量 131 项通过，独立 MySQL 任务相关 102 项通过。可以在 IDEA 运行 TaskCancellationIntegrationTest 复跑新增的 8 项测试。
 
 0.7 新增交付与模拟结算。全量 143 项通过，独立 MySQL 任务相关 114 项通过；另验证了从 0.6 的数据库结构升级时保留已有任务。可以在 IDEA 运行 TaskDeliveryIntegrationTest 复跑新增的 12 项测试，真实小程序扫码待联调。
+
+0.8 新增管理员任务管理和交付确认窗口。全量 156 项、独立 MySQL 任务用例 127 项通过，旧结构升级与可执行 JAR 的重启补偿验证通过。新增 13 项可在 AdminTaskIntegrationTest 复跑。
+
+确认接口可能返回 HTTP 202 和 `outcome=PENDING`。客户端需通过任务详情或 `GET /api/student/tasks/{id}/delivery/confirmation` 查询最终结果。窗口可通过 `app.task.delivery.window-ms` 配置，默认 1000 毫秒。前端联调时须处理确认中、完成、关闭、审核暂停和交付码过期的结果。
+
+0.9 新增在线提醒。全量 167 项、独立 MySQL 任务用例 138 项通过，其中 TaskSocketIntegrationTest 包含 11 项真实 WebSocket 场景。
+
+连接地址为 `ws://localhost:8080/ws/student/tasks`，部署 HTTPS 时使用对应的 `wss://` 地址。握手使用学生 Authorization 请求头，建立成功返回 READY，支持 PING/PONG 心跳。消息包含 eventId、eventType、taskId、occurredAt，收到后查询 HTTP 接口。关闭码 4401 表示需要重新登录。具体事件和前端恢复规则见[后端设计第 21 节](../后端设计计划.md#21-第六部分-在线状态提醒与断线恢复)。

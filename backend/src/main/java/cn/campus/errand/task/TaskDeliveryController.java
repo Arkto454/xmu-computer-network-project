@@ -49,9 +49,17 @@ public class TaskDeliveryController {
     }
 
     @PostMapping(DELIVERY + "/confirm")
-    public ApiResponse<Completion> confirm(@RequestAttribute("currentStudent") StudentProfile student,
+    public ResponseEntity<ApiResponse<Completion>> confirm(@RequestAttribute("currentStudent") StudentProfile student,
                                             @PathVariable long id, @Valid @RequestBody ScannedCode input) {
-        return ApiResponse.success(service.confirm(student.id(), id, input.payload()));
+        Completion result = service.confirm(student.id(), id, input.payload());
+        return ResponseEntity.status(result.outcome() == ConfirmationOutcome.PENDING ? 202 : 200)
+                .body(ApiResponse.success(result));
+    }
+
+    @GetMapping(DELIVERY + "/confirmation")
+    public ApiResponse<Completion> confirmation(@RequestAttribute("currentStudent") StudentProfile student,
+                                                @PathVariable long id) {
+        return ApiResponse.success(service.confirmation(student.id(), id));
     }
 
     @GetMapping("/earnings")

@@ -13,6 +13,7 @@ public final class TaskDeliveryContracts {
     private TaskDeliveryContracts() {}
 
     public enum CodeStatus { ACTIVE, EXPIRED }
+    public enum ConfirmationOutcome { PENDING, COMPLETED, TASK_CLOSED, DELIVERY_PAUSED, CODE_EXPIRED }
 
     public record CodeVersion(@NotNull @PositiveOrZero Long codeVersion) {}
     public record ScannedCode(@NotBlank @Size(max = 100) String payload) {}
@@ -26,7 +27,10 @@ public final class TaskDeliveryContracts {
                                TaskStatus taskStatus, Instant expiresAt) {}
 
     public record Settlement(BigDecimal amount, Instant settledAt) {}
-    public record Completion(long taskId, TaskStatus taskStatus, Instant completedAt, Settlement settlement) {}
+    public record ConfirmationProgress(ConfirmationOutcome outcome, Instant closesAt) {}
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public record Completion(long taskId, TaskStatus taskStatus, Instant completedAt, Settlement settlement,
+                             ConfirmationOutcome outcome, Instant closesAt) {}
     public record Earning(long taskId, String title, BigDecimal amount, Instant settledAt) {}
     public record Earnings(List<Earning> items, BigDecimal totalAmount, long total, int page, int size) {}
 }

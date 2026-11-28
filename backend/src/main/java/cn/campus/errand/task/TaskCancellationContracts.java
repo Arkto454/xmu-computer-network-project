@@ -11,7 +11,7 @@ public final class TaskCancellationContracts {
     private TaskCancellationContracts() {}
 
     public enum Status {
-        AWAITING_PEER, AWAITING_REVIEW, WITHDRAWN, DECLINED, CANCELLED, APPROVED, REJECTED, TASK_FINISHED;
+        AWAITING_PEER, AWAITING_REVIEW, WITHDRAWN, DECLINED, CANCELLED, APPROVED, REJECTED, TASK_FINISHED, ADMIN_CLOSED;
 
         public boolean pending() {
             return this == AWAITING_PEER || this == AWAITING_REVIEW;

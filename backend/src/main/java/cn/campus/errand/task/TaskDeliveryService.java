@@ -1,6 +1,7 @@
 package cn.campus.errand.task;
 
 import cn.campus.errand.common.ApiException;
+import cn.campus.errand.realtime.TaskNotice.Type;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import org.springframework.http.HttpStatus;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,15 +37,21 @@ public class TaskDeliveryService {
     private final TaskCancellationMapper cancellations;
     private final DeliveryQrRenderer renderer;
     private final Clock clock;
+    private final int windowMillis;
+    private final TaskNotifications notifications;
     private final SecureRandom random = new SecureRandom();
 
     public TaskDeliveryService(TaskMapper tasks, TaskDeliveryMapper delivery, TaskCancellationMapper cancellations,
-                               DeliveryQrRenderer renderer, Clock taskClock) {
+                               DeliveryQrRenderer renderer, Clock taskClock,
+                               @Value("${app.task.delivery.window-ms:1000}") int windowMillis, TaskNotifications notifications) {
+        if (windowMillis < 1) throw new IllegalArgumentException("交付确认窗口必须大于零");
         this.tasks = tasks;
         this.delivery = delivery;
         this.cancellations = cancellations;
         this.renderer = renderer;
         this.clock = taskClock;
+        this.windowMillis = windowMillis;
+        this.notifications = notifications;
     }
 
     @Transactional
@@ -58,6 +66,8 @@ public class TaskDeliveryService {
         if (task.status == PENDING_CONFIRMATION) return view(taskId, current, now);
         Code issued = issue(taskId, current, now);
         requireOne(tasks.transition(taskId, PICKED_UP, PENDING_CONFIRMATION, now));
+        requireOne(delivery.recordDeliveryStart(taskId, now));
+        notifications.changed(taskId, Type.DELIVERY_REQUESTED);
         return view(taskId, issued, now);
     }
 
@@ -79,7 +89,9 @@ public class TaskDeliveryService {
         Code current = delivery.findCode(taskId);
         requireVersion(current, codeVersion);
         LocalDateTime now = now();
-        return view(taskId, issue(taskId, current, now), now);
+        Code issued = issue(taskId, current, now);
+        notifications.changed(taskId, Type.DELIVERY_CODE_CHANGED);
+        return view(taskId, issued, now);
     }
 
     @Transactional
@@ -94,6 +106,7 @@ public class TaskDeliveryService {
             requireOne(delivery.clearImage(taskId));
             current.codeVersion++;
             current.imagePng = null;
+            notifications.changed(taskId, Type.DELIVERY_CODE_CHANGED);
         }
         return view(taskId, current, now());
     }
@@ -116,14 +129,81 @@ public class TaskDeliveryService {
         LocalDateTime now = now();
         checkConfirmation(task, code, payload, now);
         if (task.status == COMPLETED) return completion(taskId, task.settlementAmount, task.settledAt);
+        var previous = delivery.findConfirmation(taskId);
+        if (previous != null && previous.payloadDigest.equals(code.payloadDigest)) {
+            finalizeDueLocked(task, now);
+            return confirmationResult(tasks.findDetailById(taskId), delivery.findConfirmation(taskId));
+        }
+        if (previous != null && previous.outcome == ConfirmationOutcome.PENDING) {
+            requireOne(delivery.resolveConfirmation(taskId, ConfirmationOutcome.CODE_EXPIRED));
+        }
+        var request = new TaskDeliveryMapper.Confirmation();
+        request.taskId = taskId;
+        request.payloadDigest = code.payloadDigest;
+        request.codeVersion = code.codeVersion;
+        request.closesAt = now.plus(windowMillis, ChronoUnit.MILLIS);
+        request.outcome = ConfirmationOutcome.PENDING;
+        requireOne(previous == null ? delivery.insertConfirmation(request) : delivery.replaceConfirmation(request));
+        notifications.changed(taskId, Type.CONFIRMATION_UPDATED);
+        return confirmationResult(task, request);
+    }
 
+    @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
+    public Completion confirmation(long studentId, long taskId) {
+        TaskRecord task = findTask(taskId);
+        if (task.publisherId != studentId && !Objects.equals(task.runnerId, studentId)) throw notFound();
+        var request = delivery.findConfirmation(taskId);
+        return request == null ? null : confirmationResult(task, request);
+    }
+
+    @Transactional
+    public void finalizeConfirmation(long taskId) {
+        TaskRecord task = lockTask(taskId);
+        finalizeDueLocked(task, now());
+    }
+
+    /** 调用方须已取得任务行锁，截止后先结清窗口再处理关单。 */
+    void finalizeDueLocked(TaskRecord task, LocalDateTime now) {
+        var request = delivery.findConfirmation(task.id);
+        if (request == null || request.outcome != ConfirmationOutcome.PENDING || now.isBefore(request.closesAt)) return;
+        ConfirmationOutcome failure = finalizationFailure(task, request, delivery.findCode(task.id), now);
+        if (failure != null) {
+            requireOne(delivery.resolveConfirmation(task.id, failure));
+            notifications.changed(task.id, Type.CONFIRMATION_UPDATED);
+            return;
+        }
+        long taskId = task.id;
         requireOne(tasks.transition(taskId, PENDING_CONFIRMATION, COMPLETED, now));
         requireOne(delivery.clearImage(taskId));
         requireOne(delivery.settle(taskId, task.runnerId, task.rewardAmount, now));
         if (task.cancellationStatus == TaskCancellationContracts.Status.AWAITING_PEER) {
             requireOne(cancellations.finishWaitingForPeer(task.cancellationId));
         }
-        return completion(taskId, task.rewardAmount, now);
+        requireOne(delivery.resolveConfirmation(taskId, ConfirmationOutcome.COMPLETED));
+        task.status = COMPLETED;
+        task.settledAt = now;
+        task.settlementAmount = task.rewardAmount;
+        notifications.changed(taskId, Type.TASK_COMPLETED);
+    }
+
+    private static ConfirmationOutcome finalizationFailure(TaskRecord task,
+            TaskDeliveryMapper.Confirmation request, Code code, LocalDateTime now) {
+        if (task.status == CLOSED) return ConfirmationOutcome.TASK_CLOSED;
+        if (task.cancellationStatus == TaskCancellationContracts.Status.AWAITING_REVIEW) {
+            return ConfirmationOutcome.DELIVERY_PAUSED;
+        }
+        if (task.status != PENDING_CONFIRMATION || !active(code, now)
+                || code.codeVersion != request.codeVersion || !code.payloadDigest.equals(request.payloadDigest)) {
+            return ConfirmationOutcome.CODE_EXPIRED;
+        }
+        return null;
+    }
+
+    private static Completion confirmationResult(TaskRecord task, TaskDeliveryMapper.Confirmation request) {
+        if (request.outcome == ConfirmationOutcome.COMPLETED) {
+            return completion(task.id, task.settlementAmount, task.settledAt);
+        }
+        return new Completion(task.id, task.status, null, null, request.outcome, instant(request.closesAt));
     }
 
     @Transactional(readOnly = true, isolation = Isolation.REPEATABLE_READ)
@@ -233,7 +313,7 @@ public class TaskDeliveryService {
 
     private static Completion completion(long taskId, BigDecimal amount, LocalDateTime at) {
         Instant time = instant(at);
-        return new Completion(taskId, COMPLETED, time, new Settlement(amount, time));
+        return new Completion(taskId, COMPLETED, time, new Settlement(amount, time), ConfirmationOutcome.COMPLETED, null);
     }
 
     private static String prefix(long taskId) { return PAYLOAD_PREFIX + taskId + "."; }
@@ -247,7 +327,7 @@ public class TaskDeliveryService {
         }
     }
 
-    private LocalDateTime now() {
+    LocalDateTime now() {
         return LocalDateTime.ofInstant(clock.instant().truncatedTo(ChronoUnit.MICROS), ZoneOffset.UTC);
     }
 

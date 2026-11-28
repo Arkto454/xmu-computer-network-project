@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.*;
 
 @Mapper
 public interface TaskClaimMapper {
+    @Select("SELECT DISTINCT student_id FROM task_claim_request WHERE task_id=#{taskId} AND outcome='PENDING'")
+    List<Long> findPendingStudents(long taskId);
     @Select("""
             SELECT task_id, request_id, payload_digest, outcome
             FROM task_claim_request WHERE student_id=#{studentId} AND request_id=#{requestId}

@@ -11,6 +11,34 @@ import org.apache.ibatis.annotations.Update;
 
 @Mapper
 public interface TaskDeliveryMapper {
+    @Select("SELECT * FROM task_delivery_confirmation WHERE task_id=#{taskId}")
+    Confirmation findConfirmation(long taskId);
+
+    @Insert("""
+            INSERT INTO task_delivery_confirmation(task_id, payload_digest, code_version, outcome, closes_at)
+            VALUES (#{taskId}, #{payloadDigest}, #{codeVersion}, 'PENDING', #{closesAt})
+            """)
+    int insertConfirmation(Confirmation request);
+
+    @Update("""
+            UPDATE task_delivery_confirmation SET payload_digest=#{payloadDigest}, code_version=#{codeVersion},
+                   outcome='PENDING', closes_at=#{closesAt} WHERE task_id=#{taskId}
+            """)
+    int replaceConfirmation(Confirmation request);
+
+    @Update("UPDATE task_delivery_confirmation SET outcome=#{outcome} WHERE task_id=#{taskId} AND outcome='PENDING'")
+    int resolveConfirmation(@Param("taskId") long taskId,
+                            @Param("outcome") TaskDeliveryContracts.ConfirmationOutcome outcome);
+
+    @Select("""
+            SELECT task_id FROM task_delivery_confirmation WHERE outcome='PENDING' AND closes_at <= #{now}
+            ORDER BY closes_at, task_id LIMIT 100
+            """)
+    List<Long> findDueConfirmations(LocalDateTime now);
+
+    @Insert("INSERT INTO task_delivery_start(task_id, started_at) VALUES (#{taskId}, #{now})")
+    int recordDeliveryStart(@Param("taskId") long taskId, @Param("now") LocalDateTime now);
+
     @Select("SELECT * FROM task_delivery_code WHERE task_id=#{taskId}")
     Code findCode(long taskId);
 
@@ -58,6 +86,14 @@ public interface TaskDeliveryMapper {
         public String payloadDigest;
         public byte[] imagePng;
         public LocalDateTime expiresAt;
+    }
+
+    class Confirmation {
+        public long taskId;
+        public String payloadDigest;
+        public long codeVersion;
+        public TaskDeliveryContracts.ConfirmationOutcome outcome;
+        public LocalDateTime closesAt;
     }
 
     class Totals {

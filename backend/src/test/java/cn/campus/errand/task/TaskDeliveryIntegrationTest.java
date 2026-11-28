@@ -6,6 +6,7 @@ import cn.campus.errand.student.StudentContracts;
 import cn.campus.errand.student.WeChatGateway;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.BinaryBitmap;
+import com.google.zxing.DecodeHintType;
 import com.google.zxing.RGBLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
@@ -97,13 +98,14 @@ class TaskDeliveryIntegrationTest {
                 .andExpect(jsonPath("$.data.rewardAmount").value(3.5));
         assertThat(settlementCount()).isZero();
 
-        scan(publisher, "/confirm", payload).andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.taskStatus").value("COMPLETED"))
-                .andExpect(jsonPath("$.data.completedAt").value(START.plusSeconds(1).toString()));
+        scan(publisher, "/confirm", payload).andExpect(status().isAccepted())
+                .andExpect(jsonPath("$.data.outcome").value("PENDING"));
+        at(START.plusSeconds(2));
+        delivery.finalizeConfirmation(taskId);
         mvc.perform(get(path("")).header("Authorization", bearer(runner)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.settlement.amount").value(3.5))
-                .andExpect(jsonPath("$.data.completedAt").value(START.plusSeconds(1).toString()))
+                .andExpect(jsonPath("$.data.completedAt").value(START.plusSeconds(2).toString()))
                 .andExpect(jsonPath("$.data.privateInfo").doesNotExist());
         assertThat(settlementCount()).isEqualTo(1);
     }
@@ -149,7 +151,7 @@ class TaskDeliveryIntegrationTest {
         assertThat(delivery.currentCode(id(runner), taskId).codeStatus()).isEqualTo(CodeStatus.EXPIRED);
         assertThat(delivery.requestDelivery(id(runner), taskId).codeVersion()).isEqualTo(code.codeVersion());
         CodeView fresh = delivery.refresh(id(runner), taskId, code.codeVersion());
-        assertThat(delivery.confirm(id(publisher), taskId, decode(fresh)).taskStatus()).isEqualTo(TaskStatus.COMPLETED);
+        assertThat(complete(taskId, decode(fresh)).taskStatus()).isEqualTo(TaskStatus.COMPLETED);
     }
 
     @Test
@@ -224,8 +226,12 @@ class TaskDeliveryIntegrationTest {
         Callable<Completion> confirm = () -> delivery.confirm(id(publisher), taskId, payload);
         List<Completion> results = race(confirm, confirm);
         assertThat(results.get(0)).isEqualTo(results.get(1));
+        assertThat(results.get(0).outcome()).isEqualTo(ConfirmationOutcome.PENDING);
+        at(START.plusSeconds(2));
+        delivery.finalizeConfirmation(taskId);
+        Completion completed = delivery.confirmation(id(publisher), taskId);
         at(code.expiresAt().plusSeconds(1));
-        assertThat(confirm.call()).isEqualTo(results.get(0));
+        assertThat(confirm.call()).isEqualTo(completed);
         assertThat(delivery.verify(id(publisher), taskId, payload).taskStatus()).isEqualTo(TaskStatus.COMPLETED);
         var cancellation = cancellations.latest(id(publisher), taskId);
         assertThat(cancellation.status()).isEqualTo(Status.TASK_FINISHED);
@@ -237,33 +243,37 @@ class TaskDeliveryIntegrationTest {
     void concurrentReviewAndConfirmationPermitOneFinalPath() throws Exception {
         long cancelId = cancellations.create(id(runner), taskId, newRequest()).cancellationId();
         String payload = decode(issue());
-        List<String> results = race(() -> outcome(() -> delivery.confirm(id(publisher), taskId, payload).taskStatus()),
+        List<String> results = race(() -> outcome(() -> delivery.confirm(id(publisher), taskId, payload).outcome()),
                 () -> outcome(() -> cancellations.studentAction(id(publisher), taskId, cancelId, StudentAction.AGREE).status()));
-        assertThat(results).isIn(List.of("COMPLETED", "CANCELLATION_STATE_CONFLICT"),
+        assertThat(results).isIn(List.of("PENDING", "AWAITING_REVIEW"),
                 List.of("DELIVERY_PAUSED", "AWAITING_REVIEW"));
-        assertThat(settlementCount()).isEqualTo(results.get(0).equals("COMPLETED") ? 1 : 0);
+        at(START.plusSeconds(2));
+        delivery.finalizeConfirmation(taskId);
+        assertThat(settlementCount()).isZero();
     }
 
     @Test
     void databaseFailureRollsBackCompletionAndKeepsCodeUsable() throws Exception {
         CodeView code = issue();
         String payload = decode(code);
+        delivery.confirm(id(publisher), taskId, payload);
+        at(START.plusSeconds(2));
         jdbc.update("INSERT INTO task_settlement (task_id, runner_id, amount, settled_at) VALUES (?, ?, ?, CURRENT_TIMESTAMP)",
                 taskId, id(runner), REWARD);
-        assertThatThrownBy(() -> delivery.confirm(id(publisher), taskId, payload)).isInstanceOf(DuplicateKeyException.class);
+        assertThatThrownBy(() -> delivery.finalizeConfirmation(taskId)).isInstanceOf(DuplicateKeyException.class);
         jdbc.update("DELETE FROM task_settlement WHERE task_id=?", taskId);
         assertThat(tasks.detail(id(publisher), taskId).status()).isEqualTo(TaskStatus.PENDING_CONFIRMATION);
         assertThat(delivery.currentCode(id(runner), taskId)).isEqualTo(code);
-        assertThat(delivery.confirm(id(publisher), taskId, payload).settlement().amount()).isEqualByComparingTo(REWARD);
+        assertThat(complete(taskId, payload).settlement().amount()).isEqualByComparingTo(REWARD);
     }
 
     @Test
     void earningsArePagedAndSummedOnlyForTheRecipient() throws Exception {
         String firstPayload = decode(issue());
-        delivery.confirm(id(publisher), taskId, firstPayload);
+        complete(taskId, firstPayload);
         long otherId = pickedUpTask();
         String secondPayload = decode(delivery.requestDelivery(id(runner), otherId));
-        delivery.confirm(id(publisher), otherId, secondPayload);
+        complete(otherId, secondPayload);
         mvc.perform(get("/api/student/earnings").param("size", "1").header("Authorization", bearer(runner)))
                 .andExpect(status().isOk()).andExpect(jsonPath("$.data.total").value(2))
                 .andExpect(jsonPath("$.data.totalAmount").value(7))
@@ -293,6 +303,14 @@ class TaskDeliveryIntegrationTest {
 
     private CodeView issue() {
         return delivery.requestDelivery(id(runner), taskId);
+    }
+
+    private Completion complete(long id, String payload) {
+        Completion pending = delivery.confirm(this.id(publisher), id, payload);
+        if (pending.outcome() == ConfirmationOutcome.COMPLETED) return pending;
+        at(pending.closesAt().plusMillis(1));
+        delivery.finalizeConfirmation(id);
+        return delivery.confirmation(this.id(publisher), id);
     }
 
     private int settlementCount() {
@@ -329,14 +347,15 @@ class TaskDeliveryIntegrationTest {
         return new CreateRequest(UUID.randomUUID().toString(), "测试申请");
     }
 
-    private static String decode(CodeView code) throws Exception {
+    static String decode(CodeView code) throws Exception {
         byte[] png = Base64.getDecoder().decode(code.imageBase64());
         try (var input = new ByteArrayInputStream(png)) {
             var image = ImageIO.read(input);
             int width = image.getWidth();
             int height = image.getHeight();
             var pixels = new RGBLuminanceSource(width, height, image.getRGB(0, 0, width, height, null, 0, width));
-            return new QRCodeReader().decode(new BinaryBitmap(new HybridBinarizer(pixels))).getText();
+            return new QRCodeReader().decode(new BinaryBitmap(new HybridBinarizer(pixels)),
+                    Map.of(DecodeHintType.PURE_BARCODE, true)).getText();
         }
     }
 

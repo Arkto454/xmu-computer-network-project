@@ -29,4 +29,12 @@ public class TaskRecord {
     public Long cancellationRequesterId;
     public BigDecimal settlementAmount;
     public LocalDateTime settledAt;
+    public LocalDateTime acceptedAt;
+    public LocalDateTime deliveryStartedAt;
+    public Long closedBy;
+    public String closeReason;
+    public TaskStatus closedFrom;
+    public LocalDateTime closedAt;
+    public TaskDeliveryContracts.ConfirmationOutcome confirmationOutcome;
+    public LocalDateTime confirmationClosesAt;
 }

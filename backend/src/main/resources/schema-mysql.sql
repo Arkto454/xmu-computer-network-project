@@ -114,3 +114,26 @@ CREATE TABLE IF NOT EXISTS task_settlement (
     CONSTRAINT ck_settlement_amount_positive CHECK (amount > 0),
     INDEX idx_settlement_runner (runner_id, settled_at, task_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+CREATE TABLE IF NOT EXISTS task_delivery_confirmation (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    payload_digest CHAR(64) NOT NULL,
+    code_version BIGINT NOT NULL,
+    outcome VARCHAR(32) NOT NULL,
+    closes_at DATETIME(6) NOT NULL,
+    INDEX idx_confirmation_due (outcome, closes_at, task_id),
+    CONSTRAINT fk_confirmation_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+CREATE TABLE IF NOT EXISTS task_delivery_start (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    started_at DATETIME(6) NOT NULL,
+    CONSTRAINT fk_delivery_start_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+CREATE TABLE IF NOT EXISTS task_closure (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    admin_id BIGINT NOT NULL,
+    reason VARCHAR(500) NOT NULL,
+    previous_status VARCHAR(32) NOT NULL,
+    closed_at DATETIME(6) NOT NULL,
+    CONSTRAINT fk_closure_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;

@@ -65,6 +65,15 @@ public interface TaskCancellationMapper {
     @Update("UPDATE task_cancellation SET status='TASK_FINISHED' WHERE id=#{id} AND status='AWAITING_PEER'")
     int finishWaitingForPeer(long id);
 
+    @Update("""
+            UPDATE task_cancellation SET status='ADMIN_CLOSED'
+            WHERE task_id=#{taskId} AND status IN ('AWAITING_PEER', 'AWAITING_REVIEW')
+            """)
+    int closePending(long taskId);
+
+    @Select("SELECT * FROM task_cancellation WHERE task_id=#{taskId} ORDER BY id")
+    List<TaskCancellationRecord> findHistory(long taskId);
+
     @Select("SELECT COUNT(*) FROM task_cancellation WHERE status=#{status}")
     long countByStatus(Status status);
 

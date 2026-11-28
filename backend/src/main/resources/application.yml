@@ -19,6 +19,10 @@ mybatis:
     map-underscore-to-camel-case: true
 app:
   task:
+    delivery:
+      window-ms: 1000
+      scheduling-enabled: true
+      fixed-delay-ms: 250
     claim:
       window-ms: 1000
       scheduling-enabled: true

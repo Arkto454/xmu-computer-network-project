@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import static cn.campus.errand.task.TaskContracts.*;
+import static cn.campus.errand.realtime.TaskNotice.Type.*;
 
 @Service
 public class TaskClaimService {
@@ -24,14 +25,16 @@ public class TaskClaimService {
     private final TaskClaimMapper claims;
     private final Clock clock;
     private final long windowMillis;
+    private final TaskNotifications notifications;
 
     public TaskClaimService(TaskMapper tasks, TaskClaimMapper claims, Clock taskClock,
-                            @Value("${app.task.claim.window-ms:1000}") int windowMillis) {
+                            @Value("${app.task.claim.window-ms:1000}") int windowMillis, TaskNotifications notifications) {
         if (windowMillis < 1) throw new IllegalArgumentException("接单确认窗口必须大于零");
         this.tasks = tasks;
         this.claims = claims;
         this.clock = taskClock;
         this.windowMillis = windowMillis;
+        this.notifications = notifications;
     }
 
     @Transactional(isolation = Isolation.READ_COMMITTED)
@@ -80,6 +83,7 @@ public class TaskClaimService {
             checkBinding(existing, taskId, digest);
             return result(existing);
         }
+        if (request.outcome != ClaimOutcome.PENDING) notifications.claimResolved(taskId, studentId);
         return result(request);
     }
 
@@ -94,6 +98,7 @@ public class TaskClaimService {
         if (task.status == TaskStatus.WAITING && !task.deadlineAt.isAfter(now)) {
             requireOne(tasks.expireIfDue(task.id, now));
             task.status = TaskStatus.EXPIRED;
+            notifications.changed(task.id, TASK_EXPIRED);
         }
         LocalDateTime end = claims.findWindowEnd(task.id);
         if (end == null) return;
@@ -111,12 +116,16 @@ public class TaskClaimService {
         requireOne(tasks.acceptAvailable(task.id, now));
         requireOne(claims.assign(winner, now));
         requireOne(claims.markAccepted(winner.id, now));
+        notifications.claimResolved(task.id, winner.studentId);
         settleLocked(task.id, ClaimOutcome.TASK_TAKEN, now);
         task.status = TaskStatus.ACCEPTED;
+        notifications.changed(task.id, TASK_CLAIMED);
     }
 
     void settleLocked(long taskId, ClaimOutcome outcome, LocalDateTime now) {
+        var students = claims.findPendingStudents(taskId);
         claims.settlePending(taskId, outcome, now);
+        students.forEach(studentId -> notifications.claimResolved(taskId, studentId));
     }
 
     LocalDateTime currentTime() {
@@ -128,6 +137,7 @@ public class TaskClaimService {
             case WAITING -> ClaimOutcome.PENDING;
             case CANCELLED -> ClaimOutcome.TASK_CANCELLED;
             case EXPIRED -> ClaimOutcome.TASK_EXPIRED;
+            case CLOSED -> ClaimOutcome.TASK_CLOSED;
             default -> {
                 Long runnerId = studentId == null && task.status == TaskStatus.ACCEPTED
                         ? null : claims.findRunnerId(task.id);

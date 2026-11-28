@@ -8,6 +8,7 @@ public enum ClaimOutcome {
     TASK_TAKEN("任务已被接走"),
     TASK_CANCELLED("发布者已取消任务"),
     TASK_EXPIRED("任务已过期"),
+    TASK_CLOSED("任务已由管理员关闭"),
     TASK_STATE_CONFLICT("当前任务状态不允许接单"),
     NOT_ELIGIBLE("当前账号不能接单");
 

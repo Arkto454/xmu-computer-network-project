@@ -42,5 +42,7 @@ public final class TaskContracts {
                          @JsonInclude(JsonInclude.Include.NON_NULL) TaskCancellationContracts.Summary cancellation,
                          @JsonInclude(JsonInclude.Include.NON_NULL) Instant completedAt,
                          @JsonInclude(JsonInclude.Include.NON_NULL) TaskDeliveryContracts.Settlement settlement,
+                         @JsonInclude(JsonInclude.Include.NON_NULL) AdminTaskContracts.Closure closure,
+                         @JsonInclude(JsonInclude.Include.NON_NULL) TaskDeliveryContracts.ConfirmationProgress confirmation,
                          @JsonInclude(JsonInclude.Include.NON_NULL) PrivateInfo privateInfo) {}
 }

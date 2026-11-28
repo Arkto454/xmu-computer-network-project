@@ -114,3 +114,26 @@ CREATE TABLE IF NOT EXISTS task_settlement (
     CONSTRAINT ck_settlement_amount_positive CHECK (amount > 0)
 );
 CREATE INDEX IF NOT EXISTS idx_settlement_runner ON task_settlement(runner_id, settled_at, task_id);
+
+CREATE TABLE IF NOT EXISTS task_delivery_confirmation (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    payload_digest CHAR(64) NOT NULL,
+    code_version BIGINT NOT NULL,
+    outcome VARCHAR(32) NOT NULL,
+    closes_at TIMESTAMP(6) NOT NULL,
+    CONSTRAINT fk_confirmation_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_confirmation_due ON task_delivery_confirmation(outcome, closes_at, task_id);
+CREATE TABLE IF NOT EXISTS task_delivery_start (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    started_at TIMESTAMP(6) NOT NULL,
+    CONSTRAINT fk_delivery_start_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS task_closure (
+    task_id BIGINT NOT NULL PRIMARY KEY,
+    admin_id BIGINT NOT NULL,
+    reason VARCHAR(500) NOT NULL,
+    previous_status VARCHAR(32) NOT NULL,
+    closed_at TIMESTAMP(6) NOT NULL,
+    CONSTRAINT fk_closure_task FOREIGN KEY (task_id) REFERENCES errand_task(id) ON DELETE CASCADE
+);

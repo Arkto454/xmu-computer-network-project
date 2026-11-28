@@ -11,6 +11,8 @@ spring:
     driver-class-name: org.h2.Driver
 app:
   task:
+    delivery:
+      scheduling-enabled: false
     claim:
       scheduling-enabled: false
     expiration:
